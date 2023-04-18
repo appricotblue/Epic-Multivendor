@@ -27,9 +27,14 @@ class ShopDetailsUI extends StatefulWidget {
 class _ShopDetailsUIState extends State<ShopDetailsUI> {
   var userModel = Get.find<UserModel>();
   String? selectedImage;
+  String? isWishList;
+  String? isWishListdata;
+
   @override
   Widget build(BuildContext context) {
     ShopDetailsProvider shopDetailsProvider = context.watch<ShopDetailsProvider>();
+    isWishList = isWishListdata ?? shopDetailsProvider.shopDetailsModel?.productData?.isWishlist.toString();
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldGreen,
       appBar: AppBar(
@@ -84,35 +89,72 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                           width: 40,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
-                          child:shopDetailsProvider.shopDetailsModel?.productData?.isWishlist == false?
-                          InkWell(
-                            onTap: (){
-                                shopDetailsProvider.addToWishList(context,
-                                  userId: userModel.userId,
-                                  productId: shopDetailsProvider.shopDetailsModel?.productData?.id
-                              ).then((value){
-                               Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopDetails()));
-                              });
-                            },
-                            child: Icon(
-                              Icons.favorite_border,
-                              color: AppColors.secondaryGreen,
-                            ),
-                          ):
-                          InkWell(
-                            onTap: (){
-                              shopDetailsProvider.removeWishList(context,
-                                  userId: userModel.userId,
-                                  productId: shopDetailsProvider.shopDetailsModel?.productData?.id
-                              ).then((value){
-                               Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopDetails()));
-                              });
-                            },
-                            child: Icon(
-                              Icons.favorite,
-                              color: AppColors.secondaryGreen,
-                            ),
-                          )),
+                              child: isWishList == "false"?InkWell(
+                                onTap: (){
+                                  
+                                  shopDetailsProvider.addToWishList(context,
+                                      userId: userModel.userId,
+                                      productId: shopDetailsProvider.shopDetailsModel?.productData?.id
+                                  ).then((value){
+                                    setState(() {
+                                      isWishListdata = "true";
+                                    });
+                                   
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.favorite_border,
+                                  color: AppColors.secondaryGreen,
+                                ),
+                              ):InkWell(
+                                onTap: (){
+                                  
+                                  shopDetailsProvider.removeWishList(context,
+                                      userId: userModel.userId,
+                                      productId: shopDetailsProvider.shopDetailsModel?.productData?.id
+                                  ).then((value){
+                                    setState(() {
+                                      isWishListdata = "false";
+                                    });
+
+                                  });
+                                  
+                                },
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: AppColors.secondaryGreen,
+                                ),
+                              ),
+                          // child:shopDetailsProvider.shopDetailsModel?.productData?.isWishlist == false?
+                          // InkWell(
+                          //   onTap: (){
+                          //       shopDetailsProvider.addToWishList(context,
+                          //         userId: userModel.userId,
+                          //         productId: shopDetailsProvider.shopDetailsModel?.productData?.id
+                          //     ).then((value){
+                          //      Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopDetails()));
+                          //     });
+                          //   },
+                          //   child: Icon(
+                          //     Icons.favorite_border,
+                          //     color: AppColors.secondaryGreen,
+                          //   ),
+                          // ):
+                          // InkWell(
+                          //   onTap: (){
+                          //     shopDetailsProvider.removeWishList(context,
+                          //         userId: userModel.userId,
+                          //         productId: shopDetailsProvider.shopDetailsModel?.productData?.id
+                          //     ).then((value){
+                          //      Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopDetails()));
+                          //     });
+                          //   },
+                          //   child: Icon(
+                          //     Icons.favorite,
+                          //     color: AppColors.secondaryGreen,
+                          //   ),
+                          // )
+                      ),
                     ))
               ],
             ),

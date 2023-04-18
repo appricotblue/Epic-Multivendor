@@ -64,9 +64,7 @@ class _WishListUIState extends State<WishListUI> {
                       : AppColors.primaryBlue,
                   labelColor: AppColors.black,
                   tabs: const [
-                    Tab(
-                      text: "Products",
-                    ),
+                    Tab(text: "Products"),
                     Tab(text: "Services"),
                   ],
                 ),

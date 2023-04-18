@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/helper_style.dart';
 import 'package:epic_multivendor/screens/wishlist/wishlist_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,7 @@ class WishListProduct extends StatefulWidget {
 
 class _WishListProductState extends State<WishListProduct> {
   var userModel = Get.find<UserModel>();
+  
   @override
   Widget build(BuildContext context) {
     WishListProvider value = context.watch<WishListProvider>();
@@ -70,7 +72,7 @@ class _WishListProductState extends State<WishListProduct> {
                                             topLeft: Radius.circular(10)),
                                         child: CachedNetworkImage(
                                           imageUrl:
-                                              "${value.productWishlistModel?.wishListData?[index].featuredImageUrl}",
+                                              "${ApiEndPoints.imageBaseURL}${value.productWishlistModel?.wishListData?[index].featuredImageUrl}",
                                           width: 70,
                                           height: 70,
                                           fit: BoxFit.fill,
@@ -120,7 +122,7 @@ class _WishListProductState extends State<WishListProduct> {
                                             height: 2,
                                           ),
                                           Text(
-                                            "Order Id :12235554448",
+                                            "Product Id : #0000000${value.productWishlistModel?.wishListData?[index].id}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall
@@ -155,22 +157,13 @@ class _WishListProductState extends State<WishListProduct> {
                                       const Spacer(),
                                       IconButton(
                                           onPressed: () {
-                                            value
-                                                .removeProductWishList(
-                                                  context,
-                                                    userId: userModel.userId,
-                                                    productId: value
-                                                        .productWishlistModel
-                                                        ?.wishListData?[index]
-                                                        .id)
-                                                .then((value) {
-                                              Future.microtask(() {
-                                                context
-                                                    .read<WishListProvider>()
-                                                    .wishListProduct(
-                                                        userId:
-                                                            userModel.userId);
-                                              });
+                                            value.removeProductWishList(context,
+                                              userId: userModel.userId,
+                                              productId: value.productWishlistModel?.wishListData?[index].id
+                                            );
+                                              
+                                            setState(() {
+                                              context.read<WishListProvider>().wishListProduct(userId: userModel.userId);
                                             });
                                           },
                                           icon: Container(

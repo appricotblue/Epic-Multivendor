@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/screens/wishlist/wishlist_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class _WishListServiceState extends State<WishListService> {
                                             topLeft: Radius.circular(10)),
                                         child: CachedNetworkImage(
                                           imageUrl:
-                                              "${value.serviceWishlistModel?.wishListData?[index].imageUrl}",
+                                              "${ApiEndPoints.imageBaseURL}${value.serviceWishlistModel?.wishListData?[index].imageUrl}",
                                           width: 70,
                                           height: 70,
                                           fit: BoxFit.fill,
@@ -120,7 +121,7 @@ class _WishListServiceState extends State<WishListService> {
                                             height: 2,
                                           ),
                                           Text(
-                                            "Order Id :12235554448",
+                                            "Service Id : #0000000${value.serviceWishlistModel?.wishListData?[index].id}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall
@@ -155,24 +156,14 @@ class _WishListServiceState extends State<WishListService> {
                                       const Spacer(),
                                       IconButton(
                                           onPressed: () {
-                                            value
-                                                .removeServiceWishList(
-                                                  context,
-                                                    userId: userModel.userId,
-                                                    serviceId: value
-                                                        .serviceWishlistModel
-                                                        ?.wishListData?[index]
-                                                        .id)
-                                                .then((value) =>
-                                                    Future.microtask(() {
-                                                      context
-                                                          .read<
-                                                              WishListProvider>()
-                                                          .wishListServices(
-                                                              userId: userModel
-                                                                  .userId);
-                                                    }));
+                                            value.removeServiceWishList(context,
+                                            userId: userModel.userId,
+                                            serviceId: value.serviceWishlistModel?.wishListData?[index].id);
+                                            setState(() {
+                                              context.read<WishListProvider>().wishListServices(userId: userModel.userId);
+                                            });
                                           },
+
                                           icon: Container(
                                               decoration: BoxDecoration(
                                                   shape: BoxShape.circle,

@@ -28,9 +28,13 @@ class CommonProductDetailsUI extends StatefulWidget {
 class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
   var userModel = Get.find<UserModel>();
   String? selectedImage;
+  String? isWishList;
+  String? isWishListdata;
   @override
   Widget build(BuildContext context) {
     ShopDetailsProvider shopDetailsProvider = context.watch<ShopDetailsProvider>();
+    isWishList = isWishListdata ?? shopDetailsProvider.shopDetailsModel?.productData?.isWishlist.toString();
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldGreen,
       appBar: AppBar(
@@ -83,35 +87,43 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                               width: 40,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10)),
-                              child: shopDetailsProvider.shopDetailsModel?.productData?.isWishlist == false?
-                              InkWell(
+                              child: isWishList == "false"?InkWell(
                                 onTap: (){
-                                    shopDetailsProvider.addToWishList(context,
+                                  
+                                  shopDetailsProvider.addToWishList(context,
                                       userId: userModel.userId,
                                       productId: shopDetailsProvider.shopDetailsModel?.productData?.id
                                   ).then((value){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CommonProductDetails()));
+                                    setState(() {
+                                      isWishListdata = "true";
+                                    });
+                                   
                                   });
                                 },
                                 child: Icon(
                                   Icons.favorite_border,
                                   color: AppColors.secondaryGreen,
                                 ),
-                              ):
-                              InkWell(
+                              ):InkWell(
                                 onTap: (){
+                                  
                                   shopDetailsProvider.removeWishList(context,
                                       userId: userModel.userId,
                                       productId: shopDetailsProvider.shopDetailsModel?.productData?.id
                                   ).then((value){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CommonProductDetails()));
+                                    setState(() {
+                                      isWishListdata = "false";
+                                    });
+
                                   });
+                                  
                                 },
                                 child: Icon(
                                   Icons.favorite,
                                   color: AppColors.secondaryGreen,
                                 ),
-                              )),
+                              ),
+                        ),
                     ))
               ],
             ),
