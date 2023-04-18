@@ -43,7 +43,7 @@ class ProfileProvider extends ChangeNotifier {
           "email": "$email",
           "phone": "$phone"
         
-      }, route: "http://phpstack-732301-3097288.cloudwaysapps.com/api/update/profile-data");
+      }, route: "http://phpstack-732301-3293226.cloudwaysapps.com/api/update/profile-data");
       if (apiResponse.data != null) {
         successModel = SuccessModel.fromJson(apiResponse.data);
       }
