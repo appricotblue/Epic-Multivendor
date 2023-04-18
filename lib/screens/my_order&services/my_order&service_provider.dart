@@ -1,4 +1,5 @@
 import 'package:epic_multivendor/screens/my_order&services/model/MyOrderModel.dart';
+import 'package:epic_multivendor/screens/my_order&services/model/ServiceBookingDetailsModel.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../apis/api_endpoints.dart';
@@ -15,6 +16,7 @@ class MyOrderProvider extends ChangeNotifier{
 
   MyOrderModel? myOrderModel;
   MyServiceListModel? myServicsListModel;
+ 
 
   /// PRODUCT WISHLIST
   ///
@@ -56,4 +58,6 @@ class MyOrderProvider extends ChangeNotifier{
     }
     return myServicsListModel!;
   }
+
+
 }

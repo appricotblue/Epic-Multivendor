@@ -73,6 +73,7 @@ class ApiEndPoints {
   static String myOrderListDetails = '${baseUrl}order/details';
   static String myserviceDetails = '${baseUrl}service-details';
   static String myServiceList = '${baseUrl}my-service-bookings';
+  static String serviceBookingDetails = '${baseUrl}service-bookings/details';
 
   /// prime
   static String premium = '${baseUrl}update/premium';

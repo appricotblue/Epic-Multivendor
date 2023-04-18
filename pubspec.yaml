@@ -55,6 +55,7 @@ dependencies:
   flutter_widget_from_html_core:
   order_tracker: ^0.0.2
   carousel_slider:
+  url_launcher: ^6.0.9
 
 
 dev_dependencies:

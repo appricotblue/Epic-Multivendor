@@ -25,13 +25,13 @@ class MyServiceListModel {
   bool? _success;
   String? _errorMsg;
   List<Services>? _services;
-MyServiceListModel copyWith({  bool? success,
-  String? errorMsg,
-  List<Services>? services,
-}) => MyServiceListModel(  success: success ?? _success,
-  errorMsg: errorMsg ?? _errorMsg,
-  services: services ?? _services,
-);
+  MyServiceListModel copyWith({  bool? success,
+    String? errorMsg,
+    List<Services>? services,
+  }) => MyServiceListModel(  success: success ?? _success,
+    errorMsg: errorMsg ?? _errorMsg,
+    services: services ?? _services,
+  );
   bool? get success => _success;
   String? get errorMsg => _errorMsg;
   List<Services>? get services => _services;
@@ -56,10 +56,12 @@ MyServiceListModel copyWith({  bool? success,
 class Services {
   Services({
       num? id, 
+      String? bookingId, 
       String? serviceTitle, 
       String? price, 
       String? imageUrl,}){
     _id = id;
+    _bookingId  = bookingId;
     _serviceTitle = serviceTitle;
     _price = price;
     _imageUrl = imageUrl;
@@ -67,24 +69,30 @@ class Services {
 
   Services.fromJson(dynamic json) {
     _id = json['id'];
+    _bookingId = json['booking_id'];
     _serviceTitle = json['service_title'];
     _price = json['price'];
-    _imageUrl = json['image_url'];
+    _imageUrl = json['image'];
   }
   num? _id;
+  String? _bookingId;
   String? _serviceTitle;
   String? _price;
   String? _imageUrl;
-Services copyWith({  num? id,
+Services copyWith({  
+  num? id,
+  String? bookingId,
   String? serviceTitle,
   String? price,
   String? imageUrl,
 }) => Services(  id: id ?? _id,
+  bookingId: bookingId ?? _bookingId,
   serviceTitle: serviceTitle ?? _serviceTitle,
   price: price ?? _price,
   imageUrl: imageUrl ?? _imageUrl,
 );
   num? get id => _id;
+  String? get bookingId => _bookingId;
   String? get serviceTitle => _serviceTitle;
   String? get price => _price;
   String? get imageUrl => _imageUrl;
@@ -92,9 +100,10 @@ Services copyWith({  num? id,
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
+    map['booking_id'] = _bookingId;
     map['service_title'] = _serviceTitle;
     map['price'] = _price;
-    map['image_url'] = _imageUrl;
+    map['image'] = _imageUrl;
     return map;
   }
 

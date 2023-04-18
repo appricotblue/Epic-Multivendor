@@ -4,9 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/screens/my_order&service_details/my_order_details_provider.dart';
+import 'package:epic_multivendor/screens/my_service_details/my_service_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_web/razorpay_web.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../helper/helper_color.dart';
 import '../../../helper/helper_images.dart';
@@ -23,6 +26,7 @@ class MyServiceDetailsUI extends StatefulWidget {
 
 class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
   final userModel = Get.find<UserModel>();
+  final razorpay = Razorpay();
   @override
   Widget build(BuildContext context) {
     MyOrderDetailsProvider value = context.watch<MyOrderDetailsProvider>();
@@ -40,7 +44,7 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
               color: AppColors.black,
             )),
         title: Text(
-          "My Service",
+          "Booking Details",
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -69,7 +73,7 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
                             topRight: Radius.circular(10),
                             topLeft: Radius.circular(10)),
                         child: CachedNetworkImage(
-                          imageUrl: "${ApiEndPoints.imageBaseURL}${value.myServiceDetailsModel?.serviceData?.image}",
+                          imageUrl: "${ApiEndPoints.imageBaseURL}${value.serviceBookingDetailsModel?.bookingData?.image}",
                           width: 70,
                           height: 70,
                           fit: BoxFit.fill,
@@ -92,7 +96,7 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
                           SizedBox(
                             width: 230,
                             child: Text(
-                              value.myServiceDetailsModel?.serviceData?.title ?? "",
+                              value.serviceBookingDetailsModel?.bookingData?.serviceTitle ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6
@@ -107,7 +111,7 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
                             height: 2,
                           ),
                           Text(
-                            "type: ${value.myServiceDetailsModel?.serviceData?.serviceType}",
+                            "Booking Id: ${value.serviceBookingDetailsModel?.bookingData?.bookingId}",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -121,168 +125,123 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
                           const SizedBox(
                             height: 2,
                           ),
-                          Text(
-                            "$rupees ${value.myServiceDetailsModel?.serviceData?.price}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.445,
-                                    color: AppColors.primaryBlue,
-                                    overflow: TextOverflow.ellipsis),
+                          Row(
+                          
+                            children: [
+                              Text(
+                                "$rupees ${value.serviceBookingDetailsModel?.bookingData?.price}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.445,
+                                        color: AppColors.primaryBlue,
+                                        overflow: TextOverflow.ellipsis),
+                              ),
+                              const SizedBox(
+                                width: 110,
+                              ),
+                              value.serviceBookingDetailsModel?.bookingData?.paymentStatus == "Unpaid"? InkWell(
+                                onTap: (){
+                                  getPayment(value.serviceBookingDetailsModel?.bookingData?.price);
+                                },
+                                child: Container(
+                                  height: 30,
+                                  width:70,
+                                  decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AppColors.primaryBlue),
+                                  child: Center(child: Text("Pay Now",
+                                  style:
+                                  Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        height: 1.445,
+                                        color: AppColors.white,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                  ))
+                                ),
+                              ):Container(),
+                            ],
                           ),
                         ],
                       ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border:
-                                      Border.all(color: AppColors.lightGrey)),
-                              child: Icon(
-                                Icons.close_rounded,
-                                size: 15,
-                                color: AppColors.lightGrey,
-                              )))
                     ],
                   ),
                 ),
               ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: AppColors.white),
-              //   child: Row(
-              //     children: [
-              //       Text(
-              //         "5888",
-              //         style: Theme.of(context).textTheme.headline5?.copyWith(
-              //             height: 1.445,
-              //             fontSize:30,
-              //             overflow: TextOverflow.ellipsis,
-              //             fontWeight: FontWeight.bold),
-              //       ),
-              //       const SizedBox(
-              //         width: 15,
-              //       ),
-              //       Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           Text(
-              //             "PIN for Delivery",
-              //             style: Theme.of(context)
-              //                 .textTheme
-              //                 .headline6
-              //                 ?.copyWith(
-              //                     height: 1.445,
-              //                     overflow: TextOverflow.ellipsis,
-              //                     fontWeight: FontWeight.bold),
-              //           ),
-              //           SizedBox(
-              //             width: MediaQuery.of(context).size.width - 100,
-              //             child: Text(
-              //               "Gh 11321 Building, Avenue Street,Borivili North, Mumbai , 40gggggg0 004",
-              //               style: Theme.of(context)
-              //                   .textTheme
-              //                   .bodyMedium
-              //                   ?.copyWith(
-              //                     height: 1.445,
-              //                   ),
-              //             ),
-              //           ),
-              //           const SizedBox(
-              //             width: 10,
-              //           )
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white),
+                child: Row(
+                  children: [
+                    value.serviceBookingDetailsModel?.bookingData?.servicePin != null?Text(
+                      "${value.serviceBookingDetailsModel?.bookingData?.servicePin}",
+                      style: Theme.of(context).textTheme.headline5?.copyWith(
+                          height: 1.445,
+                          fontSize:25,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                      ),
+                    ):Text(
+                      "Not Found",
+                      style: Theme.of(context).textTheme.headline5?.copyWith(
+                          height: 1.445,
+                          fontSize:15,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "PIN for Delivery",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              ?.copyWith(
+                                  height: 1.445,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 100,
+                          child: Text(
+                            "Share this PIN with the delivery boy at the time of delivery",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  height: 1.445,
+                                  color: const Color(0x99363636),
+                                ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: AppColors.white),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         "Seller Details",
-              //         style: Theme.of(context).textTheme.headline6?.copyWith(
-              //             height: 1.445,
-              //             overflow: TextOverflow.ellipsis,
-              //             fontWeight: FontWeight.bold),
-              //       ),
-              //       const SizedBox(
-              //         height: 5,
-              //       ),
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: [
-              //           SizedBox(
-              //             width: MediaQuery.of(context).size.width - 120,
-              //             child: Text(
-              //               "Gh 11321 Building, Avenue Street,Borivili North, Mumbai , 40gggggg0 004",
-              //               style: Theme.of(context)
-              //                   .textTheme
-              //                   .bodyMedium
-              //                   ?.copyWith(
-              //                     height: 1.445,
-              //                   ),
-              //             ),
-              //           ),
-              //           Column(
-              //             children: [
-              //               Container(
-              //                 height: 40,
-              //                 width: 40,
-              //                 decoration: BoxDecoration(
-              //                     borderRadius: BorderRadius.circular(10),
-              //                     border: Border.all(
-              //                         color: AppColors.primaryBlue)),
-              //                 child: Icon(
-              //                   Icons.call,
-              //                   color: AppColors.primaryBlue,
-              //                 ),
-              //               ),
-              //               const SizedBox(
-              //                 height: 3,
-              //               ),
-              //               Text(
-              //                 "Call Seller",
-              //                 style: Theme.of(context)
-              //                     .textTheme
-              //                     .bodyMedium
-              //                     ?.copyWith(
-              //                         height: 1.445,
-              //                         color: AppColors.primaryBlue),
-              //               ),
-              //             ],
-              //           ),
-              //           const SizedBox(
-              //             width: 10,
-              //           )
-              //         ],
-              //       ),
-              //       const SizedBox(
-              //         height: 5,
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 5,
-              // ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -293,30 +252,141 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Shipping Information",
+                      "Seller Details",
                       style: Theme.of(context).textTheme.headline6?.copyWith(
                           height: 1.445,
                           overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      "Gh 11321 Building, Avenue Street,Borivili North, Mumbai , 40gggggg0 004",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            height: 1.445,
+                      "${value.serviceBookingDetailsModel?.bookingData?.shopName}",
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          // color: Colors.grey
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 120,
+                          child: Text(
+                            "${value.serviceBookingDetailsModel?.bookingData?.shopAddress}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  height: 1.445,
+                                  color: const Color(0x99363636),
+                                ),
                           ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            _makePhoneCall(value.serviceBookingDetailsModel?.bookingData?.shopPhone.toString());
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: AppColors.primaryBlue)),
+                                child: Icon(
+                                  Icons.call,
+                                  color: AppColors.primaryBlue,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                "Call Seller",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        height: 1.445,
+                                        color: AppColors.primaryBlue),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Address Information",
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      "23232322222",
+                      "${value.serviceBookingDetailsModel?.bookingData?.userAddress}",
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "${value.serviceBookingDetailsModel?.bookingData?.userEmail}",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
                     ),
+                    Text(
+                      "${value.serviceBookingDetailsModel?.bookingData?.userPhone}",
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            height: 1.445,
+                            color: const Color(0x99363636),
+                          ),
+                    ),
+                    
                     const SizedBox(
                       height: 5,
                     ),
@@ -325,15 +395,17 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
                       style: Theme.of(context).textTheme.headline6?.copyWith(
                           height: 1.445,
                           overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      "Razorpay",
+                      "${value.serviceBookingDetailsModel?.bookingData?.paymentMethod}",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
                     ),
                   ],
@@ -347,12 +419,64 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
   }
     @override
   void initState() {
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, externalWallet);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, paySuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, payError);
     Future.microtask(() {
-      context.read<MyOrderDetailsProvider>().myServiceDetails(
-          userId: userModel.userId,
-          serviceId: widget.serviceId
-          );
+      context.read<MyOrderDetailsProvider>().serviceBookingDetails(
+          serviceBookingId: widget.serviceId
+      );
     });
     super.initState();
   }
+
+  void _makePhoneCall(String? phoneNumber) async {
+    String telUrl = 'tel:$phoneNumber';
+    if (await canLaunch(telUrl)) {
+      await launch(telUrl);
+    } else {
+      throw 'Could not launch $telUrl';
+    }
+  }
+
+  void paySuccess(PaymentSuccessResponse response) async {
+    print("---Succcess---");
+
+    Provider.of<MyOrderDetailsProvider>(context,listen: false).updateBookingPaymentStatus(
+      context,bookingId: widget.serviceId
+    );
+    context.read<MyOrderDetailsProvider>().serviceBookingDetails(
+      serviceBookingId: widget.serviceId
+    );
+   
+  }
+
+  void payError(PaymentFailureResponse response) {
+    print("---Failure---");
+    print(response.message! + response.code.toString());
+  }
+
+  void externalWallet(ExternalWalletResponse response) {
+    print("---ExternalWallet---");
+    print(response.walletName);
+  }
+
+  getPayment(String? amount) {
+    var options = {
+      'key': "rzp_test_YPPy2atb2bUKDB",
+      'amount': int.parse(amount.toString()) *100,
+      'name': "${userModel.name}",
+      'prefill': {
+        'contact': userModel.phone,
+        'email': userModel.email,
+      },
+    };
+    try {
+      razorpay.open(options);
+    } catch (e) {
+      print("error $e");
+    }
+  }
+
+  
 }

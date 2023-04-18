@@ -517,7 +517,7 @@ class _ServiceCheckoutUIState extends State<ServiceCheckoutUI> {
   getPayment() {
     var options = {
       'key': "rzp_test_YPPy2atb2bUKDB",
-      'amount': int.parse(userModel.servicePrice.toString()),
+      'amount': int.parse(userModel.servicePrice.toString())*100,
       'name': "${userModel.name}",
       'prefill': {
         'contact': userModel.phone,

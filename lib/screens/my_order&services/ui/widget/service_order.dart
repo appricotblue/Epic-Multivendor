@@ -51,9 +51,9 @@ class _ServiceOrderUIState extends State<ServiceOrderUI> {
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: InkWell(
                         onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => MyServiceDetails(
-                          //   serviceId:myOrderProvider.myServicsListModel?.services?[index].id.toString()
-                          // ),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MyServiceDetails(
+                            serviceId:myOrderProvider.myServicsListModel?.services?[index].id.toString()
+                          ),));
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -108,7 +108,7 @@ class _ServiceOrderUIState extends State<ServiceOrderUI> {
                                     height: 2,
                                   ),
                                   Text(
-                                    "Order Id :12235554448",
+                                    "Booking Id : ${myOrderProvider.myServicsListModel?.services?[index].bookingId}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
