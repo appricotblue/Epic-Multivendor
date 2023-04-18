@@ -1,6 +1,6 @@
+import 'package:epic_multivendor/helper/helper_logger.dart';
 import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/helper/widgets/button.dart';
-import 'package:epic_multivendor/helper/widgets/common_textfield.dart';
 import 'package:epic_multivendor/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +18,8 @@ class UpdateProfileUI extends StatefulWidget {
 
 class _UpdateProfileUIState extends State<UpdateProfileUI> {
   var userModel = Get.find<UserModel>();
+  bool? emailValid;
+  
   @override
   Widget build(BuildContext context) {
     ProfileProvider myProfilePROV = context.watch<ProfileProvider>();
@@ -68,7 +70,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                 const SizedBox(
                   height: 5,
                 ),
-                textField(context,
+                phonetextField(context,
                     initialValue: userModel.phone,
                     text: "Phone",
                     keyboardType: TextInputType.number,
@@ -80,12 +82,21 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                 ),
                 AppButton(
                   onPressed: () {
-                    myProfilePROV.updateMyProfileFUNC(
-                      userId: userModel.userId,
-                      name: userModel.name,
-                      phone: userModel.phone,
-                      email: userModel.email
-                    ).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile(),)));
+                    isEmailValid(userModel.email.toString());
+
+                    if(emailValid != true){
+                      SnackBarErrorMessage(context, "Invalid Email");
+                    }else if(userModel.phone?.length != 10){
+                      SnackBarErrorMessage(context, "Invalid Phone Number");
+                    }
+                    else{
+                      myProfilePROV.updateMyProfileFUNC(
+                        userId: userModel.userId,
+                        name: userModel.name,
+                        phone: userModel.phone,
+                        email: userModel.email
+                      ).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile(),)));
+                    }
                   },
                   text: "Update",
                   color: AppColors.white,
@@ -109,6 +120,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
         borderRadius: BorderRadius.circular(12),
         color: AppColors.white,
       ),
+  
       child: TextFormField(
         initialValue: initialValue,
         onChanged: onChanged,
@@ -119,8 +131,47 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
           disabledBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
+          
         ),
       ),
     );
   }
+
+  phonetextField(context, {initialValue, text, void Function(String)? onChanged, keyboardType}) {
+    return Container(
+      height: 50,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: AppColors.white,
+      ),
+  
+      child: TextFormField(
+        initialValue: initialValue,
+        onChanged: onChanged,
+        keyboardType: keyboardType,
+        maxLength: 10,
+        decoration: InputDecoration(
+          hintText: text,
+          contentPadding: const EdgeInsets.only(left: 10),
+          disabledBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          
+        ),
+      ),
+    );
+  }
+
+  
+
+  
+
+  bool? isEmailValid(String email) {
+    emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+    return emailValid;
+  }
+
+
+      
 }

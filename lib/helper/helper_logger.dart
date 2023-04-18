@@ -41,3 +41,16 @@ SnackBarMessage(context, text) {
     ),
   ));
 }
+
+SnackBarErrorMessage(context, text) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(text),
+    duration: const Duration(milliseconds: 3000),
+    backgroundColor: Colors.red,
+    elevation: 17,
+    behavior: SnackBarBehavior.floating,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10)
+    ),
+  ));
+}
