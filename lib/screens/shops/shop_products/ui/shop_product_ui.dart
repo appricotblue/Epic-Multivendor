@@ -30,6 +30,7 @@ class _ShopProductUIState extends State<ShopProductUI> {
   var userModel = Get.find<UserModel>();
   int? isSelected;
   int count = 0;
+  int? attributeId;
   @override
   Widget build(BuildContext context) {
     ShopProductProvider shopProductProvider =
@@ -360,30 +361,25 @@ class _ShopProductUIState extends State<ShopProductUI> {
                                                           : SizedBox(
                                                               width: 150,
                                                               height: 40,
-                                                              child: ListView
-                                                                  .builder(
-                                                                itemCount: shopProductProvider
-                                                                    .shopProductListModel
-                                                                    ?.products?[
-                                                                        index]
-                                                                    .attributes
-                                                                    ?.length,
-                                                                scrollDirection:
-                                                                    Axis.horizontal,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                            pos) =>
-                                                                        Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          5.0),
+                                                              child: ListView.builder(
+                                                                itemCount: shopProductProvider.shopProductListModel?.products?[ index].attributes?.length,
+                                                                scrollDirection:Axis.horizontal,
+                                                                itemBuilder:(context,pos) =>
+                                                                Padding(
+                                                                  padding:const EdgeInsets.all( 5.0),
                                                                   child:
                                                                       InkWell(
                                                                     onTap: () {
-                                                                      shopProductProvider.addRemoveStock(
-                                                                          index,
-                                                                          false);
+
+                                                                      setState(() {
+                                                                        attributeId =  shopProductProvider.shopProductListModel?.products?[index].attributes?[pos].id;
+                                                                        shopProductProvider.shopProductListModel?.products?[index].attributeCount = pos;
+                                                                        shopProductProvider.shopProductListModel?.products?[index].salePrice =  
+                                                                        shopProductProvider.shopProductListModel?.products?[index].attributes?[pos].value;
+                                                                      });
+                                                                      // shopProductProvider.addRemoveStock(
+                                                                      //     index,
+                                                                      //     false);
                                                                       // setState(
                                                                       //     () {
                                                                       //       shopProductProvider.addStock(index);
@@ -474,6 +470,7 @@ class _ShopProductUIState extends State<ShopProductUI> {
                                                       //     ),
                                                       //   ],
                                                       // ),
+                                                      
                                                       shopProductProvider.shopProductListModel?.products?[index].salePrice != null &&
                                                       shopProductProvider.shopProductListModel?.products?[index].salePrice != 0
                                                       ?
@@ -694,6 +691,11 @@ class _ShopProductUIState extends State<ShopProductUI> {
                                                                           .isCart ==
                                                                       false
                                                                   ? () {
+                                                                      if(shopProductProvider.shopProductListModel?.products?[ index].attributes?.length != 0){
+                                                                        if(attributeId != null){
+                                                                            
+                                                                        }
+                                                                      }
                                                                       Provider.of<CartProvider>(
                                                                               context,
                                                                               listen:
@@ -703,7 +705,9 @@ class _ShopProductUIState extends State<ShopProductUI> {
                                                                               userId: userModel.userId,
                                                                               productAmount: shopProductProvider.shopProductListModel?.products?[index].productPrice,
                                                                               productId: shopProductProvider.shopProductListModel?.products?[index].id,
-                                                                              quantity: shopProductProvider.shopProductListModel?.products?[index].quantityCount)
+                                                                              quantity: shopProductProvider.shopProductListModel?.products?[index].quantityCount,
+                                                                              attributeId: attributeId
+                                                                          )
                                                                           .then((value) {
                                                                         Future.microtask(
                                                                             () {

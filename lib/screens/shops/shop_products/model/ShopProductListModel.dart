@@ -181,18 +181,21 @@ class Products {
 }
 
 class Attributes {
+  int? id;
   dynamic name;
   int? value;
 
-  Attributes({this.name, this.value});
+  Attributes({this.id,this.name, this.value});
 
   Attributes.fromJson(Map<String, dynamic> json) {
+    id = json["id"];
     name = json["name"];
     value = json["value"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["id"] = id;
     _data["name"] = name;
     _data["value"] = value;
     return _data;
