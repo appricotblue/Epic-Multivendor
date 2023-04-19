@@ -40,13 +40,14 @@ class ShopDetailsProvider extends ChangeNotifier {
   }
 
   Future<SuccessModel> addToCart(context,
-      {userId,productId,quantity,productAmount}) async {
+      {userId,productId,quantity,productAmount,attributeId}) async {
     try {
       ApiResponse apiResponse = await ApiHelper().postData(data: {
         "user_id": "$userId",
         "product_id": "$productId",
         "quantity": "1",
-        "product_amount": "$productAmount"
+        "product_amount": "$productAmount",
+        "attribute_id":"$attributeId"
       }, route: ApiEndPoints.addToCart);
       if (apiResponse.data != null) {
         successModel = SuccessModel.fromJson(apiResponse.data);

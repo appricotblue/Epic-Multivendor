@@ -85,7 +85,7 @@ class ProductData {
       String? name, 
       String? description, 
       int? price, 
-      num? salePrice, 
+      int? salePrice, 
       String? unit, 
       num? stock, 
       num? category, 
@@ -98,7 +98,7 @@ class ProductData {
       dynamic discount, 
       bool? isWishlist, 
       bool? isCart, 
-      List<dynamic>? attributes, 
+      List<Attributes>? attributes, 
       num? quantity, 
       String? createdAt, 
       String? updatedAt,}){
@@ -125,6 +125,14 @@ class ProductData {
     _updatedAt = updatedAt;
 }
 
+  int? _attributeCount;
+
+  int get attributeCount => _attributeCount ?? 0;
+
+  set attributeCount(int value) {
+    _attributeCount = value;
+  }
+
   ProductData.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];
@@ -143,12 +151,11 @@ class ProductData {
     _discount = json['discount'];
     _isWishlist = json['is_wishlist'];
     _isCart = json['is_cart'];
-    if (json['attributes'] != null) {
-      _attributes = [];
-      // json['attributes'].forEach((v) {
-      //   _attributes?.add(Dynamic.fromJson(v));
-      // });
-    }
+    _attributes = json["attributes"] == null
+        ? null
+        : (json["attributes"] as List)
+            .map((e) => Attributes.fromJson(e))
+            .toList();
     _quantity = json['quantity'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
@@ -157,7 +164,7 @@ class ProductData {
   String? _name;
   String? _description;
   int? _price;
-  num? _salePrice;
+  int? _salePrice;
   String? _unit;
   num? _stock;
   num? _category;
@@ -170,7 +177,7 @@ class ProductData {
   dynamic _discount;
   bool? _isWishlist;
   bool? _isCart;
-  List<dynamic>? _attributes;
+  List<Attributes>? _attributes;
   num? _quantity;
   String? _createdAt;
   String? _updatedAt;
@@ -178,7 +185,7 @@ ProductData copyWith({  int? id,
   String? name,
   String? description,
   int? price,
-  num? salePrice,
+  int? salePrice,
   String? unit,
   num? stock,
   num? category,
@@ -191,7 +198,7 @@ ProductData copyWith({  int? id,
   dynamic discount,
   bool? isWishlist,
   bool? isCart,
-  List<dynamic>? attributes,
+  List<Attributes>? attributes,
   num? quantity,
   String? createdAt,
   String? updatedAt,
@@ -221,7 +228,7 @@ ProductData copyWith({  int? id,
   String? get name => _name;
   String? get description => _description;
   int? get price => _price;
-  num? get salePrice => _salePrice;
+  int? get salePrice => _salePrice;
   String? get unit => _unit;
   num? get stock => _stock;
   num? get category => _category;
@@ -234,7 +241,7 @@ ProductData copyWith({  int? id,
   dynamic get discount => _discount;
   bool? get isWishlist => _isWishlist;
   bool? get isCart => _isCart;
-  List<dynamic>? get attributes => _attributes;
+  List<Attributes>? get attributes => _attributes;
   num? get quantity => _quantity;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
@@ -261,10 +268,33 @@ ProductData copyWith({  int? id,
     if (_attributes != null) {
       map['attributes'] = _attributes?.map((v) => v.toJson()).toList();
     }
+    
     map['quantity'] = _quantity;
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
     return map;
   }
 
+}
+
+class Attributes {
+  int? id;
+  String? name;
+  int? value;
+
+  Attributes({this.id,this.name, this.value});
+
+  Attributes.fromJson(Map<String, dynamic> json) {
+    id = json["id"];
+    name = json["name"];
+    value = json["value"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["id"] = id;
+    _data["name"] = name;
+    _data["value"] = value;
+    return _data;
+  }
 }

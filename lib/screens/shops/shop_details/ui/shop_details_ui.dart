@@ -29,12 +29,16 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
   String? selectedImage;
   String? isWishList;
   String? isWishListdata;
+  int? productAmount;
+  int? productPrice;
+  int? attributeId;
 
   @override
   Widget build(BuildContext context) {
     ShopDetailsProvider shopDetailsProvider = context.watch<ShopDetailsProvider>();
     isWishList = isWishListdata ?? shopDetailsProvider.shopDetailsModel?.productData?.isWishlist.toString();
-
+    productAmount =  productPrice ??shopDetailsProvider.shopDetailsModel?.productData?.salePrice;
+    
     return Scaffold(
       backgroundColor: AppColors.scaffoldGreen,
       appBar: AppBar(
@@ -125,35 +129,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                                   color: AppColors.secondaryGreen,
                                 ),
                               ),
-                          // child:shopDetailsProvider.shopDetailsModel?.productData?.isWishlist == false?
-                          // InkWell(
-                          //   onTap: (){
-                          //       shopDetailsProvider.addToWishList(context,
-                          //         userId: userModel.userId,
-                          //         productId: shopDetailsProvider.shopDetailsModel?.productData?.id
-                          //     ).then((value){
-                          //      Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopDetails()));
-                          //     });
-                          //   },
-                          //   child: Icon(
-                          //     Icons.favorite_border,
-                          //     color: AppColors.secondaryGreen,
-                          //   ),
-                          // ):
-                          // InkWell(
-                          //   onTap: (){
-                          //     shopDetailsProvider.removeWishList(context,
-                          //         userId: userModel.userId,
-                          //         productId: shopDetailsProvider.shopDetailsModel?.productData?.id
-                          //     ).then((value){
-                          //      Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopDetails()));
-                          //     });
-                          //   },
-                          //   child: Icon(
-                          //     Icons.favorite,
-                          //     color: AppColors.secondaryGreen,
-                          //   ),
-                          // )
+                       
                       ),
                     ))
               ],
@@ -213,12 +189,12 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                         overflow: TextOverflow.ellipsis,
                         color: AppColors.lightGrey),
                   ),
-                  shopDetailsProvider.shopDetailsModel?.productData?.salePrice != null || 
-                  shopDetailsProvider.shopDetailsModel?.productData?.salePrice != 0 ?
+                  productAmount != null || 
+                  productAmount != 0 ?
                   Row(
                     children: [
                       Text(
-                        '$rupees ${shopDetailsProvider.shopDetailsModel?.productData?.price ?? ""}',
+                        '$rupees ${productAmount ?? ""}',
                         style: Theme.of(context).textTheme.headline5?.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
@@ -229,7 +205,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                         width: 10,
                       ),
                       Text(
-                        'MRP $rupees ${shopDetailsProvider.shopDetailsModel?.productData?.salePrice}',
+                        'MRP $rupees ${shopDetailsProvider.shopDetailsModel?.productData?.price}',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -243,7 +219,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                   ):Row(
                     children: [
                       Text(
-                        '$rupees ${ shopDetailsProvider.shopDetailsModel?.productData?.price ?? ""}',
+                        '$rupees ${shopDetailsProvider.shopDetailsModel?.productData?.price ?? ""}',
                         style: Theme.of(context).textTheme.headline5?.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
@@ -257,39 +233,82 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                   const SizedBox(
                     height: 5,
                   ),
-                  Row(
-                    children: [
-                      RatingBar.builder(
-                        initialRating: 3,
-                        minRating: 1,
-                        itemSize: 14,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 1.0),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star,
-                          size: 10,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {},
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Text(
-                        "520 Rating",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: AppColors.primaryGreen),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     RatingBar.builder(
+                  //       initialRating: 3,
+                  //       minRating: 1,
+                  //       itemSize: 14,
+                  //       direction: Axis.horizontal,
+                  //       allowHalfRating: true,
+                  //       itemCount: 5,
+                  //       itemPadding:
+                  //           const EdgeInsets.symmetric(horizontal: 1.0),
+                  //       itemBuilder: (context, _) => const Icon(
+                  //         Icons.star,
+                  //         size: 10,
+                  //         color: Colors.amber,
+                  //       ),
+                  //       onRatingUpdate: (rating) {},
+                  //     ),
+                  //     const SizedBox(
+                  //       height: 3,
+                  //     ),
+                  //     Text(
+                  //       "520 Rating",
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .bodySmall
+                  //           ?.copyWith(color: AppColors.primaryGreen),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(
                     height: 5,
                   ),
+
+                  // ignore: prefer_is_empty
+                  shopDetailsProvider.shopDetailsModel?.productData?.attributes?.length != 0 ?
+                  SizedBox(
+                    height: 50,
+                      child: ListView.builder(
+                        itemCount:shopDetailsProvider.shopDetailsModel?.productData?.attributes?.length,
+                        scrollDirection:Axis.horizontal,
+                        itemBuilder:(context,pos) =>
+                        Padding(
+                          padding:const EdgeInsets.all( 5.0),
+                          child: InkWell(
+                            onTap: (){
+                              setState(() {
+                                attributeId = shopDetailsProvider.shopDetailsModel?.productData?.attributes?[pos].id; 
+                                shopDetailsProvider.shopDetailsModel?.productData?.attributeCount = pos; 
+                                productPrice = shopDetailsProvider.shopDetailsModel?.productData?.attributes?[pos].value; 
+                              });
+
+                              print("-----$attributeId");
+                            },
+                            child: Container(
+                              width: 80,
+                              height:40,
+                              color: shopDetailsProvider.shopDetailsModel?.productData?.attributeCount == pos?
+                                      AppColors.primaryGreen:AppColors.primaryGreen.withOpacity(.6),
+                              child:Center(
+                                child:Text("${ shopDetailsProvider.shopDetailsModel?.productData?.attributes?[pos].name}",
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  fontSize: 12,
+                                  height: 1.445,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: AppColors.white),
+                                ),
+                              )
+                            ),
+                          )
+                        ),
+                      )
+
+                  ):Container(),
+                
+              
                   Divider(
                     color: AppColors.lightGrey,
                   ),
@@ -354,7 +373,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                               ShopCheckOut(
                                 isOrder: "true",
                                 productId: "${shopDetailsProvider.shopDetailsModel?.productData?.id.toString()}",
-                                productAmount: shopDetailsProvider.shopDetailsModel?.productData?.price.toString(),
+                                productAmount: productAmount == null? shopDetailsProvider.shopDetailsModel?.productData?.price.toString():productAmount.toString(),
                                 quantity: 1,
                               )));
                     },
@@ -388,12 +407,23 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                           MaterialPageRoute(
                               builder: (context) => const Cart()));
                     }:
-                        () {
+                   () {
+
+                      if(shopDetailsProvider.shopDetailsModel?.productData?.attributes?.length != 0){
+
+                        // ignore: prefer_conditional_assignment
+                        if(attributeId == null){
+                            attributeId = shopDetailsProvider.shopDetailsModel?.productData?.attributes?[0].id;
+                        }
+                      }
                       shopDetailsProvider.addToCart(context,
                       userId: userModel.userId,
                       quantity: "1",
                       productId: shopDetailsProvider.shopDetailsModel?.productData?.id,
-                      productAmount: shopDetailsProvider.shopDetailsModel?.productData?.price).then((value) {
+                      productAmount: productAmount ?? shopDetailsProvider.shopDetailsModel?.productData?.price,
+                      attributeId:attributeId
+
+                    ).then((value) {
                         shopDetailsProvider.shopDetails(
                           userId: userModel.userId,
                           productIAd: userModel.shopProductId
