@@ -692,8 +692,9 @@ class _ShopProductUIState extends State<ShopProductUI> {
                                                                       false
                                                                   ? () {
                                                                       if(shopProductProvider.shopProductListModel?.products?[ index].attributes?.length != 0){
-                                                                        if(attributeId != null){
-                                                                            
+                                                                        // ignore: prefer_conditional_assignment
+                                                                        if(attributeId == null){
+                                                                            attributeId = shopProductProvider.shopProductListModel?.products?[ index].attributes?[0].id;
                                                                         }
                                                                       }
                                                                       Provider.of<CartProvider>(
