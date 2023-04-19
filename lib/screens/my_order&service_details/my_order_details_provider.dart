@@ -106,4 +106,28 @@ class MyOrderDetailsProvider extends ChangeNotifier {
     }
     return successModel;
   }
+
+  Future<SuccessModel?> updateOrderPaymentStatus(context,{orderId}) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('http://phpstack-732301-3293226.cloudwaysapps.com/api/update/payment/status'));
+    request.body = json.encode({
+      "order_id": "$orderId"
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      context.read<MyOrderDetailsProvider>().myOrderListDetails(orderId: orderId);
+      
+    }
+    else {
+      print(response.reasonPhrase);
+       
+    }
+    return successModel;
+  }
 }

@@ -58,11 +58,11 @@ class CartProvider extends ChangeNotifier{
   }
 
    Future<SuccessModel> deleteCart(context,
-      {userId,id}) async {
+      {userId,productId}) async {
     try {
       ApiResponse apiResponse = await ApiHelper().postData(data: {
         "user_id": "$userId", 
-         "id": "$id",
+        "product_id": "$productId",
       }, route: ApiEndPoints.removeCart);
       if (apiResponse.data != null) {
         successModel = SuccessModel.fromJson(apiResponse.data);

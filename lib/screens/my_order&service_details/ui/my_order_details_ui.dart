@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/helper_color.dart';
+import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/screens/my_order&service_details/my_order_details_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:order_tracker/order_tracker.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_web/razorpay_web.dart';
 
 import '../../../helper/helper_images.dart';
 import '../../../helper/helper_shimmer.dart';
@@ -21,6 +24,9 @@ class MyOrderDetailsUI extends StatefulWidget {
 
 class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
   int _index = 0;
+  final userModel = Get.find<UserModel>();
+  final razorpay = Razorpay();
+
   @override
   Widget build(BuildContext context) {
     MyOrderDetailsProvider value = context.watch<MyOrderDetailsProvider>();
@@ -121,7 +127,22 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                                       height: 2,
                                     ),
                                     Text(
-                                      "Order Id :${value.myOrderDetailsModel?.products?[index].productId}",
+                                      "Product Id : #0000000${value.myOrderDetailsModel?.products?[index].productId}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w300,
+                                              height: 1.445,
+                                              color: const Color(0x99363636),
+                                              overflow: TextOverflow.ellipsis),
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
+                                    ),
+                                    Text(
+                                      "Quantity : ${value.myOrderDetailsModel?.products?[index].quantity}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -309,10 +330,12 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                   children: [
                     Text(
                       "Shipping Information",
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
                           height: 1.445,
                           overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                     ),
                     const SizedBox(
                       height: 5,
@@ -321,6 +344,7 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                       value.myOrderDetailsModel?.orders?.deliveryAddress ?? "",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
                     ),
                     const SizedBox(
@@ -330,18 +354,21 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                       value.myOrderDetailsModel?.orders?.userName ?? "",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
                     ),
                     Text(
                       value.myOrderDetailsModel?.orders?.userPhone ?? "",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
                     ),
                     Text(
                       "Order Id : ${value.myOrderDetailsModel?.orders?.orderId ?? ""}",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
                     ),
                     Text(
@@ -352,14 +379,16 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                           color: AppColors.primaryGreen),
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     Text(
                       "Payment Method",
                       style: Theme.of(context).textTheme.headline6?.copyWith(
                           height: 1.445,
                           overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
@@ -368,13 +397,43 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                       "Payment status: ${value.myOrderDetailsModel?.orders?.paymentStatus ?? ""}",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
                     ),
                     Text(
                       "Payment method: ${value.myOrderDetailsModel?.orders?.paymentMethod ?? ""}",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             height: 1.445,
+                            color: const Color(0x99363636),
                           ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                      value.myOrderDetailsModel?.orders?.paymentStatus == "Unpaid"? InkWell(
+                      onTap: (){
+                        getPayment(value.myOrderDetailsModel?.orders?.orderAmount);
+                      },
+                      child: Center(
+                        child: Container(
+                          height: 35,
+                          width:MediaQuery.of(context).size.width - 100,
+                          decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.primaryGreen),
+                          child: Center(child: Text("Pay Now",
+                          style:
+                          Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                height: 1.445,
+                                color: AppColors.white,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                          ))
+                        ),
+                      ),
+                    ):Container(),
+                    const SizedBox(
+                      height: 15,
                     ),
                   ],
                 ),
@@ -396,7 +455,9 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                       style: Theme.of(context).textTheme.headline6?.copyWith(
                           height: 1.445,
                           overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -511,6 +572,9 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
 
   @override
   void initState() {
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, externalWallet);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, paySuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, payError);
     Future.microtask(() {
       context
           .read<MyOrderDetailsProvider>()
@@ -518,4 +582,41 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
     });
     super.initState();
   }
+
+    void paySuccess(PaymentSuccessResponse response) async {
+    print("---Succcess---");
+
+    Provider.of<MyOrderDetailsProvider>(context,listen: false).updateOrderPaymentStatus(
+      context,orderId: widget.orderId
+    );
+     context.read<MyOrderDetailsProvider>().myOrderListDetails(orderId: widget.orderId);
+  }
+
+  void payError(PaymentFailureResponse response) {
+    print("---Failure---");
+    print(response.message! + response.code.toString());
+  }
+
+  void externalWallet(ExternalWalletResponse response) {
+    print("---ExternalWallet---");
+    print(response.walletName);
+  }
+
+  getPayment(String? amount) {
+    var options = {
+      'key': "rzp_test_YPPy2atb2bUKDB",
+      'amount': int.parse(amount.toString()) *100,
+      'name': "${userModel.name}",
+      'prefill': {
+        'contact': userModel.phone,
+        'email': userModel.email,
+      },
+    };
+    try {
+      razorpay.open(options);
+    } catch (e) {
+      print("error $e");
+    }
+  }
+
 }

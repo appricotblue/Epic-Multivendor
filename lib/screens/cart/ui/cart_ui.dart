@@ -139,7 +139,7 @@ class _CartUIState extends State<CartUI> {
                                       height: 2,
                                     ),
                                     Text(
-                                      "Order Id :12235554448",
+                                      "Product Id :#0000000${cartProvider.cartListModel?.cartData?[index].productId}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -154,7 +154,22 @@ class _CartUIState extends State<CartUI> {
                                       height: 2,
                                     ),
                                     Text(
-                                      "$rupees ${ cartProvider.cartListModel?.cartData?[index].productAmount??""}",
+                                      "quantity : ${cartProvider.cartListModel?.cartData?[index].quantity}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w300,
+                                              height: 1.445,
+                                              color: const Color(0x99363636),
+                                              overflow: TextOverflow.ellipsis),
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
+                                    ),
+                                    Text(
+                                      "$rupees ${ cartProvider.cartListModel?.cartData?[index].totalAmount??""}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -171,7 +186,8 @@ class _CartUIState extends State<CartUI> {
                                     onPressed: () {
                                       cartProvider.deleteCart(
                                         context,
-                                        id: cartProvider.cartListModel?.cartData?[index].id,userId: userModel.userId).then((value) {
+                                        productId: cartProvider.cartListModel?.cartData?[index].productId,
+                                        userId: userModel.userId).then((value) {
                                         Future.microtask(() {
                                             context.read<CartProvider>().getCart(
                                                 userId: userModel.userId,
@@ -205,7 +221,7 @@ class _CartUIState extends State<CartUI> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                _price(context, title: "Product Price", price: ""),
+                _price(context, title: "Product Price", price: "$rupees $total"),
                 _price(context, title: "GST(18%)", price: ""),
                 _price(context, title: "Delivery Charge", price: ""),
                 _price(context, title: "Delivery GST", price: ""),
