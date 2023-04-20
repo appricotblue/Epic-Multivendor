@@ -87,6 +87,35 @@ class ApiHelper {
     return ApiResponse(false);
   }
 
+   Future<ApiResponse> deliveryCal(
+      {dynamic data,
+        String? route,
+        Map<String, String> extraHeaders = const {}}) async {
+    try {
+      Map<String, String> headers = deliveryHeaders();
+      if (extraHeaders.isNotEmpty) {
+        headers.clear();
+        headers.addAll(extraHeaders);
+      }
+      Response response =
+      await post(Uri.parse(route!), body: data, headers: headers);
+      showWarningMessage(route!);
+      showInfoMessage(data);
+      showWarningMessage(response.body);
+      showInfoMessage(response.statusCode);
+      if (response.statusCode == 200) {
+        return ApiResponse(true, data: jsonDecode(response.body));
+      }else {
+        return ApiResponse(false);
+      }
+
+    } catch (ex) {
+      showErrorMessage("Exception $ex");
+    }
+    return ApiResponse(false);
+  }
+
+
   Future<ApiResponse> deleteData(String route, dynamic data) async {
     String url = baseUrlFunction() + route;
     try {
@@ -184,6 +213,14 @@ class ApiHelper {
   Map<String, String> getDefaultHeaders() {
     Map<String, String> headers = {
       "accept": "application/json",
+    };
+    return headers;
+  }
+
+  Map<String, String> deliveryHeaders() {
+    Map<String, String> headers = {
+      "accept": "application/json",
+      "ClientSecret": "qbSh5ucp1XlnPAy5uxvDSLDRXK1DkkkbnpwnDm75pI8r9wjgxv0nJO6fvbCmnAO6"
     };
     return headers;
   }

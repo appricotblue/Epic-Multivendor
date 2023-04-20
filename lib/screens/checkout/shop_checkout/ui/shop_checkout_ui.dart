@@ -1,6 +1,7 @@
 import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/helper_logger.dart';
 import 'package:epic_multivendor/helper/helper_shimmer.dart';
+import 'package:epic_multivendor/helper/helper_style.dart';
 import 'package:epic_multivendor/screens/cart/cart.dart';
 import 'package:epic_multivendor/screens/checkout/address/address.dart';
 import 'package:epic_multivendor/screens/checkout/address/ui/address.dart';
@@ -31,13 +32,17 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
   int? selectedPayment = 0;
   var userModel = Get.find<UserModel>();
   final razorpay = Razorpay();
-
+  double? deliveryAmount;
+  double? totalAmount;
+ 
   TextEditingController postCTLR = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     bool? isLoading = widget.isAdrress == null?false:true;
     CheckoutProvider checkoutProvider = context.watch<CheckoutProvider>();
+    deliveryAmount  =  double.parse(checkoutProvider.deliveryAmount);
+    totalAmount     = (deliveryAmount ?? 0) + (userModel.orderAmount ?? 0);
     return Scaffold(
         backgroundColor: AppColors.scaffoldBlue,
         appBar: AppBar(
@@ -104,7 +109,15 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
                           setState(() {
                             userModel.updateWith(addressId: checkoutProvider.addressListModel?.addressList?[index].id.toString());
                             selectedIndex = index;
+                            Provider.of<CheckoutProvider>(context,listen: false).deliveryCalculation(context,
+                              fromLatitude: "${userModel.lat}",
+                              fromLongitude: "${userModel.lng}",
+                              toLatitude: "${checkoutProvider.addressListModel?.addressList?[index].latitude}",
+                              toLongitude: "${checkoutProvider.addressListModel?.addressList?[index].longitude}"
+                            );
+                           
                           });
+
                         },
                         child: Container(
                           width: double.infinity,
@@ -405,6 +418,91 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
                     );
                   },
                 ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Sub Total",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.445,
+                            color: const Color(0xcc373737),
+                          ),
+                    ),
+                    Text(
+                      "$rupees ${userModel.orderAmount}",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            height: 1.445,
+                            color: const Color(0xcc373737),
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Delivery Charge",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.445,
+                            color: const Color(0xcc373737),
+                          ),
+                    ),
+                    Text(
+                      "$rupees $deliveryAmount",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            height: 1.445,
+                            color: const Color(0xcc373737),
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  color: AppColors.lightGrey,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Amount",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            height: 1.445,
+                            color: Colors.black,
+                          ),
+                    ),
+                    Text(
+                      "$rupees $totalAmount",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            height: 1.445,
+                            color: Colors.black,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                
               ],
             ),
           ),
@@ -421,23 +519,25 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
                   getPayment();
                 }else{
                   widget.isOrder == "true"? Provider.of<CheckoutProvider>(context,listen: false).buyNow(
-                    orderAmount: userModel.orderAmount,
+                    orderAmount: totalAmount,
                     userId: userModel.userId,
                     addressId: userModel.addressId,
                     paymentStatus: "UnPaid",
                     paymentMethod: "Cash On Delivery",
                     productId: widget.productId,
                     productAmount: widget.productAmount,
-                    quantity: widget.quantity
+                    quantity: widget.quantity,
+                    deliveryAmount: deliveryAmount
                   ).then((value) {
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ShopOrderPlaced(),));
                   }):
                   
                   Provider.of<CheckoutProvider>(context,listen: false).placeOrder(
-                    orderAmount: userModel.orderAmount,
+                    orderAmount: totalAmount,
                     userId: userModel.userId,
                     addressId: userModel.addressId,
                     paymentMethod: "Cash On Delivery",
+                    deliveryAmount: deliveryAmount
                   ).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ShopOrderPlaced(),)));
                 }
                 
@@ -464,7 +564,7 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
   void paySuccess(PaymentSuccessResponse response) async {
     print("---Succcess---");
     widget.isOrder == "true"? Provider.of<CheckoutProvider>(context,listen: false).buyNow(
-      orderAmount: userModel.orderAmount,
+      orderAmount: totalAmount,
       userId: userModel.userId,
       addressId: userModel.addressId,
       paymentStatus: "Paid",
@@ -476,7 +576,7 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
     ).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ShopOrderPlaced(),))):
 
     Provider.of<CheckoutProvider>(context,listen: false).placeOrder(
-      orderAmount: userModel.orderAmount,
+      orderAmount: totalAmount,
       userId: userModel.userId,
       addressId: userModel.addressId,
       paymentMethod: "Razorpay"
@@ -496,7 +596,7 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
   getPayment() {
     var options = {
       'key': "rzp_test_YPPy2atb2bUKDB",
-      'amount': userModel.orderAmount! * 100,
+      'amount': totalAmount! * 100,
       'name': "",
 
     };

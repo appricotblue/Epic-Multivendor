@@ -6,15 +6,18 @@ class CartListModel {
   CartListModel({
       bool? success, 
       String? errorMsg, 
+      int? gst,
       List<CartData>? cartData,}){
     _success = success;
     _errorMsg = errorMsg;
+    _gst = gst;
     _cartData = cartData;
 }
 
   CartListModel.fromJson(dynamic json) {
     _success = json['success'];
     _errorMsg = json['errorMsg'];
+    _gst      = json['gst'];
     if (json['cart_data'] != null) {
       _cartData = [];
       json['cart_data'].forEach((v) {
@@ -24,22 +27,27 @@ class CartListModel {
   }
   bool? _success;
   String? _errorMsg;
+  int? _gst;
   List<CartData>? _cartData;
-CartListModel copyWith({  bool? success,
-  String? errorMsg,
-  List<CartData>? cartData,
-}) => CartListModel(  success: success ?? _success,
-  errorMsg: errorMsg ?? _errorMsg,
-  cartData: cartData ?? _cartData,
-);
+  CartListModel copyWith({  bool? success,
+    String? errorMsg,
+    int? gst,
+    List<CartData>? cartData,
+  }) => CartListModel(  success: success ?? _success,
+    errorMsg: errorMsg ?? _errorMsg,
+    gst: gst ?? _gst,
+    cartData: cartData ?? _cartData,
+  );
   bool? get success => _success;
   String? get errorMsg => _errorMsg;
+  int? get gst => _gst;
   List<CartData>? get cartData => _cartData;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['success'] = _success;
     map['errorMsg'] = _errorMsg;
+    map['gst'] = _gst;
     if (_cartData != null) {
       map['cart_data'] = _cartData?.map((v) => v.toJson()).toList();
     }

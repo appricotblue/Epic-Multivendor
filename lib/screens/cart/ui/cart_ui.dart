@@ -27,12 +27,16 @@ class CartUI extends StatefulWidget {
 class _CartUIState extends State<CartUI> {
   var userModel = Get.find<UserModel>();
   var total;
+  var productAmount;
+
   @override
   Widget build(BuildContext context) {
     CartProvider cartProvider = context.watch<CartProvider>();
     var data = cartProvider.cartListModel?.cartData?.map((e) => e.totalAmount);
+    productAmount = data?.fold(0, (previousValue, element) => previousValue.toInt() + element!.toInt());
     total = data?.fold(0, (previousValue, element) => previousValue.toInt() + element!.toInt());
-    print(total);
+    total = total + cartProvider.cartListModel?.gst;
+   
     return WillPopScope(
        onWillPop: () async {
          Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomBarScreen(),));
@@ -215,18 +219,21 @@ class _CartUIState extends State<CartUI> {
         ),
         bottomNavigationBar: Container(
           width: MediaQuery.of(context).size.width,
-          height: 300,
+          height: 230,
           color: AppColors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                _price(context, title: "Product Price", price: "$rupees $total"),
-                _price(context, title: "GST(18%)", price: ""),
-                _price(context, title: "Delivery Charge", price: ""),
-                _price(context, title: "Delivery GST", price: ""),
+                _price(context, title: "Product Price", price: "$rupees $productAmount"),
+                _price(context, title: "GST", price: "$rupees ${cartProvider.cartListModel?.gst}"),
+                // _price(context, title: "Delivery Charge", price: ""),
+                // _price(context, title: "Delivery GST", price: ""),
                 const SizedBox(
                   height: 10,
+                ),
+                Divider(
+                  color: AppColors.lightGrey,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -255,7 +262,7 @@ class _CartUIState extends State<CartUI> {
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 AppButton(
                   onPressed:cartProvider.cartListModel?.cartData?.length == 0?(){

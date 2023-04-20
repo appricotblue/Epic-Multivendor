@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/screens/checkout/model/PlaceOrderModel.dart';
+import 'package:epic_multivendor/screens/checkout/model/delivery_calculation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -41,6 +42,10 @@ class CheckoutProvider extends ChangeNotifier{
   SuccessModel? successModel;
   AddressListModel? addressListModel;
   PlaceOrderModel? placeOrderModel;
+  DeliveryCalculationModel? deliveryCalculationModel;
+
+  String deliveryAmount = "0.0";
+
 
   Future<SuccessModel> addAddressFUNC({
     userID,address,pincode,lat,lng
@@ -83,7 +88,7 @@ class CheckoutProvider extends ChangeNotifier{
     return addressListModel!;
   }
 
-  Future<PlaceOrderModel> placeOrder({userId,orderAmount,addressId,paymentMethod}) async {
+  Future<PlaceOrderModel> placeOrder({userId,orderAmount,addressId,paymentMethod,deliveryAmount}) async {
     try {
       ApiResponse apiResponse =
       await ApiHelper().postData(data: {
@@ -92,7 +97,8 @@ class CheckoutProvider extends ChangeNotifier{
         "payment_status": "Unpaid",
         "order_type": "Self Pickup",
         "delivery_address_id": "$addressId",
-        "payment_method": "$paymentMethod"
+        "payment_method": "$paymentMethod",
+        "delivery_amount":"$deliveryAmount"
       }, route: ApiEndPoints.placeOrder);
       if (apiResponse.data != null) {
         placeOrderModel = PlaceOrderModel.fromJson(apiResponse.data);
@@ -105,7 +111,7 @@ class CheckoutProvider extends ChangeNotifier{
     return placeOrderModel!;
   }
 
-    Future<PlaceOrderModel> buyNow({userId,orderAmount,paymentStatus,addressId,paymentMethod,productId,productAmount,quantity}) async {
+    Future<PlaceOrderModel> buyNow({userId,orderAmount,paymentStatus,addressId,paymentMethod,productId,productAmount,quantity,deliveryAmount}) async {
     try {
       ApiResponse apiResponse =
       await ApiHelper().buyNow(data: {
@@ -117,7 +123,9 @@ class CheckoutProvider extends ChangeNotifier{
         "payment_method": "$paymentMethod",
         "product_id": productId,
         "product_amount": productAmount,
-        "quantity": "$quantity"
+        "quantity": "$quantity",
+        "delivery_amount":"$deliveryAmount"
+
       }, route: ApiEndPoints.buyNow);
       if (apiResponse.data != null) {
         placeOrderModel = PlaceOrderModel.fromJson(apiResponse.data);
@@ -152,12 +160,37 @@ class CheckoutProvider extends ChangeNotifier{
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
-     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ServiceOrderPlaced(),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ServiceOrderPlaced(),));
     }
     else {
       print(response.reasonPhrase);
     }
     return successModel!;
+  }
+
+  Future<DeliveryCalculationModel>deliveryCalculation(context,{fromLatitude,fromLongitude,toLatitude,toLongitude}) async {
+    try {
+      ApiResponse apiResponse =
+      await ApiHelper().deliveryCal(data: {
+        "from_latitude":"$fromLatitude",
+        "from_longitude": "$fromLongitude",
+        "to_latitude": "$toLatitude",
+        "to_longitude": "$toLongitude",
+        "weight": "5"
+      }, route: ApiEndPoints.deliveryCalcualtion);
+      if (apiResponse.data != null) {
+        deliveryCalculationModel = DeliveryCalculationModel.fromJson(apiResponse.data);
+        deliveryAmount = "${deliveryCalculationModel?.data?.deliveryAmount}";
+
+        
+      }
+      setLoading(false);
+    } catch (ex) {
+      setLoading(false);
+      SnackBarErrorMessage(context, "No service is available between these regions.No intercity service is available.");
+      showErrorMessage("Something went wrong");
+    }
+    return deliveryCalculationModel!;
   }
 
   

@@ -55,6 +55,9 @@ class ApiEndPoints {
   static String placeOrder = '${baseUrl}place/order';
   static String buyNow = '${baseUrl}buy/now';
 
+  /// Qwqer calculation
+  static String deliveryCalcualtion = 'https://stage-api.qwqer.in/client/price-calculate/';
+
   /// profile
   static String myProfile = '${baseUrl}profile-data';
   static String updateProfile = '${baseUrl}update/profile-data';
