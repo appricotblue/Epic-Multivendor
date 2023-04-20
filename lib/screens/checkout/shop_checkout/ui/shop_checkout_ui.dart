@@ -514,7 +514,10 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
               print(userModel.orderAmount);
               if(userModel.addressId == null || userModel.addressId == ""){
                 SnackBarMessage(context, "Address MIssing");
-              }else{
+              }else if(deliveryAmount == 0.0){
+                SnackBarErrorMessage(context, "No service is available between these regions.No intercity service is available.");
+              }
+              else{
                 if(selectedPayment == 0){
                   getPayment();
                 }else{

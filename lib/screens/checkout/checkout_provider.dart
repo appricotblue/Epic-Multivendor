@@ -187,6 +187,7 @@ class CheckoutProvider extends ChangeNotifier{
       setLoading(false);
     } catch (ex) {
       setLoading(false);
+      deliveryAmount = "0.0";
       SnackBarErrorMessage(context, "No service is available between these regions.No intercity service is available.");
       showErrorMessage("Something went wrong");
     }

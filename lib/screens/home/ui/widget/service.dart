@@ -61,7 +61,7 @@ class _ServiceListState extends State<ServiceList> {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: CachedNetworkImage(
-              imageUrl: "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.serviceBanners?[0]}",
+              imageUrl: "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.serviceBanners?[0].imageName}",
               width: double.infinity,
               height: 150,
               fit: BoxFit.fill,
