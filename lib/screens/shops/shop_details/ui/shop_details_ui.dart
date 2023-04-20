@@ -172,15 +172,85 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      shopDetailsProvider.shopDetailsModel?.productData?.name ?? "",
-                      style: Theme.of(context).textTheme.headline5?.copyWith(
-                          height: 1.445,
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width-150,
+                        child: Text(
+                          shopDetailsProvider.shopDetailsModel?.productData?.name ?? "",
+                          style: Theme.of(context).textTheme.headline5?.copyWith(
+                              height: 1.445,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                if(shopDetailsProvider.shopDetailsModel?.productData?.quantityCount == 1){
+
+                                }else{
+                                  shopDetailsProvider.shopDetailsModel?.productData?.quantityCount--;
+                                }
+                               
+                              });
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 40,
+                              color: AppColors
+                                  .primaryGreen,
+                              child: Center(
+                                child: Text(
+                                  "-",
+                                  style: TextStyle(
+                                      color: AppColors
+                                          .white),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            height: 30,
+                            width: 40,
+                            color: AppColors.white,
+                            child: Center(
+                              child: Text(
+                                shopDetailsProvider.shopDetailsModel?.productData?.quantityCount.toString() ??
+                                    "",
+                                style: TextStyle(
+                                    color: AppColors
+                                        .primaryGreen),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                shopDetailsProvider.shopDetailsModel?.productData?.quantityCount ++;
+                              });
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 40,
+                              color: AppColors
+                                  .primaryGreen,
+                              child: Center(
+                                child: Text(
+                                  "+",
+                                  style: TextStyle(
+                                      color: AppColors
+                                          .white),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],)
+                    ],
                   ),
                   Text(
                     shopDetailsProvider.shopDetailsModel?.productData?.status ?? "",
@@ -374,7 +444,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                                 isOrder: "true",
                                 productId: "${shopDetailsProvider.shopDetailsModel?.productData?.id.toString()}",
                                 productAmount: productAmount == null? shopDetailsProvider.shopDetailsModel?.productData?.price.toString():productAmount.toString(),
-                                quantity: 1,
+                                quantity: shopDetailsProvider.shopDetailsModel?.productData?.quantityCount,
                               )));
                     },
                     child: Container(
@@ -418,7 +488,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                       }
                       shopDetailsProvider.addToCart(context,
                       userId: userModel.userId,
-                      quantity: "1",
+                      quantity: shopDetailsProvider.shopDetailsModel?.productData?.quantityCount,
                       productId: shopDetailsProvider.shopDetailsModel?.productData?.id,
                       productAmount: productAmount ?? shopDetailsProvider.shopDetailsModel?.productData?.price,
                       attributeId:attributeId

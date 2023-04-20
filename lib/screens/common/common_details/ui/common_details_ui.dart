@@ -30,10 +30,15 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
   String? selectedImage;
   String? isWishList;
   String? isWishListdata;
+  int? productAmount;
+  int? productPrice;
+  int? attributeId;
+
   @override
   Widget build(BuildContext context) {
     ShopDetailsProvider shopDetailsProvider = context.watch<ShopDetailsProvider>();
-    isWishList = isWishListdata ?? shopDetailsProvider.shopDetailsModel?.productData?.isWishlist.toString();
+    isWishList    = isWishListdata ?? shopDetailsProvider.shopDetailsModel?.productData?.isWishlist.toString();
+    productAmount =  productPrice ??shopDetailsProvider.shopDetailsModel?.productData?.salePrice;
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldGreen,
@@ -169,29 +174,99 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      shopDetailsProvider.shopDetailsModel?.productData?.name ?? "",
-                      style: Theme.of(context).textTheme.headline5?.copyWith(
-                          height: 1.445,
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width-150,
+                        child: Text(
+                          shopDetailsProvider.shopDetailsModel?.productData?.name ?? "",
+                          style: Theme.of(context).textTheme.headline5?.copyWith(
+                              height: 1.445,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                       Row(
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                if(shopDetailsProvider.shopDetailsModel?.productData?.quantityCount == 1){
+
+                                }else{
+                                  shopDetailsProvider.shopDetailsModel?.productData?.quantityCount--;
+                                }
+                               
+                              });
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 40,
+                              color: AppColors
+                                  .primaryGreen,
+                              child: Center(
+                                child: Text(
+                                  "-",
+                                  style: TextStyle(
+                                      color: AppColors
+                                          .white),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            height: 30,
+                            width: 40,
+                            color: AppColors.white,
+                            child: Center(
+                              child: Text(
+                                shopDetailsProvider.shopDetailsModel?.productData?.quantityCount.toString() ??
+                                    "",
+                                style: TextStyle(
+                                    color: AppColors
+                                        .primaryGreen),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                shopDetailsProvider.shopDetailsModel?.productData?.quantityCount ++;
+                              });
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 40,
+                              color: AppColors
+                                  .primaryGreen,
+                              child: Center(
+                                child: Text(
+                                  "+",
+                                  style: TextStyle(
+                                      color: AppColors
+                                          .white),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],)
+                    ],
                   ),
-                  Text(
-                    "Kalhara",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        height: 1.445,
-                        overflow: TextOverflow.ellipsis,
-                        color: AppColors.lightGrey),
-                  ),
-                  shopDetailsProvider.shopDetailsModel?.productData?.salePrice != null || 
-                  shopDetailsProvider.shopDetailsModel?.productData?.salePrice != 0
-                  ?Row(
+                  // Text(
+                  //   "Kalhara",
+                  //   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  //       height: 1.445,
+                  //       overflow: TextOverflow.ellipsis,
+                  //       color: AppColors.lightGrey),
+                  // ),
+                   productAmount != null || 
+                  productAmount != 0 ?
+                  Row(
                     children: [
                       Text(
-                        '$rupees ${ shopDetailsProvider.shopDetailsModel?.productData?.salePrice ?? ""}',
+                        '$rupees ${productAmount ?? ""}',
                         style: Theme.of(context).textTheme.headline5?.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
@@ -202,7 +277,7 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                         width: 10,
                       ),
                       Text(
-                        'MRP $rupees ${shopDetailsProvider.shopDetailsModel?.productData?.price ??""}',
+                        'MRP $rupees ${shopDetailsProvider.shopDetailsModel?.productData?.price}',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -216,7 +291,7 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                   ):Row(
                     children: [
                       Text(
-                        '$rupees ${ shopDetailsProvider.shopDetailsModel?.productData?.price ?? ""}',
+                        '$rupees ${shopDetailsProvider.shopDetailsModel?.productData?.price ?? ""}',
                         style: Theme.of(context).textTheme.headline5?.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
@@ -227,42 +302,84 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                         width: 10,
                       ),
                     ]),
+                  
                   const SizedBox(
                     height: 5,
                   ),
-                  Row(
-                    children: [
-                      RatingBar.builder(
-                        initialRating: 3,
-                        minRating: 1,
-                        itemSize: 14,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 1.0),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star,
-                          size: 10,
-                          color: Colors.amber,
+                  // Row(
+                  //   children: [
+                  //     RatingBar.builder(
+                  //       initialRating: 3,
+                  //       minRating: 1,
+                  //       itemSize: 14,
+                  //       direction: Axis.horizontal,
+                  //       allowHalfRating: true,
+                  //       itemCount: 5,
+                  //       itemPadding:
+                  //           const EdgeInsets.symmetric(horizontal: 1.0),
+                  //       itemBuilder: (context, _) => const Icon(
+                  //         Icons.star,
+                  //         size: 10,
+                  //         color: Colors.amber,
+                  //       ),
+                  //       onRatingUpdate: (rating) {},
+                  //     ),
+                  //     const SizedBox(
+                  //       height: 3,
+                  //     ),
+                  //     Text(
+                  //       "520 Rating",
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .bodySmall
+                  //           ?.copyWith(color: AppColors.primaryGreen),
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+
+                   // ignore: prefer_is_empty
+                  shopDetailsProvider.shopDetailsModel?.productData?.attributes?.length != 0 ?
+                  SizedBox(
+                    height: 50,
+                      child: ListView.builder(
+                        itemCount:shopDetailsProvider.shopDetailsModel?.productData?.attributes?.length,
+                        scrollDirection:Axis.horizontal,
+                        itemBuilder:(context,pos) =>
+                        Padding(
+                          padding:const EdgeInsets.all( 5.0),
+                          child: InkWell(
+                            onTap: (){
+                              setState(() {
+                                attributeId = shopDetailsProvider.shopDetailsModel?.productData?.attributes?[pos].id; 
+                                shopDetailsProvider.shopDetailsModel?.productData?.attributeCount = pos; 
+                                productPrice = shopDetailsProvider.shopDetailsModel?.productData?.attributes?[pos].value; 
+                              });
+
+                              print("-----$attributeId");
+                            },
+                            child: Container(
+                              width: 80,
+                              height:40,
+                              color: shopDetailsProvider.shopDetailsModel?.productData?.attributeCount == pos?
+                                      AppColors.primaryGreen:AppColors.primaryGreen.withOpacity(.6),
+                              child:Center(
+                                child:Text("${ shopDetailsProvider.shopDetailsModel?.productData?.attributes?[pos].name}",
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  fontSize: 12,
+                                  height: 1.445,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: AppColors.white),
+                                ),
+                              )
+                            ),
+                          )
                         ),
-                        onRatingUpdate: (rating) {},
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Text(
-                        "520 Rating",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: AppColors.primaryGreen),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                      )
+
+                  ):Container(),
                   Divider(
                     color: AppColors.lightGrey,
                   ),
@@ -318,7 +435,7 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                     height: 5,
                   ),
                   Text(
-    shopDetailsProvider.shopDetailsModel?.productData?.description ?? "",
+                    shopDetailsProvider.shopDetailsModel?.productData?.description ?? "",
                     // "sed-egestas-duis-hac-diam-ornare-id-facilisis-quis-etiam-a-malesuada-enim-bibendum-lectus-egestas-ipsum-aenean-at-non-risus-nulla-proin-odio-aliquet-iaculis-vitae-quis-mollis-tortor-id-sit-sed-ut-sem-odio-fermentum-dolor-praesent-tortor-lacus-ultrices-facilisis-eu-consequat-porttitor-arcu-nibh-congue-enim-erat-nullam-et-nam-cursus-vulputate-molestie",
                     style: Theme.of(context).textTheme.headline6?.copyWith(
                         fontSize: 18,
@@ -385,7 +502,7 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                             isOrder: "true",
                             productId: "${shopDetailsProvider.shopDetailsModel?.productData?.id.toString()}",
                             productAmount: shopDetailsProvider.shopDetailsModel?.productData?.price.toString(),
-                            quantity: 1,
+                            quantity: shopDetailsProvider.shopDetailsModel?.productData?.quantityCount,
                           )));
                     },
                     child: Container(
@@ -413,11 +530,21 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                   padding: const EdgeInsets.all(5.0),
                   child: InkWell(
                     onTap: () {
+
+                      if(shopDetailsProvider.shopDetailsModel?.productData?.attributes?.length != 0){
+
+                        // ignore: prefer_conditional_assignment
+                        if(attributeId == null){
+                            attributeId = shopDetailsProvider.shopDetailsModel?.productData?.attributes?[0].id;
+                        }
+                      }
                       shopDetailsProvider.addToCart(context,
                       userId: userModel.userId,
                       productAmount: shopDetailsProvider.shopDetailsModel?.productData?.price,
                       productId: shopDetailsProvider.shopDetailsModel?.productData?.id,
-                      quantity: "1").then((value) {
+                      quantity: shopDetailsProvider.shopDetailsModel?.productData?.quantityCount,
+                      attributeId:attributeId
+                      ).then((value) {
                         Future.microtask(() {
                           context.read<ShopDetailsProvider>().shopDetails(
                               userId: userModel.userId,

@@ -133,6 +133,14 @@ class ProductData {
     _attributeCount = value;
   }
 
+  int? _quantityCount;
+
+  int get quantityCount => _quantityCount ?? 1;
+
+  set quantityCount(int value) {
+    _quantityCount = value;
+  }
+
   ProductData.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];

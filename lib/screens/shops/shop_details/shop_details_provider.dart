@@ -45,7 +45,7 @@ class ShopDetailsProvider extends ChangeNotifier {
       ApiResponse apiResponse = await ApiHelper().postData(data: {
         "user_id": "$userId",
         "product_id": "$productId",
-        "quantity": "1",
+        "quantity": "$quantity",
         "product_amount": "$productAmount",
         "attribute_id":"$attributeId"
       }, route: ApiEndPoints.addToCart);

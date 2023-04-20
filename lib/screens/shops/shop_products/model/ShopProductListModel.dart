@@ -98,7 +98,7 @@ class Products {
     _attributeCount = value;
   }
 
-    int? _quantityCount;
+  int? _quantityCount;
 
   int get quantityCount => _quantityCount ?? 0;
 
