@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/widgets/common_search_bar.dart';
 import 'package:epic_multivendor/screens/common/common_category/common_category.dart';
+import 'package:epic_multivendor/screens/fashion/fashion_category/fashion_category.dart';
 import 'package:epic_multivendor/screens/home/home_provider.dart';
 import 'package:epic_multivendor/screens/service/service_details/service_details.dart';
 import 'package:epic_multivendor/screens/shops/shop_category/shop_category.dart';
@@ -135,14 +136,25 @@ class _ShopListState extends State<ShopList> {
                                       "${ApiEndPoints.imageBaseURL}${homeProvider.homeShopListModel?.shopTypes?[i].imageName}");
                               if (homeProvider
                                       .homeShopListModel?.shopTypes?[i].type ==
-                                  "Shops") {
+                                  "Restaurants") {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           const ShopCategory(),
                                     ));
-                              } else {
+                              }
+                              else if (homeProvider
+                                      .homeShopListModel?.shopTypes?[i].type ==
+                                  "Fashion") {
+                                     Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const FashionCategory(),
+                                    ));
+                                  }
+                               else {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

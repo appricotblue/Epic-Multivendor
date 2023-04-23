@@ -3,6 +3,7 @@ class ShopProductListModel {
   String? errorMsg;
   List<Banners>? banners;
   List<Category>? categories;
+  List<NewProducts>? newProducts;
   List<Products>? products;
 
   ShopProductListModel(
@@ -10,6 +11,7 @@ class ShopProductListModel {
       this.errorMsg,
       this.banners,
       this.categories,
+      this.newProducts,
       this.products});
 
   ShopProductListModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,11 @@ class ShopProductListModel {
     categories = json["categories"] == null
         ? null
         : (json["categories"] as List).map((e) => Category.fromJson(e)).toList();
+
+    newProducts = json["new_products"] == null
+        ? null
+        : (json["new_products"] as List).map((e) => NewProducts.fromJson(e)).toList();
+        
     products = json["products"] == null
         ? null
         : (json["products"] as List).map((e) => Products.fromJson(e)).toList();
@@ -36,6 +43,9 @@ class ShopProductListModel {
     }
     if (categories != null) {
       _data["categories"] = categories;
+    }
+    if (newProducts != null) {
+      _data["new_products"] = newProducts?.map((e) => e.toJson()).toList();
     }
     if (products != null) {
       _data["products"] = products?.map((e) => e.toJson()).toList();
@@ -246,4 +256,108 @@ class Category {
         "category": category,
         "image_name": imageName,
     };
+}
+
+class NewProducts {
+ int? id;
+  String? name;
+  String? description;
+  int? price;
+  int? salePrice;
+  dynamic unit;
+  int? stock;
+  int? category;
+  int? subCategory;
+  String? status;
+  String? featured;
+  String? isNew;
+  String? featuredImageName;
+  dynamic walletAmount;
+  dynamic discount;
+  bool? isWishlist;
+  bool? isCart;
+  List<Attributes>? attributes;
+  int? quantity;
+  String? createdAt;
+  String? updatedAt;
+
+  NewProducts(
+      {this.id,
+      this.name,
+      this.description,
+      this.price,
+      this.salePrice,
+      this.unit,
+      this.stock,
+      this.category,
+      this.subCategory,
+      this.status,
+      this.featured,
+      this.isNew,
+      this.featuredImageName,
+      this.walletAmount,
+      this.discount,
+      this.isWishlist,
+      this.isCart,
+      this.attributes,
+      this.quantity,
+      this.createdAt,
+      this.updatedAt});
+
+  NewProducts.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    price = json['price'];
+    salePrice = json['sale_price'];
+    unit = json['unit'];
+    stock = json['stock'];
+    category = json['category'];
+    subCategory = json['sub_category'];
+    status = json['status'];
+    featured = json['featured'];
+    isNew = json['is_new'];
+    featuredImageName = json['featured_image_name'];
+    walletAmount = json['wallet_amount'];
+    discount = json['discount'];
+    isWishlist = json['is_wishlist'];
+    isCart = json['is_cart'];
+    if (json['attributes'] != null) {
+      attributes = <Attributes>[];
+      json['attributes'].forEach((v) {
+        attributes!.add(new Attributes.fromJson(v));
+      });
+    }
+    quantity = json['quantity'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['price'] = this.price;
+    data['sale_price'] = this.salePrice;
+    data['unit'] = this.unit;
+    data['stock'] = this.stock;
+    data['category'] = this.category;
+    data['sub_category'] = this.subCategory;
+    data['status'] = this.status;
+    data['featured'] = this.featured;
+    data['is_new'] = this.isNew;
+    data['featured_image_name'] = this.featuredImageName;
+    data['wallet_amount'] = this.walletAmount;
+    data['discount'] = this.discount;
+    data['is_wishlist'] = this.isWishlist;
+    data['is_cart'] = this.isCart;
+    if (this.attributes != null) {
+      data['attributes'] = this.attributes!.map((v) => v.toJson()).toList();
+    }
+    data['quantity'] = this.quantity;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
 }

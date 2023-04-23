@@ -1,8 +1,10 @@
 // ignore_for_file: file_names
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import '../helper_color.dart';
 import '../helper_images.dart';
 import '../helper_shimmer.dart';
@@ -25,6 +27,7 @@ class CommonScreenProductList extends StatefulWidget {
 }
 
 class _CommonScreenProductListState extends State<CommonScreenProductList> {
+  var userModel = Get.find<UserModel>();
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -74,7 +77,7 @@ class _CommonScreenProductListState extends State<CommonScreenProductList> {
                       ),
                     ),
                     Text(
-                      "Women Embroidered ed.. ",
+                      "${userModel.shopCategoryType}",
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w300,

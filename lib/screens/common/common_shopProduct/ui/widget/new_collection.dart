@@ -47,8 +47,8 @@ class CommonNewCollection extends StatelessWidget {
               image: "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.products?[i].featuredImageName}",
               title:shopProductProvider.shopProductListModel?.products?[i].name ?? "",
               type: "kakkanad",
-              price: shopProductProvider.shopProductListModel?.products?[i].price.toString() ?? "",
-              strikedPrice: shopProductProvider.shopProductListModel?.products?[i].salePrice.toString() ?? "",
+              price: shopProductProvider.shopProductListModel?.products?[i].salePrice.toString() ?? "",
+              strikedPrice: shopProductProvider.shopProductListModel?.products?[i].price.toString() ?? "",
               onTap: (){
                 userModel.updateWith(shopProductId: shopProductProvider.shopProductListModel?.products?[i].id.toString());
                 userModel.updateWith(shopProductTitle: shopProductProvider.shopProductListModel?.products?[i].name.toString());

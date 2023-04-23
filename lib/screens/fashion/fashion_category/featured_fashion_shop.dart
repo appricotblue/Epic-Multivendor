@@ -1,6 +1,8 @@
 import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/helper_images.dart';
 import 'package:epic_multivendor/screens/common/common_shopProduct/common_shopProduct.dart';
+import 'package:epic_multivendor/screens/fashion/fashion_shop_product.dart';
+import 'package:epic_multivendor/screens/shops/shop_category/shop_category_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,17 +10,15 @@ import 'package:provider/provider.dart';
 import '../../../../../helper/model/user_model.dart';
 import '../../../../../helper/widgets/common_list.dart';
 import '../../../../../helper/widgets/common_view_all.dart';
-import '../../../shop_products/shop_product.dart';
-import '../../shop_category_provider.dart';
 
-class ShopFeaturedUI extends StatefulWidget {
-  const ShopFeaturedUI({super.key});
+class FashionShopFeaturedUI extends StatefulWidget {
+  const FashionShopFeaturedUI({super.key});
 
   @override
-  State<ShopFeaturedUI> createState() => _ShopFeaturedUIState();
+  State<FashionShopFeaturedUI> createState() => _FashionShopFeaturedUIState();
 }
 
-class _ShopFeaturedUIState extends State<ShopFeaturedUI> {
+class _FashionShopFeaturedUIState extends State<FashionShopFeaturedUI> {
   var userModel = Get.find<UserModel>();
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _ShopFeaturedUIState extends State<ShopFeaturedUI> {
     return Column(
       children: [
         CommonViewAllWithTitle(
-          title: "Featured ${userModel.shopCategoryType}",
+          title: "Featured Supermarkets",
           viewAll: "View All",
           onTap: () {},
         ),
@@ -55,8 +55,7 @@ class _ShopFeaturedUIState extends State<ShopFeaturedUI> {
               onTap: (){
                 userModel.updateWith(shopId: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].id}");
                 userModel.updateWith(shopName: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].name}");
-                userModel.updateWith(shopImage: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].image}");
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopProduct(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const FashionShopProduct(),));
               },
             );
           },
