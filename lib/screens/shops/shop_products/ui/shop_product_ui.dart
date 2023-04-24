@@ -75,7 +75,7 @@ class _ShopProductUIState extends State<ShopProductUI> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(
-                            imageUrl: "${ApiEndPoints.imageBaseURL}${userModel.shopImage}" ?? "",
+                            imageUrl: "${userModel.shopImage}" ?? "",
                             width: double.infinity,
                             height: 300,
                             fit: BoxFit.fill,
