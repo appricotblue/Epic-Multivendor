@@ -68,12 +68,13 @@ class ShopProductProvider extends ChangeNotifier {
     } else {}
   }
 
-  Future<CategoryProductModel> categoryProductList({userId, categoryId}) async {
+  Future<CategoryProductModel> categoryProductList({userId,shopId, categoryId}) async {
     try {
       setLoading(true);
       ApiResponse apiResponse = await ApiHelper().postData(data: {
         "user_id": "$userId",
         "category_id": "$categoryId",
+        "shop_id":"$shopId"
       }, route: ApiEndPoints.categoryProduct);
       if (apiResponse.data != null) {
         categoryProductModel = CategoryProductModel.fromJson(apiResponse.data);

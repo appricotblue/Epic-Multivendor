@@ -26,7 +26,7 @@ class _FashionShopFeaturedUIState extends State<FashionShopFeaturedUI> {
     return Column(
       children: [
         CommonViewAllWithTitle(
-          title: "Featured Supermarkets",
+          title: "Featured ${userModel.shopCategoryType}",
           viewAll: "View All",
           onTap: () {},
         ),

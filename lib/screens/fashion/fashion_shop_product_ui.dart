@@ -4,6 +4,7 @@ import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/widgets/common_search_bar.dart';
 import 'package:epic_multivendor/helper/widgets/common_view_all.dart';
+import 'package:epic_multivendor/screens/category/category_product.dart';
 import 'package:epic_multivendor/screens/common/common_shopProduct/ui/widget/new_collection.dart';
 import 'package:epic_multivendor/screens/common/common_shopProduct/ui/widget/popular_collection.dart';
 import 'package:epic_multivendor/screens/common/common_shopProduct/ui/widget/product_for_you.dart';
@@ -134,19 +135,25 @@ class _CommonShopProductUIState extends State<FashionShopProductUI> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.white,
-                               image: DecorationImage(
-                                image: NetworkImage("${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.categories?[index].imageName}"),
-                                fit: BoxFit.fill,
-
-                               )
+                            InkWell(
+                              onTap: (){
+                                  userModel.updateWith(catgeoryId:shopProductProvider.shopProductListModel?.categories?[index].id.toString());
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryProduct(),));
+                                },
+                              child: Container(
+                                width: 80,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.white,
+                                 image: DecorationImage(
+                                  image: NetworkImage("${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.categories?[index].imageName}"),
+                                  fit: BoxFit.fill,
+                            
+                                 )
+                                ),
+                               
                               ),
-                             
                             ),
                             const SizedBox(
                               height: 5,
