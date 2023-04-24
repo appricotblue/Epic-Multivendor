@@ -1,5 +1,6 @@
 import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/model/SuccessModel.dart';
+import 'package:epic_multivendor/screens/category/model/category_product_model.dart';
 import 'package:epic_multivendor/screens/home/model/home_service_list_model.dart';
 import 'package:epic_multivendor/screens/home/model/home_shop_list_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,7 @@ class ShopProductProvider extends ChangeNotifier {
 
   ShopProductListModel? shopProductListModel;
   SuccessModel? successModel;
+  CategoryProductModel? categoryProductModel;
 
   /// Home shops
   ///
@@ -65,4 +67,37 @@ class ShopProductProvider extends ChangeNotifier {
       notifyListeners();
     } else {}
   }
+
+  Future<CategoryProductModel> categoryProductList({userId, categoryId}) async {
+    try {
+      setLoading(true);
+      ApiResponse apiResponse = await ApiHelper().postData(data: {
+        "user_id": "$userId",
+        "category_id": "$categoryId",
+      }, route: ApiEndPoints.categoryProduct);
+      if (apiResponse.data != null) {
+        categoryProductModel = CategoryProductModel.fromJson(apiResponse.data);
+        int temp = categoryProductModel?.products?.length ?? 0;
+        for (int i = 0; i < temp; i++) {
+          int attributeLength =
+              categoryProductModel?.products?[i].attributes?.length ?? 0;
+          if (attributeLength != 0) {
+            categoryProductModel?.products?[i].productPrice =
+                categoryProductModel?.products?[i].attributes?[0].value
+                        .toString() ??
+                    "";
+          } else {
+            categoryProductModel?.products?[i].productPrice =
+                categoryProductModel?.products?[i].price.toString() ?? "";
+          }
+        }
+      }
+      setLoading(false);
+    } catch (ex) {
+      setLoading(false);
+      showErrorMessage("Something went wrong");
+    }
+    return categoryProductModel!;
+  }
+
 }

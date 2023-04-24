@@ -41,6 +41,8 @@ class ApiEndPoints {
   static String shopCategory = '${baseUrl}category-shops';
   static String shopProduct = '${baseUrl}shop/product';
   static String shopDetails = '${baseUrl}product-details';
+  ///
+  static String categoryProduct = '${baseUrl}category/product';
 
   /// cart
   static String addToCart = '${baseUrl}add/cart-data';
