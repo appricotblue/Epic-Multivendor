@@ -151,8 +151,10 @@ class CheckoutProvider extends ChangeNotifier{
       "phone":"$phone",
       "query":"$query",
       "user_address_id":"$addressId",
-      "payment_method":"Razorpay",
-      "payment_status":"Paid"
+      "payment_method":"Cash On Delivery",
+      "payment_status":"Unpaid"
+      // "payment_method":"Razorpay",
+      // "payment_status":"Paid"
     });
     request.headers.addAll(headers);
 

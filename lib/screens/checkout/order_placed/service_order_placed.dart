@@ -1,6 +1,7 @@
 import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/helper_routes.dart';
 import 'package:epic_multivendor/helper/widgets/button.dart';
+import 'package:epic_multivendor/screens/my_order&services/my_order&service.dart';
 import 'package:flutter/material.dart';
 
 import '../../bottom/bottom_nav.dart';
@@ -62,9 +63,9 @@ class ServiceOrderPlaced extends StatelessWidget {
                   ),
                   AppButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const BottomBarScreen(),));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MyOrderServices(),));
                     },
-                    text: "Go to my services",
+                    text: "Go to my order & services",
                     txtClr: AppColors.white,
                     color: AppColors.primaryBlue,
                   ),

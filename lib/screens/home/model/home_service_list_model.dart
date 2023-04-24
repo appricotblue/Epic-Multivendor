@@ -98,6 +98,7 @@ class Services {
       num? id, 
       String? title, 
       String? serviceTypeId, 
+      String? serviceType, 
       num? brandId, 
       String? description, 
       String? price, 
@@ -105,11 +106,13 @@ class Services {
       String? image, 
       bool? isWishlist, 
       bool? isBooking, 
+      String? shopLocation,
       String? createdAt, 
       String? updatedAt,}){
     _id = id;
     _title = title;
     _serviceTypeId = serviceTypeId;
+    _serviceType = serviceType;
     _brandId = brandId;
     _description = description;
     _price = price;
@@ -117,6 +120,7 @@ class Services {
     _image = image;
     _isWishlist = isWishlist;
     _isBooking = isBooking;
+    _shopLocation = shopLocation;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
 }
@@ -125,6 +129,7 @@ class Services {
     _id = json['id'];
     _title = json['title'];
     _serviceTypeId = json['service_type_id'];
+    _serviceType = json['service_type'];
     _brandId = json['brand_id'];
     _description = json['description'];
     _price = json['price'];
@@ -132,12 +137,14 @@ class Services {
     _image = json['image'];
     _isWishlist = json['is_wishlist'];
     _isBooking = json['is_booking'];
+    _shopLocation = json['shop_location'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
   num? _id;
   String? _title;
   String? _serviceTypeId;
+  String? _serviceType;
   num? _brandId;
   String? _description;
   String? _price;
@@ -145,6 +152,7 @@ class Services {
   String? _image;
   bool? _isWishlist;
   bool? _isBooking;
+  String? _shopLocation;
   String? _createdAt;
   String? _updatedAt;
 Services copyWith({  num? id,
@@ -162,6 +170,7 @@ Services copyWith({  num? id,
 }) => Services(  id: id ?? _id,
   title: title ?? _title,
   serviceTypeId: serviceTypeId ?? _serviceTypeId,
+  serviceType: serviceType ?? _serviceType,
   brandId: brandId ?? _brandId,
   description: description ?? _description,
   price: price ?? _price,
@@ -169,12 +178,14 @@ Services copyWith({  num? id,
   image: image ?? _image,
   isWishlist: isWishlist ?? _isWishlist,
   isBooking: isBooking ?? _isBooking,
+  shopLocation: shopLocation ?? _shopLocation,
   createdAt: createdAt ?? _createdAt,
   updatedAt: updatedAt ?? _updatedAt,
 );
   num? get id => _id;
   String? get title => _title;
   String? get serviceTypeId => _serviceTypeId;
+  String? get serviceType => _serviceType;
   num? get brandId => _brandId;
   String? get description => _description;
   String? get price => _price;
@@ -182,6 +193,7 @@ Services copyWith({  num? id,
   String? get image => _image;
   bool? get isWishlist => _isWishlist;
   bool? get isBooking => _isBooking;
+  String? get shopLocation => _shopLocation;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
 
@@ -190,6 +202,7 @@ Services copyWith({  num? id,
     map['id'] = _id;
     map['title'] = _title;
     map['service_type_id'] = _serviceTypeId;
+    map['service_type'] = _serviceType;
     map['brand_id'] = _brandId;
     map['description'] = _description;
     map['price'] = _price;
@@ -197,6 +210,7 @@ Services copyWith({  num? id,
     map['image'] = _image;
     map['is_wishlist'] = _isWishlist;
     map['is_booking'] = _isBooking;
+    map['shop_location'] = _shopLocation;
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
     return map;

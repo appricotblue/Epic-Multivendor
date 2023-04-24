@@ -139,7 +139,7 @@ class _ServiceDetailsUIState extends State<ServiceDetailsUI> {
                 ),
               ),
               Text(
-                "Kalhara",
+                serviceProvider.serviceDetailsModel?.serviceData?.serviceType ?? "",
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     height: 1.445,
                     overflow: TextOverflow.ellipsis,
@@ -147,62 +147,79 @@ class _ServiceDetailsUIState extends State<ServiceDetailsUI> {
               ),
               Row(
                 children: [
+                  const Icon(
+                      Icons.place,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 5.0),
                   Text(
-                    '$rupees ${serviceProvider.serviceDetailsModel?.serviceData?.price}',
-                    style: Theme.of(context).textTheme.headline5?.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
+                    serviceProvider.serviceDetailsModel?.serviceData?.shopLocation ?? "",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         height: 1.445,
-                        color: AppColors.primaryGreen),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'MRP $rupees 300',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          height: 1.445,
-                          decoration: TextDecoration.lineThrough,
-                          color: const Color(0xff7a7a7a),
-                          decorationColor: const Color(0xff7a7a7a),
-                        ),
+                        overflow: TextOverflow.ellipsis,
+                        color: AppColors.lightGrey),
                   ),
                 ],
               ),
+              // Row(
+              //   children: [
+              //     Text(
+              //       '$rupees ${serviceProvider.serviceDetailsModel?.serviceData?.price}',
+              //       style: Theme.of(context).textTheme.headline5?.copyWith(
+              //           fontSize: 18,
+              //           fontWeight: FontWeight.w900,
+              //           height: 1.445,
+              //           color: AppColors.primaryGreen),
+              //     ),
+              //     const SizedBox(
+              //       width: 10,
+              //     ),
+              //     Text(
+              //       'MRP $rupees 300',
+              //       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //             fontSize: 18,
+              //             fontWeight: FontWeight.w500,
+              //             height: 1.445,
+              //             decoration: TextDecoration.lineThrough,
+              //             color: const Color(0xff7a7a7a),
+              //             decorationColor: const Color(0xff7a7a7a),
+              //           ),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(
                 height: 5,
               ),
-              Row(
-                children: [
-                  RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 1,
-                    itemSize: 14,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      size: 10,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {},
-                  ),
-                  const SizedBox(
-                    height: 3,
-                  ),
-                  Text(
-                    "520 Rating",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AppColors.primaryGreen),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     RatingBar.builder(
+              //       initialRating: 3,
+              //       minRating: 1,
+              //       itemSize: 14,
+              //       direction: Axis.horizontal,
+              //       allowHalfRating: true,
+              //       itemCount: 5,
+              //       itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+              //       itemBuilder: (context, _) => const Icon(
+              //         Icons.star,
+              //         size: 10,
+              //         color: Colors.amber,
+              //       ),
+              //       onRatingUpdate: (rating) {},
+              //     ),
+              //     const SizedBox(
+              //       height: 3,
+              //     ),
+              //     Text(
+              //       "520 Rating",
+              //       style: Theme.of(context)
+              //           .textTheme
+              //           .bodySmall
+              //           ?.copyWith(color: AppColors.primaryGreen),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(
                 height: 5,
               ),
@@ -219,9 +236,17 @@ class _ServiceDetailsUIState extends State<ServiceDetailsUI> {
               const SizedBox(
                 height: 5,
               ),
-              _details(context, "Color", "Black"),
-              _details(context, "Occassion", "Casual Wear"),
-              _details(context, "Material", "Coton"),
+              Text(
+                serviceProvider.serviceDetailsModel?.serviceData?.details ?? "",
+                style: Theme.of(context).textTheme.headline6?.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    height: 1.9444444444,
+                    color: const Color(0xff333333)),
+              ),
+              // _details(context, "Color", "Black"),
+              // _details(context, "Occassion", "Casual Wear"),
+              // _details(context, "Material", "Coton"),
               const SizedBox(
                 height: 5,
               ),
@@ -260,10 +285,12 @@ class _ServiceDetailsUIState extends State<ServiceDetailsUI> {
                   child: InkWell(
                     onTap: () {
                       userModel.updateWith(
-                          serviceId: serviceProvider?.serviceDetailsModel?.serviceData?.id.toString(),
-                          servicePrice: serviceProvider?.serviceDetailsModel?.serviceData?.price,
-                          serviceImage: "${ApiEndPoints.imageBaseURL}${serviceProvider?.serviceDetailsModel?.serviceData?.image}",
-                          serviceTitle: serviceProvider?.serviceDetailsModel?.serviceData?.title
+                          serviceId: serviceProvider.serviceDetailsModel?.serviceData?.id.toString(),
+                          servicePrice: serviceProvider.serviceDetailsModel?.serviceData?.price,
+                          serviceImage: "${ApiEndPoints.imageBaseURL}${serviceProvider.serviceDetailsModel?.serviceData?.image}",
+                          serviceTitle: serviceProvider.serviceDetailsModel?.serviceData?.title,
+                          serviceType: serviceProvider.serviceDetailsModel?.serviceData?.serviceType,
+                          
                       );
                       debugPrint(userModel.userId);
                       debugPrint(userModel.serviceId);

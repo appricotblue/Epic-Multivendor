@@ -111,7 +111,7 @@ class _ShopListState extends State<ShopList> {
                     child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
+                        crossAxisCount: 4,
                         mainAxisExtent: 100.0,
                         mainAxisSpacing: 1,
                         crossAxisSpacing: 1,
@@ -170,33 +170,16 @@ class _ShopListState extends State<ShopList> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                    width: 70,
-                                    height: 70,
+                                    width: 60,
+                                    height: 60,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: AppColors.secondaryGreen,
+                                      image: DecorationImage(
+                                        image: NetworkImage("${ApiEndPoints.imageBaseURL}${homeProvider.homeShopListModel?.shopTypes?[i].imageName}")
+                                      )
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(14.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              "${ApiEndPoints.imageBaseURL}${homeProvider.homeShopListModel?.shopTypes?[i].imageName}",
-                                          width: double.infinity,
-                                          fit: BoxFit.fill,
-                                          placeholder: (context, url) =>
-                                              ShimmerLoader()
-                                                  .shimmerImageProduct(context,
-                                                      width: 50.0),
-                                          errorWidget: (context, url, error) =>
-                                              Image.asset(
-                                            AppAssetsImages.noProduct1,
-                                            color: AppColors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    
                                   ),
                                   const SizedBox(
                                     height: 5,

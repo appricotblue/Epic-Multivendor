@@ -363,87 +363,87 @@ class _ServiceCheckoutUIState extends State<ServiceCheckoutUI> {
                       /// PAYMENT METHOD
                       ///
                       ///
-                      Text(
-                        "Payment Method",
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              height: 1.445,
-                              color: const Color(0xcc373737),
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 2,
-                        itemBuilder: (context, index) {
-                          List paymentMethod = ["Razorpay", "Cash on delivery"];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 5.0),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  selectedPayment = index;
-                                });
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: Container(
-                                        height: 15,
-                                        width: 15,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: AppColors.primaryBlue)),
-                                        child: Center(
-                                          child: Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: selectedPayment == index
-                                                    ? AppColors.primaryBlue
-                                                    : AppColors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      paymentMethod[index],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          ?.copyWith(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.5,
-                                            color: const Color(0xff373737),
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                      // Text(
+                      //   "Payment Method",
+                      //   style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      //         fontSize: 16,
+                      //         fontWeight: FontWeight.w400,
+                      //         height: 1.445,
+                      //         color: const Color(0xcc373737),
+                      //       ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 5,
+                      // ),
+                      // ListView.builder(
+                      //   shrinkWrap: true,
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   itemCount: 2,
+                      //   itemBuilder: (context, index) {
+                      //     List paymentMethod = ["Razorpay", "Cash on delivery"];
+                      //     return Padding(
+                      //       padding: const EdgeInsets.only(bottom: 5.0),
+                      //       child: InkWell(
+                      //         onTap: () {
+                      //           setState(() {
+                      //             selectedPayment = index;
+                      //           });
+                      //         },
+                      //         child: Container(
+                      //           width: double.infinity,
+                      //           padding: const EdgeInsets.symmetric(
+                      //               horizontal: 10, vertical: 10),
+                      //           decoration: BoxDecoration(
+                      //             color: AppColors.white,
+                      //             borderRadius: BorderRadius.circular(10),
+                      //           ),
+                      //           child: Row(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: [
+                      //               Padding(
+                      //                 padding: const EdgeInsets.only(top: 8.0),
+                      //                 child: Container(
+                      //                   height: 15,
+                      //                   width: 15,
+                      //                   decoration: BoxDecoration(
+                      //                       shape: BoxShape.circle,
+                      //                       border: Border.all(
+                      //                           color: AppColors.primaryBlue)),
+                      //                   child: Center(
+                      //                     child: Container(
+                      //                       height: 10,
+                      //                       width: 10,
+                      //                       decoration: BoxDecoration(
+                      //                           shape: BoxShape.circle,
+                      //                           color: selectedPayment == index
+                      //                               ? AppColors.primaryBlue
+                      //                               : AppColors.white),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               const SizedBox(
+                      //                 width: 10,
+                      //               ),
+                      //               Text(
+                      //                 paymentMethod[index],
+                      //                 style: Theme.of(context)
+                      //                     .textTheme
+                      //                     .bodyText1
+                      //                     ?.copyWith(
+                      //                       fontSize: 15,
+                      //                       fontWeight: FontWeight.w400,
+                      //                       height: 1.5,
+                      //                       color: const Color(0xff373737),
+                      //                     ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
                     ],
                   ),
                 ),
@@ -464,11 +464,23 @@ class _ServiceCheckoutUIState extends State<ServiceCheckoutUI> {
                 debugPrint(userModel.email);
                 debugPrint(userModel.query);
                 debugPrint(userModel.addressId);
-                getPayment();
+                // getPayment();
+
+                Provider.of<CheckoutProvider>(context,listen: false).serviceBooking(
+                  context,
+                  userId: userModel.userId,
+                  addressId: userModel.addressId,
+                  serviceId: userModel.serviceId,
+                  name: userModel.name,
+                  phone: userModel.phone,
+                  email: userModel.email,
+                  query: userModel.query
+                ).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ServiceOrderPlaced(),)));
               }
               //
             },
-            text: "Pay $rupees ${userModel.servicePrice}",
+            // text: "Pay $rupees ${userModel.servicePrice}",
+            text: "Book Service",
             color: AppColors.primaryBlue,
             txtClr: AppColors.white,
             width: MediaQuery.of(context).size.width,

@@ -85,71 +85,83 @@ class BookServiceUI extends StatelessWidget {
                                     color: const Color(0xff272727),
                                   ),
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  "₹ ${userModel.servicePrice.toString() ?? ""}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.445,
-                                        color: const Color(0xff1747c3),
-                                      ),
-                                ),
-                                const SizedBox(width: 5.0),
-                                Text(
-                                  "120",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.445,
-                                        decoration: TextDecoration.lineThrough,
-                                        color: const Color(0xff7a7a7a),
-                                        decorationColor:
-                                            const Color(0xff7a7a7a),
-                                      ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                RatingBar.builder(
-                                  initialRating: 3,
-                                  minRating: 1,
-                                  itemSize: 15,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding: const EdgeInsets.symmetric(
-                                      horizontal: 1.0),
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    size: 10,
-                                    color: Colors.amber,
+                            Text(
+                              userModel.serviceType.toString() ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.445,
+                                    color: const Color(0xff1747c3),
                                   ),
-                                  onRatingUpdate: (rating) {},
-                                ),
-                                const SizedBox(width: 5.0),
-                                Text(
-                                  "520 Reviews",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.445,
-                                        color: const Color(0xff5f5f5f),
-                                      ),
-                                ),
-                              ],
                             ),
+                            // Row(
+                            //   children: [
+                            //     Text(
+                            //       "₹ ${userModel.servicePrice.toString() ?? ""}",
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .bodyText1
+                            //           ?.copyWith(
+                            //             fontSize: 20,
+                            //             fontWeight: FontWeight.w700,
+                            //             height: 1.445,
+                            //             color: const Color(0xff1747c3),
+                            //           ),
+                            //     ),
+                            //     const SizedBox(width: 5.0),
+                            //     Text(
+                            //       "120",
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .bodyText1
+                            //           ?.copyWith(
+                            //             fontSize: 15,
+                            //             fontWeight: FontWeight.w500,
+                            //             height: 1.445,
+                            //             decoration: TextDecoration.lineThrough,
+                            //             color: const Color(0xff7a7a7a),
+                            //             decorationColor:
+                            //                 const Color(0xff7a7a7a),
+                            //           ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // Row(
+                            //   children: [
+                            //     RatingBar.builder(
+                            //       initialRating: 3,
+                            //       minRating: 1,
+                            //       itemSize: 15,
+                            //       direction: Axis.horizontal,
+                            //       allowHalfRating: true,
+                            //       itemCount: 5,
+                            //       itemPadding: const EdgeInsets.symmetric(
+                            //           horizontal: 1.0),
+                            //       itemBuilder: (context, _) => const Icon(
+                            //         Icons.star,
+                            //         size: 10,
+                            //         color: Colors.amber,
+                            //       ),
+                            //       onRatingUpdate: (rating) {},
+                            //     ),
+                            //     const SizedBox(width: 5.0),
+                            //     Text(
+                            //       "520 Reviews",
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .bodyText1
+                            //           ?.copyWith(
+                            //             fontSize: 12,
+                            //             fontWeight: FontWeight.w400,
+                            //             height: 1.445,
+                            //             color: const Color(0xff5f5f5f),
+                            //           ),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         )
                       ],
@@ -246,7 +258,8 @@ class BookServiceUI extends StatelessWidget {
                  name: nameCTLR.text,
                  number: phoneCTLR.text,
                  email: emailCTLR.text,
-                 query: queryCTLR.text
+                 query: queryCTLR.text,
+                 phone: phoneCTLR.text
                );
                debugPrint(userModel.userId);
                debugPrint(userModel.serviceId);

@@ -31,6 +31,7 @@ class UserModel {
   String? servicePrice;
   String? serviceImage;
   String? serviceTitle;
+  String? serviceType;
   String? name;
   String? number;
   String? email;
@@ -63,6 +64,7 @@ class UserModel {
       this.servicePrice,
       this.serviceImage,
       this.serviceTitle,
+      this.serviceType,
       this.name,
       this.number,
       this.email,
@@ -95,6 +97,7 @@ class UserModel {
     String? servicePrice,
     String? serviceImage,
     String? serviceTitle,
+    String? serviceType,
     String? name,
     String? number,
     String? email,
@@ -128,6 +131,7 @@ class UserModel {
     this.servicePrice = servicePrice ?? this.servicePrice;
     this.serviceImage = serviceImage ?? this.serviceImage;
     this.serviceTitle = serviceTitle ?? this.serviceTitle;
+    this.serviceType = serviceType ?? this.serviceType;
     this.name = name ?? this.name;
     this.number = number ?? this.number;
     this.email = email ?? this.email;
@@ -163,6 +167,7 @@ class UserModel {
       'servicePrice': servicePrice,
       'serviceImage': serviceImage,
       'serviceTitle': serviceTitle,
+      'serviceType':serviceType,
       'name': name,
       'number': number,
       'email': email,

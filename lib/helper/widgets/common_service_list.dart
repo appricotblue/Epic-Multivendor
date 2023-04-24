@@ -17,8 +17,9 @@ class CommonListServiceWidget extends StatefulWidget {
       this.ratingViews,
       this.onTap,
       this.iconData,
-      this.price});
-  final String? image, title, type, ratingViews, price;
+      this.price,
+      this.location});
+  final String? image, title, type, ratingViews, price,location;
   void Function()? onTap;
   final Widget? iconData;
 
@@ -91,6 +92,17 @@ class _CommonListServiceWidgetState extends State<CommonListServiceWidget> {
                             ),
                       ),
                     ),
+                    Text(
+                      widget.type.toString(),
+                      style:
+                          Theme.of(context).textTheme.bodyText1?.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
+                                height: 1.445,
+                                overflow: TextOverflow.ellipsis,
+                                color: const Color(0xff444444),
+                          ),
+                    ),
                     Row(
                       children: [
                         const Icon(
@@ -100,9 +112,9 @@ class _CommonListServiceWidgetState extends State<CommonListServiceWidget> {
                         ),
                         const SizedBox(width: 5.0),
                         SizedBox(
-                          width: 130,
+                          width: 110,
                           child: Text(
-                            widget.type.toString(),
+                            widget.location.toString(),
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                       fontSize: 14,
@@ -115,47 +127,47 @@ class _CommonListServiceWidgetState extends State<CommonListServiceWidget> {
                         )
                       ],
                     ),
-                    const SizedBox(height: 3.0),
-                    Row(
-                      children: [
-                        RatingBar.builder(
-                          initialRating: 3,
-                          minRating: 1,
-                          itemSize: 13,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 1,
-                          itemPadding:
-                              const EdgeInsets.symmetric(horizontal: 1.0),
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.star,
-                            size: 10,
-                            color: Colors.amber,
-                          ),
-                          onRatingUpdate: (rating) {},
-                        ),
-                        Text("(${widget.ratingViews})",
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      fontSize: 11.3185548782,
-                                      fontWeight: FontWeight.w300,
-                                      height: 1.5,
-                                      color: const Color(0xff444444),
-                                    )),
-                        const Spacer(),
-                        Text(
-                          "₹ ${widget.price}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.445,
-                                  color: AppColors.primaryBlue),
-                        )
-                      ],
-                    ),
+                    // const SizedBox(height: 5.0),
+                    // Row(
+                    //   children: [
+                    //     RatingBar.builder(
+                    //       initialRating: 3,
+                    //       minRating: 1,
+                    //       itemSize: 13,
+                    //       direction: Axis.horizontal,
+                    //       allowHalfRating: true,
+                    //       itemCount: 1,
+                    //       itemPadding:
+                    //           const EdgeInsets.symmetric(horizontal: 1.0),
+                    //       itemBuilder: (context, _) => const Icon(
+                    //         Icons.star,
+                    //         size: 10,
+                    //         color: Colors.amber,
+                    //       ),
+                    //       onRatingUpdate: (rating) {},
+                    //     ),
+                    //     Text("(${widget.ratingViews})",
+                    //         style:
+                    //             Theme.of(context).textTheme.bodyText1?.copyWith(
+                    //                   fontSize: 11.3185548782,
+                    //                   fontWeight: FontWeight.w300,
+                    //                   height: 1.5,
+                    //                   color: const Color(0xff444444),
+                    //                 )),
+                    //     const Spacer(),
+                    //     Text(
+                    //       "₹ ${widget.price}",
+                    //       style: Theme.of(context)
+                    //           .textTheme
+                    //           .bodyText1
+                    //           ?.copyWith(
+                    //               fontSize: 18,
+                    //               fontWeight: FontWeight.w700,
+                    //               height: 1.445,
+                    //               color: AppColors.primaryBlue),
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 ),
               )

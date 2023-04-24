@@ -93,19 +93,19 @@ class _ServiceListState extends State<ServiceList> {
           ),
           homeProvider.homeServiceListModel?.serviceCategories?.length == 0 ||
               homeProvider.homeServiceListModel?.serviceCategories?.length == null ?
-              Center(child: Image.asset(AppAssetsImages.noService1),):
+         Center(child: Image.asset(AppAssetsImages.noService1),):
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Container(
-              padding: const EdgeInsets.fromLTRB(5, 10, 2, 10),
+              padding: const EdgeInsets.fromLTRB(5, 20, 2, 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10), color: Colors.white),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  mainAxisExtent: 120.0,
+                  mainAxisExtent: 125.0,
                   mainAxisSpacing: 1,
-                  crossAxisSpacing: 1,
+                  crossAxisSpacing: 10,
                 ),
                 itemCount: homeProvider.homeServiceListModel?.serviceCategories?.length,
                 shrinkWrap: true,
@@ -171,6 +171,7 @@ class _ServiceListState extends State<ServiceList> {
                                       fontWeight: FontWeight.w400,
                                       height: 1.445,
                                       color: const Color(0xff444444),
+                                      
                                     ),
                           )
                         ],
@@ -210,7 +211,8 @@ class _ServiceListState extends State<ServiceList> {
               return CommonListServiceWidget(
                 image:  "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.services?[i].image}",
                 title: homeProvider.homeServiceListModel?.services?[i].title ?? "",
-                type: "kakkanad",
+                type: homeProvider.homeServiceListModel?.services?[i].serviceType,
+                location: homeProvider.homeServiceListModel?.services?[i].shopLocation,
                 ratingViews: "2.4k",
                 price: homeProvider.homeServiceListModel?.services?[i].price ?? "0",
                 iconData:homeProvider.homeServiceListModel?.services?[i].isWishlist == false?
