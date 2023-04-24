@@ -55,7 +55,7 @@ class _ShopFeaturedUIState extends State<ShopFeaturedUI> {
               onTap: (){
                 userModel.updateWith(shopId: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].id}");
                 userModel.updateWith(shopName: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].name}");
-                userModel.updateWith(shopImage: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].image}");
+                userModel.updateWith(shopImage: "${ApiEndPoints.imageBaseURL}${shopCategoryProvider.shopCategoryModel?.shopData?[i].image}");
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const ShopProduct(),));
               },
             );
