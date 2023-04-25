@@ -2,6 +2,7 @@ import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/model/SuccessModel.dart';
 import 'package:epic_multivendor/screens/home/model/home_service_list_model.dart';
 import 'package:epic_multivendor/screens/home/model/home_shop_list_model.dart';
+import 'package:epic_multivendor/screens/home/model/search_shop_model.dart';
 import 'package:epic_multivendor/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +38,7 @@ class HomeProvider extends ChangeNotifier {
   HomeShopListModel? homeShopListModel;
   HomeServiceListModel? homeServiceListModel;
   SuccessModel? successModel;
+  SearchShopModel? searchShopModel;
 
   /// Home shops
   ///
@@ -103,6 +105,28 @@ class HomeProvider extends ChangeNotifier {
       showErrorMessage("Something went wrong");
     }
     return homeShopListModel!;
+  }
+
+    Future<SearchShopModel> searchShopFUNC(
+      {userId, location, lat, lng,searchKey}) async {
+    try {
+      setLoading(true);
+      ApiResponse apiResponse = await ApiHelper().postData(data: {
+        "user_id": "$userId",
+        "location": "$location",
+        "latitude": "$lat",
+        "longitude": "$lng",
+         "search_key":"$searchKey"
+      }, route: ApiEndPoints.searchShopData);
+      if (apiResponse.data != null) {
+        searchShopModel = SearchShopModel.fromJson(apiResponse.data);
+      }
+      setLoading(false);
+    } catch (ex) {
+      setLoading(false);
+      showErrorMessage("Something went wrong");
+    }
+    return searchShopModel!;
   }
 
   Future<HomeServiceListModel> homeSearchServiceFUNC({userId, location, lat, lng,searchKey}) async {

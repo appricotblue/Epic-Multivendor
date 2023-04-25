@@ -4,6 +4,7 @@ import 'package:epic_multivendor/helper/widgets/common_search_bar.dart';
 import 'package:epic_multivendor/screens/common/common_category/common_category.dart';
 import 'package:epic_multivendor/screens/fashion/fashion_category/fashion_category.dart';
 import 'package:epic_multivendor/screens/home/home_provider.dart';
+import 'package:epic_multivendor/screens/home/ui/widget/search_shops.dart';
 import 'package:epic_multivendor/screens/service/service_details/service_details.dart';
 import 'package:epic_multivendor/screens/shops/shop_category/shop_category.dart';
 import 'package:epic_multivendor/screens/shops/shop_details/shop_details.dart';
@@ -39,21 +40,56 @@ class _ShopListState extends State<ShopList> {
           const SizedBox(
             height: 10,
           ),
-          CommonSearchBar(
-            hintText: "Search Shops",
-            controller: controller,
-            onPressed: () {
-              Future.microtask(() {
-                context.read<HomeProvider>().homeSearchShopFUNC(
-                    userId: userModel.userId,
-                    lat: userModel.lat,
-                    lng: userModel.lng,
-                    location: userModel.placeName,
-                    searchKey: controller.text
-                    );
-              });
+
+          InkWell(
+            onTap: (){
+               Navigator.push(context,MaterialPageRoute(builder: (context) => SearchShop()));
             },
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              decoration: BoxDecoration(
+                color: AppColors.white, 
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Center(
+                child: TextField(
+                  enabled: false,
+                  controller: controller,
+                  decoration: InputDecoration(
+                  hintText: "Search Shops",
+                  hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                    height: 1.445,
+                    color: const Color(0xffa4a4a4),
+                  ),
+                suffixIcon: IconButton(
+                onPressed: (){
+          
+                }, 
+                icon: const Icon(Icons.search)),
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none),
+              ),
+            )),
           ),
+          // CommonSearchBar(
+          //   hintText: "Search Shops",
+          //   controller: controller,
+          //   onPressed: () {
+          //     Future.microtask(() {
+          //       context.read<HomeProvider>().homeSearchShopFUNC(
+          //           userId: userModel.userId,
+          //           lat: userModel.lat,
+          //           lng: userModel.lng,
+          //           location: userModel.placeName,
+          //           searchKey: controller.text
+          //           );
+          //     });
+          //   },
+          // ),
           const SizedBox(
             height: 5,
           ),
@@ -284,6 +320,9 @@ class _ShopListState extends State<ShopList> {
                           homeProvider.homeShopListModel?.shopData?[i].name ??
                               "",
                       type: homeProvider
+                              .homeShopListModel?.shopData?[i].shopType ??
+                          "",
+                      location: homeProvider
                               .homeShopListModel?.shopData?[i].location ??
                           "",
                       ratingViews: "2.4k",

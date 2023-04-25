@@ -15,6 +15,7 @@ class ApiEndPoints {
   static String homeServiceData = '${baseUrl}home-service-data';
   static String homeSearchShopData = '${baseUrl}search/home-shop-data';
   static String homeSearchServiceData = '${baseUrl}search/home-service-data';
+  static String searchShopData = '${baseUrl}search/shop-data';
 
   /// SERVICES
   ///

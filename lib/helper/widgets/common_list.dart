@@ -15,8 +15,10 @@ class CommonListWidget extends StatefulWidget {
       this.title,
       this.type,
       this.ratingViews,
-      this.onTap});
-  final String? image, title, type, ratingViews;
+      this.onTap,
+      this.location
+    });
+  final String? image, title, type, ratingViews,location;
   void Function()? onTap;
 
   @override
@@ -72,6 +74,20 @@ class _CommonListWidgetState extends State<CommonListWidget> {
                             ),
                       ),
                     ),
+                    SizedBox(
+                      width: 130,
+                      child: Text(
+                        widget.type.toString(),
+                        style:
+                            Theme.of(context).textTheme.bodyText1?.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w300,
+                                  height: 1.445,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: const Color(0xff444444),
+                                ),
+                      ),
+                    ),
                     Row(
                       children: [
                         const Icon(
@@ -83,7 +99,7 @@ class _CommonListWidgetState extends State<CommonListWidget> {
                         SizedBox(
                           width: 130,
                           child: Text(
-                            widget.type.toString(),
+                            widget.location.toString(),
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                       fontSize: 14,
