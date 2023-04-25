@@ -69,42 +69,42 @@ class _CommonShopProductUIState extends State<CommonShopProductUI> {
             ),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                RatingBar.builder(
-                  initialRating: 3,
-                  minRating: 1,
-                  itemSize: 14,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    size: 10,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: (rating) {},
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Text(
-                  "520 Rating",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppColors.primaryGreen),
-                ),
-              ],
-            ),
-          )
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 8.0),
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         RatingBar.builder(
+        //           initialRating: 3,
+        //           minRating: 1,
+        //           itemSize: 14,
+        //           direction: Axis.horizontal,
+        //           allowHalfRating: true,
+        //           itemCount: 5,
+        //           itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+        //           itemBuilder: (context, _) => const Icon(
+        //             Icons.star,
+        //             size: 10,
+        //             color: Colors.amber,
+        //           ),
+        //           onRatingUpdate: (rating) {},
+        //         ),
+        //         const SizedBox(
+        //           height: 3,
+        //         ),
+        //         Text(
+        //           "520 Rating",
+        //           style: Theme.of(context)
+        //               .textTheme
+        //               .bodySmall
+        //               ?.copyWith(color: AppColors.primaryGreen),
+        //         ),
+        //       ],
+        //     ),
+        //   )
+        // ],
       ),
       body:shopProductProvider.isLoading?ShimmerLoader().shimmerProduct(context):
       SingleChildScrollView(
