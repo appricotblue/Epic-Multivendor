@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epic_multivendor/helper/model/user_model.dart';
+import 'package:epic_multivendor/screens/home/ui/widget/search_services.dart';
 import 'package:epic_multivendor/screens/service/service_details/service_details.dart';
 import 'package:epic_multivendor/screens/wishlist/wishlist_provider.dart';
 import 'package:flutter/material.dart';
@@ -36,25 +37,61 @@ class _ServiceListState extends State<ServiceList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
-          CommonSearchBar(
-            hintText: "Search Services",
-            controller: controller,
-            onPressed: (){
-                    Future.microtask(() {
-                context.read<HomeProvider>().homeSearchServiceFUNC(
-                    userId: userModel.userId,
-                    lat: userModel.lat,
-                    lng: userModel.lng,
-                    location: userModel.placeName,
-                    searchKey: controller.text
-                    );
-              });
+          // CommonSearchBar(
+          //   hintText: "Search Services",
+          //   controller: controller,
+          //   onPressed: (){
+          //           Future.microtask(() {
+          //       context.read<HomeProvider>().homeSearchServiceFUNC(
+          //           userId: userModel.userId,
+          //           lat: userModel.lat,
+          //           lng: userModel.lng,
+          //           location: userModel.placeName,
+          //           searchKey: controller.text
+          //           );
+          //     });
+          //   },
+          // ),
+
+           InkWell(
+            onTap: (){
+               Navigator.push(context,MaterialPageRoute(builder: (context) => const SearchServices()));
             },
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              decoration: BoxDecoration(
+                color: AppColors.white, 
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Center(
+                child: TextField(
+                  enabled: false,
+                  controller: controller,
+                  decoration: InputDecoration(
+                  hintText: "Search Services",
+                  border: InputBorder.none,
+                  hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                    height: 1.445,
+                    color: const Color(0xffa4a4a4),
+                  ),
+                suffixIcon: IconButton(
+                onPressed: (){
+          
+                }, 
+                icon: const Icon(Icons.search)),
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none),
+              ),
+            )),
           ),
           const SizedBox(
-            height: 5,
+            height: 10,
           ),
           homeProvider.homeServiceListModel?.serviceBanners?.length == 0 ||
               homeProvider.homeServiceListModel?.serviceBanners?.length == null?Container():

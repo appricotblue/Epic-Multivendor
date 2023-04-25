@@ -37,6 +37,7 @@ class Services {
   int? id;
   String? title;
   String? serviceTypeId;
+  String? serviceType;
   int? brandId;
   String? description;
   String? price;
@@ -46,13 +47,15 @@ class Services {
   bool? isBooking;
   String? createdAt;
   String? updatedAt;
+  String? shopLocation;
 
-  Services({this.id, this.title, this.serviceTypeId, this.brandId, this.description, this.price, this.status, this.image, this.isWishlist, this.isBooking, this.createdAt, this.updatedAt});
+  Services({this.id, this.title, this.serviceTypeId, this.serviceType, this.shopLocation, this.brandId, this.description, this.price, this.status, this.image, this.isWishlist, this.isBooking, this.createdAt, this.updatedAt});
 
   Services.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     title = json["title"];
     serviceTypeId = json["service_type_id"];
+    serviceType = json["service_type"];
     brandId = json["brand_id"];
     description = json["description"];
     price = json["price"];
@@ -62,6 +65,8 @@ class Services {
     isBooking = json["is_booking"];
     createdAt = json["created_at"];
     updatedAt = json["updated_at"];
+    shopLocation = json["shop_location"];
+    
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +74,7 @@ class Services {
     _data["id"] = id;
     _data["title"] = title;
     _data["service_type_id"] = serviceTypeId;
+    _data["service_type"] = serviceType;
     _data["brand_id"] = brandId;
     _data["description"] = description;
     _data["price"] = price;
@@ -78,6 +84,7 @@ class Services {
     _data["is_booking"] = isBooking;
     _data["created_at"] = createdAt;
     _data["updated_at"] = updatedAt;
+    _data["shop_location"] = shopLocation;
     return _data;
   }
 }
@@ -86,6 +93,7 @@ class FeaturedServices {
   int? id;
   String? title;
   String? serviceTypeId;
+  String? serviceType;
   int? brandId;
   String? description;
   String? price;
@@ -96,12 +104,13 @@ class FeaturedServices {
   String? createdAt;
   String? updatedAt;
 
-  FeaturedServices({this.id, this.title, this.serviceTypeId, this.brandId, this.description, this.price, this.status, this.image, this.isWishlist, this.isBooking, this.createdAt, this.updatedAt});
+  FeaturedServices({this.id, this.title, this.serviceTypeId,this.serviceType, this.brandId, this.description, this.price, this.status, this.image, this.isWishlist, this.isBooking, this.createdAt, this.updatedAt});
 
   FeaturedServices.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     title = json["title"];
     serviceTypeId = json["service_type_id"];
+    serviceType = json["service_type"];
     brandId = json["brand_id"];
     description = json["description"];
     price = json["price"];
@@ -118,6 +127,7 @@ class FeaturedServices {
     _data["id"] = id;
     _data["title"] = title;
     _data["service_type_id"] = serviceTypeId;
+    _data["service_type"]= serviceType;
     _data["brand_id"] = brandId;
     _data["description"] = description;
     _data["price"] = price;

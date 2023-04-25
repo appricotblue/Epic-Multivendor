@@ -3,6 +3,7 @@ import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/screens/bottom/bottom_nav.dart';
+import 'package:epic_multivendor/screens/home/home_provider.dart';
 import 'package:epic_multivendor/screens/service/book_service/book_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -35,6 +36,13 @@ class _ServiceDetailsUIState extends State<ServiceDetailsUI> {
         backgroundColor: AppColors.white,
         leading: IconButton(
             onPressed: () {
+              // Future.microtask(() {
+              //   context.read<HomeProvider>().homeService(
+              //       userId: userModel.userId,
+              //       lat: userModel.lat,
+              //       lng:userModel.lng,
+              //       location:userModel.placeName);
+              // });
               Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomBarScreen(),));
             },
             icon: Icon(
@@ -89,11 +97,11 @@ class _ServiceDetailsUIState extends State<ServiceDetailsUI> {
                               userId: userModel.userId,
                               serviceId: serviceProvider.serviceDetailsModel?.serviceData?.id)
                               .then((value) =>  Future.microtask(() {
-                            context.read<ServiceProvider>().serviceDetailsFUNC(
-                                userId: userModel.userId,
-                                serviceId: userModel.serviceId
-                            );
-                          }));
+                                context.read<ServiceProvider>().serviceDetailsFUNC(
+                                    userId: userModel.userId,
+                                    serviceId: userModel.serviceId
+                                );
+                              }));
                         },
                         child: Icon(
                           Icons.favorite_border,

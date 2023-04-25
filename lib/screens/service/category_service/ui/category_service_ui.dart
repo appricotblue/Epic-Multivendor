@@ -3,6 +3,7 @@ import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/widgets/common_search_bar.dart';
 import 'package:epic_multivendor/helper/widgets/common_view_all.dart';
+import 'package:epic_multivendor/screens/home/ui/widget/search_services.dart';
 import 'package:epic_multivendor/screens/service/branded_service/branded_service.dart';
 import 'package:epic_multivendor/screens/service/service_details/service_details.dart';
 import 'package:flutter/material.dart';
@@ -116,8 +117,43 @@ class _CategoryServiceUIState extends State<CategoryServiceUI> {
               const SizedBox(
                 height: 7,
               ),
-              CommonSearchBar(
-                hintText: "Search Service",
+              // CommonSearchBar(
+              //   hintText: "Search Service",
+              // ),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const SearchServices()));
+                },
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppColors.white, 
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Center(
+                    child: TextField(
+                      enabled: false,
+                      // controller: controller,
+                      decoration: InputDecoration(
+                      hintText: "Search Services",
+                      border: InputBorder.none,
+                      hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                        height: 1.445,
+                        color: const Color(0xffa4a4a4),
+                      ),
+                    suffixIcon: IconButton(
+                    onPressed: (){
+              
+                    }, 
+                    icon: const Icon(Icons.search)),
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none),
+                  ),
+                )),
               ),
               const SizedBox(
                 height: 5,
@@ -186,7 +222,8 @@ class _CategoryServiceUIState extends State<CategoryServiceUI> {
                   return CommonListServiceWidget(
                     image: "${ApiEndPoints.imageBaseURL}${serviceProvider.categoryServiceModel?.services?[i].image}",
                     title:serviceProvider.categoryServiceModel?.services?[i].title ?? "",
-                    type: "kakkanad",
+                    type: serviceProvider.categoryServiceModel?.services?[i].serviceType ?? "",
+                    location: serviceProvider.categoryServiceModel?.services?[i].shopLocation ?? "",
                     ratingViews: "2.4k",
                     price: serviceProvider.categoryServiceModel?.services?[i].price ?? "",
                     iconData: serviceProvider.categoryServiceModel?.services?[i].isWishlist ==
