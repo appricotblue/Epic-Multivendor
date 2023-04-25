@@ -53,8 +53,9 @@ class _SearchShopUIState extends State<SearchShopUI> {
                       lat: userModel.lat,
                       lng: userModel.lng,
                       location: userModel.placeName,
-                      searchKey: controller.text
-                      );
+                      searchKey: controller.text,
+                      categoryId: userModel.shopCategoryTypeId
+                  );
                 });
               },
             ),

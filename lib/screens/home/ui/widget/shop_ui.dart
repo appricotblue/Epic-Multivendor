@@ -38,7 +38,7 @@ class _ShopListState extends State<ShopList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
 
           InkWell(
@@ -59,6 +59,7 @@ class _ShopListState extends State<ShopList> {
                   controller: controller,
                   decoration: InputDecoration(
                   hintText: "Search Shops",
+                  border: InputBorder.none,
                   hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w300,
@@ -91,7 +92,7 @@ class _ShopListState extends State<ShopList> {
           //   },
           // ),
           const SizedBox(
-            height: 5,
+            height: 10,
           ),
           homeProvider.homeShopListModel?.shopBanners?.length == 0 ||
                   homeProvider.homeShopListModel?.shopBanners?.length == null

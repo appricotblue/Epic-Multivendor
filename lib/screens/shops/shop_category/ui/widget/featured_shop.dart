@@ -50,7 +50,8 @@ class _ShopFeaturedUIState extends State<ShopFeaturedUI> {
             return CommonListWidget(
               image: "${ApiEndPoints.imageBaseURL}${shopCategoryProvider.shopCategoryModel?.shopData?[i].image}",
               title: shopCategoryProvider.shopCategoryModel?.shopData?[i].name ?? "",
-              type:shopCategoryProvider.shopCategoryModel?.shopData?[i].location ?? "",
+              location:shopCategoryProvider.shopCategoryModel?.shopData?[i].location ?? "",
+              type: shopCategoryProvider.shopCategoryModel?.shopData?[i].shopType ?? "",
               ratingViews: "2.4k",
               onTap: (){
                 userModel.updateWith(shopId: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].id}");

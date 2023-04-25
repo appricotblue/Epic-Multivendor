@@ -79,6 +79,7 @@ class ShopData {
       String? longitude, 
       String? isActive, 
       String? description, 
+      String? shopType,
       String? radius, 
       String? image, 
       String? createdAt, 
@@ -95,6 +96,7 @@ class ShopData {
     _longitude = longitude;
     _isActive = isActive;
     _description = description;
+    _shopType = shopType;
     _radius = radius;
     _image = image;
     _createdAt = createdAt;
@@ -114,6 +116,7 @@ class ShopData {
     _longitude = json['longitude'];
     _isActive = json['is_active'];
     _description = json['description'];
+    _shopType = json['shop_type'];
     _radius = json['radius'];
     _image = json['image'];
     _createdAt = json['created_at'];
@@ -131,6 +134,7 @@ class ShopData {
   String? _longitude;
   String? _isActive;
   String? _description;
+  String? _shopType;
   String? _radius;
   String? _image;
   String? _createdAt;
@@ -147,6 +151,7 @@ ShopData copyWith({  num? id,
   String? longitude,
   String? isActive,
   String? description,
+  String? shopType,
   String? radius,
   String? image,
   String? createdAt,
@@ -163,6 +168,7 @@ ShopData copyWith({  num? id,
   longitude: longitude ?? _longitude,
   isActive: isActive ?? _isActive,
   description: description ?? _description,
+  shopType: shopType ?? _shopType,
   radius: radius ?? _radius,
   image: image ?? _image,
   createdAt: createdAt ?? _createdAt,
@@ -180,6 +186,7 @@ ShopData copyWith({  num? id,
   String? get longitude => _longitude;
   String? get isActive => _isActive;
   String? get description => _description;
+  String? get shopType => _shopType;
   String? get radius => _radius;
   String? get image => _image;
   String? get createdAt => _createdAt;
@@ -199,6 +206,7 @@ ShopData copyWith({  num? id,
     map['longitude'] = _longitude;
     map['is_active'] = _isActive;
     map['description'] = _description;
+    map['shop_type'] = _shopType;
     map['radius'] = _radius;
     map['image'] = _image;
     map['created_at'] = _createdAt;

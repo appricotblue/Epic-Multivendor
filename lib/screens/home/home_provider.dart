@@ -108,7 +108,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
     Future<SearchShopModel> searchShopFUNC(
-      {userId, location, lat, lng,searchKey}) async {
+      {userId, location, lat, lng,searchKey,categoryId}) async {
     try {
       setLoading(true);
       ApiResponse apiResponse = await ApiHelper().postData(data: {
@@ -116,7 +116,8 @@ class HomeProvider extends ChangeNotifier {
         "location": "$location",
         "latitude": "$lat",
         "longitude": "$lng",
-         "search_key":"$searchKey"
+        "search_key":"$searchKey",
+        "category_id":"$categoryId"
       }, route: ApiEndPoints.searchShopData);
       if (apiResponse.data != null) {
         searchShopModel = SearchShopModel.fromJson(apiResponse.data);

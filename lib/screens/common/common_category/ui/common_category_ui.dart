@@ -4,6 +4,7 @@ import 'package:epic_multivendor/screens/common/common_category/ui/widget/featur
 import 'package:epic_multivendor/screens/common/common_category/ui/widget/most_rated.dart';
 import 'package:epic_multivendor/screens/common/common_category/ui/widget/popular.dart';
 import 'package:epic_multivendor/screens/common/common_category/ui/widget/within_km.dart';
+import 'package:epic_multivendor/screens/home/ui/widget/search_shops.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class CommonCategoryUI extends StatefulWidget {
 
 class _CommonCategoryUIState extends State<CommonCategoryUI> {
   var userModel = Get.find<UserModel>();
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     ShopCategoryProvider shopCategoryProvider = context.watch<ShopCategoryProvider>();
@@ -41,7 +43,7 @@ class _CommonCategoryUIState extends State<CommonCategoryUI> {
               color: AppColors.primaryGreen,
             )),
         title: Text(
-          userModel?.shopCategoryType ?? "",
+          userModel.shopCategoryType ?? "",
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -94,7 +96,7 @@ class _CommonCategoryUIState extends State<CommonCategoryUI> {
                             text: 'Shop from ',
                           ),
                           TextSpan(
-                            text:  userModel?.shopCategoryType ?? "",
+                            text:  userModel.shopCategoryType ?? "",
                             style:
                                 Theme.of(context).textTheme.headline6?.copyWith(
                                       fontSize: 12,
@@ -121,8 +123,38 @@ class _CommonCategoryUIState extends State<CommonCategoryUI> {
               ///
               ///
               ///#############################################################################################
-              CommonSearchBar(
-                hintText: "Search Shops",
+              // CommonSearchBar(
+              //   hintText: "Search Shops",
+              // ),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => SearchShop()));
+                },
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppColors.white, borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: TextField(
+                      enabled: false,
+                      controller: controller,
+                      decoration: InputDecoration(
+                      hintText: "Search Shops",
+                      border: InputBorder.none,
+                      hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                            height: 1.445,
+                            color: const Color(0xffa4a4a4),
+                          ),
+                        suffixIcon: IconButton(
+                            onPressed: (){}, icon: const Icon(Icons.search)),
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none),
+                  ),
+                )),
               ),
               const SizedBox(
                 height: 5,
