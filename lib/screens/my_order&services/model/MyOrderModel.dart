@@ -84,7 +84,9 @@ class Orders {
       String? paymentMethod, 
       num? deliveryBoyId, 
       String? createdAt, 
-      String? updatedAt,}){
+      String? updatedAt,
+      String? image,
+      }){
     _id = id;
     _orderId = orderId;
     _userId = userId;
@@ -102,6 +104,7 @@ class Orders {
     _deliveryBoyId = deliveryBoyId;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
+    _image = image;
 }
 
   Orders.fromJson(dynamic json) {
@@ -122,6 +125,7 @@ class Orders {
     _deliveryBoyId = json['delivery_boy_id'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
+    _image = json['image'];
   }
   num? _id;
   String? _orderId;
@@ -140,6 +144,7 @@ class Orders {
   num? _deliveryBoyId;
   String? _createdAt;
   String? _updatedAt;
+  String? _image;
 Orders copyWith({  num? id,
   String? orderId,
   num? userId,
@@ -157,6 +162,7 @@ Orders copyWith({  num? id,
   num? deliveryBoyId,
   String? createdAt,
   String? updatedAt,
+  String? image,
 }) => Orders(  id: id ?? _id,
   orderId: orderId ?? _orderId,
   userId: userId ?? _userId,
@@ -174,6 +180,7 @@ Orders copyWith({  num? id,
   deliveryBoyId: deliveryBoyId ?? _deliveryBoyId,
   createdAt: createdAt ?? _createdAt,
   updatedAt: updatedAt ?? _updatedAt,
+  image: image ?? _image,
 );
   num? get id => _id;
   String? get orderId => _orderId;
@@ -192,6 +199,7 @@ Orders copyWith({  num? id,
   num? get deliveryBoyId => _deliveryBoyId;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
+  String? get image => _image;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -212,6 +220,7 @@ Orders copyWith({  num? id,
     map['delivery_boy_id'] = _deliveryBoyId;
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
+    map['image']  = _image;
     return map;
   }
 

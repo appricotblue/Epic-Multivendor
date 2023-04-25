@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/screens/my_order&services/my_order&service_provider.dart';
 import 'package:epic_multivendor/screens/my_order&service_details/my_order_details.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class _ProductOrderUIState extends State<ProductOrderUI> {
                                     topRight: Radius.circular(10),
                                     topLeft: Radius.circular(10)),
                                 child: CachedNetworkImage(
-                                  imageUrl: "",
+                                  imageUrl: "${ApiEndPoints.imageBaseURL}${myOrderProvider.myOrderModel?.orders?[index].image}",
                                   width: 70,
                                   height: 70,
                                   fit: BoxFit.fill,
