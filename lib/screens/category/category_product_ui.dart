@@ -131,7 +131,7 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                                         height: 5,
                                       ),
                                       SizedBox(
-                                        width: 170,
+                                        width: 200,
                                         child: Text(shopProductProvider.categoryProductModel?.products?[index].name ??"",
                                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                             fontSize: 17,
