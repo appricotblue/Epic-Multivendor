@@ -71,7 +71,7 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                       setState(() {
                         
                       });
-                      userModel.updateWith(subCategoryId: 'null');
+                      userModel.updateWith(catgeoryId: userModel.catgeoryId);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryProduct(),));
                     },
                     child: Container(
@@ -92,7 +92,7 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                   ),   
                   Container(
                     height: 50,
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery.of(context).size.width-80,
                     child: ListView.builder(
                       itemCount: shopProductProvider.productSubCategoryModel?.categories?.length,
                       shrinkWrap: true,
@@ -100,9 +100,7 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: (){
-                            setState(() {
-                              shopProductProvider.categoryProductModel?.products?[index].attributeCount = index;
-                            });
+                           
                             userModel.updateWith(
                               catgeoryId:shopProductProvider.productSubCategoryModel?.categories?[index].mainCategoryId.toString(),
                               subCategoryId: shopProductProvider.productSubCategoryModel?.categories?[index].id.toString()
