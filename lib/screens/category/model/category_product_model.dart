@@ -81,6 +81,8 @@ class Products {
     _attributeCount = value;
   }
 
+  
+
   int? _quantityCount;
 
   int get quantityCount => _quantityCount ?? 0;
@@ -105,6 +107,15 @@ class Products {
   set productPrice(String value) {
     _productPrice = value;
   }
+
+  int? _selectedSub;
+
+  int get selectedSub => _selectedSub ?? 0;
+
+  set selectedSub(int value) {
+    _attributeCount = value;
+  }
+
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];

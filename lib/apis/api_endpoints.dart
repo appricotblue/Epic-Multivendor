@@ -85,6 +85,6 @@ class ApiEndPoints {
   /// prime
   static String premium = '${baseUrl}update/premium';
 
-
+  static String productSubCategory = '${baseUrl}get-all/sub-category';
 
 }

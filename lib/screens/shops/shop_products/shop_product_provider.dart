@@ -3,6 +3,7 @@ import 'package:epic_multivendor/helper/model/SuccessModel.dart';
 import 'package:epic_multivendor/screens/category/model/category_product_model.dart';
 import 'package:epic_multivendor/screens/home/model/home_service_list_model.dart';
 import 'package:epic_multivendor/screens/home/model/home_shop_list_model.dart';
+import 'package:epic_multivendor/screens/shops/shop_products/model/product_subcategory_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../apis/http_request.dart';
@@ -19,6 +20,7 @@ class ShopProductProvider extends ChangeNotifier {
   ShopProductListModel? shopProductListModel;
   SuccessModel? successModel;
   CategoryProductModel? categoryProductModel;
+  ProductSubCategoryModel? productSubCategoryModel;
 
   /// Home shops
   ///
@@ -68,13 +70,14 @@ class ShopProductProvider extends ChangeNotifier {
     } else {}
   }
 
-  Future<CategoryProductModel> categoryProductList({userId,shopId, categoryId}) async {
+  Future<CategoryProductModel> categoryProductList({userId,shopId, categoryId,subCategoryId}) async {
     try {
       setLoading(true);
       ApiResponse apiResponse = await ApiHelper().postData(data: {
         "user_id": "$userId",
         "category_id": "$categoryId",
-        "shop_id":"$shopId"
+        "shop_id":"$shopId",
+        "sub_category_id":"$subCategoryId"
       }, route: ApiEndPoints.categoryProduct);
       if (apiResponse.data != null) {
         categoryProductModel = CategoryProductModel.fromJson(apiResponse.data);
@@ -99,6 +102,24 @@ class ShopProductProvider extends ChangeNotifier {
       showErrorMessage("Something went wrong");
     }
     return categoryProductModel!;
+  }
+
+  Future<ProductSubCategoryModel> getProductSubCategory({categoryId}) async {
+    try {
+      setLoading(true);
+      ApiResponse apiResponse = await ApiHelper().postData(data: {
+        "category_id": "$categoryId",
+    
+      }, route: ApiEndPoints.productSubCategory);
+      if (apiResponse.data != null) {
+        productSubCategoryModel = ProductSubCategoryModel.fromJson(apiResponse.data);
+      }
+      setLoading(false);
+    } catch (ex) {
+      setLoading(false);
+      showErrorMessage("Something went wrong");
+    }
+    return productSubCategoryModel!;
   }
 
 }

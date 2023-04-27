@@ -36,6 +36,7 @@ class UserModel {
   String? email;
   String? query;
   String? catgeoryId;
+  String? subCategoryId;
 
   UserModel(
       {this.userId,
@@ -69,7 +70,8 @@ class UserModel {
       this.number,
       this.email,
       this.query,
-      this.catgeoryId
+      this.catgeoryId,
+      this.subCategoryId
       });
 
   void updateWith({
@@ -105,6 +107,7 @@ class UserModel {
     String? email,
     String? query,
     String? catgeoryId,
+    String? subCategoryId,
   }) {
     this.userId = userId ?? this.userId;
     this.phone = phone ?? this.phone;
@@ -140,6 +143,7 @@ class UserModel {
     this.email = email ?? this.email;
     this.query = query ?? this.query;
     this.catgeoryId = catgeoryId ?? this.catgeoryId;
+    this.subCategoryId = subCategoryId ?? this.subCategoryId;
   }
 
   //write
@@ -176,7 +180,8 @@ class UserModel {
       'number': number,
       'email': email,
       'query': query,
-      'catgeoryId':catgeoryId
+      'catgeoryId':catgeoryId,
+      'subCategoryId':subCategoryId
     };
   }
 
@@ -215,6 +220,8 @@ class UserModel {
         number: value['number'],
         email: value['email'],
         query: value['query'],
-        catgeoryId:value['catgeoryId']);
+        catgeoryId:value['catgeoryId'],
+        subCategoryId :value['subCategoryId']
+      );
   }
 }
