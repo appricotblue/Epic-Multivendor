@@ -72,7 +72,12 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                         
                       });
                       userModel.updateWith(subCategoryId: 'null');
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryProduct(),));
+                      setState(() {
+                        context
+                        .read<ShopProductProvider>()
+                        .categoryProductList(
+                        userId: userModel.userId, categoryId: userModel.catgeoryId,shopId:userModel.shopId,subCategoryId: userModel.subCategoryId);
+                      });
                     },
                     child: Container(
                       height: 50,
@@ -105,7 +110,12 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                               catgeoryId:shopProductProvider.productSubCategoryModel?.categories?[index].mainCategoryId.toString(),
                               subCategoryId: shopProductProvider.productSubCategoryModel?.categories?[index].id.toString()
                             );
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryProduct(),));
+                            setState(() {
+                              context
+                              .read<ShopProductProvider>()
+                              .categoryProductList(
+                              userId: userModel.userId, categoryId: userModel.catgeoryId,shopId:userModel.shopId,subCategoryId: userModel.subCategoryId);
+                            });
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
