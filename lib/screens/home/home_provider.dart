@@ -2,6 +2,7 @@ import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/model/SuccessModel.dart';
 import 'package:epic_multivendor/screens/home/model/home_service_list_model.dart';
 import 'package:epic_multivendor/screens/home/model/home_shop_list_model.dart';
+import 'package:epic_multivendor/screens/home/model/search_product_model.dart';
 import 'package:epic_multivendor/screens/home/model/search_service_model.dart';
 import 'package:epic_multivendor/screens/home/model/search_shop_model.dart';
 import 'package:epic_multivendor/screens/login/login.dart';
@@ -41,6 +42,7 @@ class HomeProvider extends ChangeNotifier {
   SuccessModel? successModel;
   SearchShopModel? searchShopModel;
   SearchServiceModel? searchServiceModel;
+  SearchProductModel? searchProductModel;
 
   /// Home shops
   ///
@@ -173,5 +175,25 @@ class HomeProvider extends ChangeNotifier {
       showErrorMessage("Something went wrong");
     }
     return searchServiceModel!;
+  }
+
+  Future<SearchProductModel> searchProductFUNC({userId,shopId,searchKey,categoryId}) async {
+    try {
+      setLoading(true);
+      ApiResponse apiResponse = await ApiHelper().postData(data: {
+        "user_id": "$userId",
+        "shop_id": "$shopId",
+        "search_key":"$searchKey"
+        
+      }, route: ApiEndPoints.searchProductData);
+      if (apiResponse.data != null) {
+        searchProductModel = SearchProductModel.fromJson(apiResponse.data);
+      }
+      setLoading(false);
+    } catch (ex) {
+      setLoading(false);
+      showErrorMessage("Something went wrong");
+    }
+    return searchProductModel!;
   }
 }

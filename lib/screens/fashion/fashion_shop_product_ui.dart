@@ -5,6 +5,7 @@ import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/widgets/common_search_bar.dart';
 import 'package:epic_multivendor/helper/widgets/common_view_all.dart';
 import 'package:epic_multivendor/screens/category/category_product.dart';
+import 'package:epic_multivendor/screens/common/common_shopProduct/ui/search_products.dart';
 import 'package:epic_multivendor/screens/common/common_shopProduct/ui/widget/new_collection.dart';
 import 'package:epic_multivendor/screens/common/common_shopProduct/ui/widget/popular_collection.dart';
 import 'package:epic_multivendor/screens/common/common_shopProduct/ui/widget/product_for_you.dart';
@@ -30,7 +31,7 @@ class FashionShopProductUI extends StatefulWidget {
 
 class _CommonShopProductUIState extends State<FashionShopProductUI> {
   var userModel = Get.find<UserModel>();
-
+  TextEditingController controller = TextEditingController();
   
   @override
   Widget build(BuildContext context) {
@@ -113,8 +114,39 @@ class _CommonShopProductUIState extends State<FashionShopProductUI> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              CommonSearchBar(
-                hintText: "Search Products",
+              // CommonSearchBar(
+              //   hintText: "Search Products",
+              // ),
+
+              InkWell(
+                onTap: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => SearchProducts()));
+                },
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: AppColors.white, borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: TextField(
+                      enabled: false,
+                      controller: controller,
+                      decoration: InputDecoration(
+                      hintText: "Search Products",
+                      border: InputBorder.none,
+                      hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                            height: 1.445,
+                            color: const Color(0xffa4a4a4),
+                          ),
+                        suffixIcon: IconButton(
+                            onPressed: (){}, icon: const Icon(Icons.search)),
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none),
+                  ),
+                )),
               ),
               const SizedBox(
                 height: 10,
