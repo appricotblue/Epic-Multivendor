@@ -411,6 +411,66 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Additional Charges",
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    
+                    value.serviceBookingDetailsModel?.bookingData?.additionalCharges?.length == null ||
+                    value.serviceBookingDetailsModel?.bookingData?.additionalCharges?.length == 0 ?
+                    Center(child: Image.asset(AppAssetsImages.noService1),)
+                    :
+                    Container(
+                      height: 100,
+                      child: ListView.builder(
+                        itemCount:  value.serviceBookingDetailsModel?.bookingData?.additionalCharges?.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("${value.serviceBookingDetailsModel?.bookingData?.additionalCharges?[index].service}",
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  height: 1.445,
+                                  fontSize: 17,
+                                  color: const Color(0x99363636),
+                                ),
+                              ),
+                              Text("$rupees ${value.serviceBookingDetailsModel?.bookingData?.additionalCharges?[index].amount}",
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  height: 1.445,
+                                  fontSize: 17,
+                                  color: const Color(0x99363636),
+                                ),
+                              )
+                            ],
+                          );
+                        }
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),

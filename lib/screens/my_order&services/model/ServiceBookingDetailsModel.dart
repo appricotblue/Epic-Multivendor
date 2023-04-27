@@ -40,9 +40,10 @@ class BookingData {
   String? userPhone;
   String? userEmail;
   String? bookingStatus;
+  List<AdditionalCharges>? additionalCharges;
 
-  BookingData(
-      {this.id,
+  BookingData({
+      this.id,
       this.bookingId,
       this.serviceTitle,
       this.price,
@@ -56,7 +57,9 @@ class BookingData {
       this.userAddress,
       this.userPhone,
       this.userEmail,
-      this.bookingStatus});
+      this.bookingStatus,
+      this.additionalCharges
+    });
 
   BookingData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -74,6 +77,12 @@ class BookingData {
     userPhone = json['user_phone'];
     userEmail = json['user_email'];
     bookingStatus = json['booking_status'];
+    if (json['additional_charges'] != null) {
+      additionalCharges = <AdditionalCharges>[];
+      json['additional_charges'].forEach((v) {
+        additionalCharges!.add(new AdditionalCharges.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -93,6 +102,32 @@ class BookingData {
     data['user_phone'] = this.userPhone;
     data['user_email'] = this.userEmail;
     data['booking_status'] = this.bookingStatus;
+    if (this.additionalCharges != null) {
+      data['additional_charges'] =
+          this.additionalCharges!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class AdditionalCharges {
+  int? id;
+  String? service;
+  int? amount;
+
+  AdditionalCharges({this.id, this.service, this.amount});
+
+  AdditionalCharges.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    service = json['service'];
+    amount = json['amount'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['service'] = this.service;
+    data['amount'] = this.amount;
     return data;
   }
 }
