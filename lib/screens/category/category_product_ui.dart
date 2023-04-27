@@ -71,7 +71,7 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                       setState(() {
                         
                       });
-                      userModel.updateWith(catgeoryId: userModel.catgeoryId);
+                      userModel.updateWith(subCategoryId: 'null');
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryProduct(),));
                     },
                     child: Container(
@@ -100,7 +100,7 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: (){
-                           
+                            
                             userModel.updateWith(
                               catgeoryId:shopProductProvider.productSubCategoryModel?.categories?[index].mainCategoryId.toString(),
                               subCategoryId: shopProductProvider.productSubCategoryModel?.categories?[index].id.toString()
