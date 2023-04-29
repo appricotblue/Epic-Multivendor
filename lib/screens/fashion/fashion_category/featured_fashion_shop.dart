@@ -58,6 +58,7 @@ class _FashionShopFeaturedUIState extends State<FashionShopFeaturedUI> {
                 userModel.updateWith(shopName: "${shopCategoryProvider.shopCategoryModel?.shopData?[i].name}");
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const FashionShopProduct(),));
               },
+            
             );
           },
         ),

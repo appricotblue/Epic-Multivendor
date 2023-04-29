@@ -122,4 +122,42 @@ class ShopProductProvider extends ChangeNotifier {
     return productSubCategoryModel!;
   }
 
+  Future<SuccessModel> addToWishList(context,
+      {userId,productId}) async {
+    try {
+      ApiResponse apiResponse = await ApiHelper().addWishList(data: {
+        "user_id": "$userId",
+        "product_id": "$productId",
+      }, route: ApiEndPoints.addToWishList);
+      if (apiResponse.data != null) {
+        successModel = SuccessModel.fromJson(apiResponse.data);
+        successModel?.errorMsg == null || successModel?.errorMsg == "" || successModel?.errorMsg == "null"?
+        SnackBarMessage(context, "Added to wish list"):
+        SnackBarMessage(context, successModel?.errorMsg);
+      }
+    } catch (ex) {
+      showErrorMessage("Something went wrong");
+    }
+    return successModel!;
+  }
+
+  Future<SuccessModel> removeWishList(context,
+      {userId,productId}) async {
+    try {
+      ApiResponse apiResponse = await ApiHelper().addWishList(data: {
+        "user_id": "$userId",
+        "product_id": "$productId",
+      }, route: ApiEndPoints.removeToWishList);
+      if (apiResponse.data != null) {
+        successModel = SuccessModel.fromJson(apiResponse.data);
+        successModel?.errorMsg == null || successModel?.errorMsg == "" || successModel?.errorMsg == "null"?
+        SnackBarMessage(context, "Remove wish list"):
+        SnackBarMessage(context, successModel?.errorMsg);
+      }
+    } catch (ex) {
+      showErrorMessage("Something went wrong");
+    }
+    return successModel!;
+  }
+
 }

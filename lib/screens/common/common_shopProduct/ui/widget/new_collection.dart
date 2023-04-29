@@ -1,4 +1,5 @@
 import 'package:epic_multivendor/apis/api_endpoints.dart';
+import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/helper_images.dart';
 import 'package:epic_multivendor/screens/common/common_details/common_details.dart';
 import 'package:epic_multivendor/screens/shops/shop_products/shop_product_provider.dart';
@@ -46,7 +47,7 @@ class CommonNewCollection extends StatelessWidget {
             return CommonScreenProductList(
               image: "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.products?[i].featuredImageName}",
               title:shopProductProvider.shopProductListModel?.products?[i].name ?? "",
-              type: "kakkanad",
+              type: shopProductProvider.shopProductListModel?.products?[i].categoryType ?? "",
               price: shopProductProvider.shopProductListModel?.products?[i].salePrice.toString() ?? "",
               strikedPrice: shopProductProvider.shopProductListModel?.products?[i].price.toString() ?? "",
               onTap: (){
@@ -56,6 +57,40 @@ class CommonNewCollection extends StatelessWidget {
                 userModel.updateWith(shopProductImage: "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.products?[i].featuredImageName}");
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const CommonProductDetails(),));
               },
+
+            iconData: shopProductProvider.shopProductListModel?.products?[i].isWishlist == true?
+              InkWell(
+                onTap: (){
+                  shopProductProvider.removeWishList(context,
+                    userId: userModel.userId,
+                    productId: shopProductProvider.shopProductListModel?.products?[i].id
+                  );
+                  context.read<ShopProductProvider>().shopProductList(
+                      userId: userModel.userId,
+                      shopId:userModel.shopId
+                  );
+                },
+                child: Icon(
+                  Icons.favorite_outline,
+                  color: AppColors.primaryGreen,
+                ),
+              ): InkWell(
+                onTap: (){
+                  shopProductProvider.addToWishList(context,
+                    userId: userModel.userId,
+                    productId: shopProductProvider.shopProductListModel?.products?[i].id
+                  );
+                  context.read<ShopProductProvider>().shopProductList(
+                      userId: userModel.userId,
+                      shopId:userModel.shopId
+                  );
+                },
+                child: Icon(
+                  Icons.favorite,
+                  color: AppColors.primaryGreen,
+                ),
+              ),
+            
             );
           },
         ),

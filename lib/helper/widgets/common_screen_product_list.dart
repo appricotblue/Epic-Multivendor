@@ -18,8 +18,11 @@ class CommonScreenProductList extends StatefulWidget {
         this.type,
         this.price,
         this.strikedPrice,
-        this.onTap});
+        this.onTap,
+        this.iconData,
+        });
   final String? image, title, type, price,strikedPrice;
+  final Widget? iconData;
   void Function()? onTap;
 
   @override
@@ -43,20 +46,37 @@ class _CommonScreenProductListState extends State<CommonScreenProductList> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    topLeft: Radius.circular(10)),
-                child: CachedNetworkImage(
-                  imageUrl: widget.image.toString(),
-                  width: double.infinity,
-                  height: 170,
-                  fit: BoxFit.fill,
-                  placeholder: (context, url) =>
-                      ShimmerLoader().shimmerImageProduct(context, width:200.0),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(AppAssetsImages.noProduct1,height: 170,color: AppColors.secondaryGreen,),
-                ),
+              Stack(
+                children :[
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10)),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.image.toString(),
+                      width: double.infinity,
+                      height: 170,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) =>
+                          ShimmerLoader().shimmerImageProduct(context, width:200.0),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(AppAssetsImages.noProduct1,height: 170,color: AppColors.secondaryGreen,),
+                    ),
+                  ),
+
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.white,
+                        ),
+                        child: widget.iconData))
+                ]
+                
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
@@ -77,7 +97,7 @@ class _CommonScreenProductListState extends State<CommonScreenProductList> {
                       ),
                     ),
                     Text(
-                      "${userModel.shopCategoryType}",
+                      "${widget.type}",
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w300,

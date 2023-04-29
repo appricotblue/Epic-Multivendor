@@ -64,6 +64,7 @@ class Products {
   int? stock;
   int? category;
   int? subCategory;
+  String? categoryType;
   String? status;
   String? featured;
   String? isNew;
@@ -87,6 +88,7 @@ class Products {
       this.stock,
       this.category,
       this.subCategory,
+      this.categoryType,
       this.status,
       this.featured,
       this.isNew,
@@ -143,6 +145,7 @@ class Products {
     stock = json["stock"];
     category = json["category"];
     subCategory = json["sub_category"];
+    categoryType = json["category_type"];
     status = json["status"];
     featured = json["featured"];
     isNew = json["is_new"];
@@ -172,6 +175,7 @@ class Products {
     _data["stock"] = stock;
     _data["category"] = category;
     _data["sub_category"] = subCategory;
+    _data["category_type"] = categoryType;
     _data["status"] = status;
     _data["featured"] = featured;
     _data["is_new"] = isNew;
