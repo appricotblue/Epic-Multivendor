@@ -196,4 +196,20 @@ class HomeProvider extends ChangeNotifier {
     }
     return searchProductModel!;
   }
+
+  Future<SuccessModel> updateDeviceToken({userId,deviceToken}) async {
+    try {
+      ApiResponse apiResponse = await ApiHelper().postData(data: {
+        "user_id": "$userId",
+        "device_token": "$deviceToken",
+      }, route: ApiEndPoints.updateDeviceToken);
+      if (apiResponse.data != null) {
+        successModel = SuccessModel.fromJson(apiResponse.data);
+        
+      }
+    } catch (ex) {
+      showErrorMessage("Something went wrong");
+    }
+    return successModel!;
+  }
 }

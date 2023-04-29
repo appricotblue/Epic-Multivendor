@@ -6,6 +6,7 @@ import 'package:epic_multivendor/screens/home/ui/widget/service.dart';
 import 'package:epic_multivendor/screens/home/ui/widget/shop_ui.dart';
 import 'package:epic_multivendor/screens/map/map.dart';
 import 'package:epic_multivendor/screens/prime/prime.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,8 @@ class _HomeUIState extends State<HomeUI> {
   bool isSecondTab = false;
   int selectedIndex = 0;
   var userModel = Get.find<UserModel>();
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +205,14 @@ class _HomeUIState extends State<HomeUI> {
           lng: userModel.lng,
           location:userModel.placeName);
     });
+    pushFCMtoken();
     super.initState();
+  }
+
+   void pushFCMtoken() async {
+    HomeProvider provider = HomeProvider();
+    String? token = await messaging.getToken();
+    provider.updateDeviceToken(userId: userModel.userId,deviceToken: token);
   }
 
   _sharedValueForLocation() async {

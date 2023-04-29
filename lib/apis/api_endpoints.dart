@@ -7,6 +7,7 @@ class ApiEndPoints {
   /// login
   static String login = '${baseUrl}login';
   static String settings = '${baseUrl}settings';
+   static String updateDeviceToken = '${baseUrl}user-update/device-token';
 
   /// HOME
   ///
