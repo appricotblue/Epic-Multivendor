@@ -58,10 +58,10 @@ class CommonNewCollection extends StatelessWidget {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const CommonProductDetails(),));
               },
 
-            iconData: shopProductProvider.shopProductListModel?.products?[i].isWishlist == true?
+            iconData: shopProductProvider.shopProductListModel?.products?[i].isWishlist == false?
               InkWell(
                 onTap: (){
-                  shopProductProvider.removeWishList(context,
+                  shopProductProvider.addToWishList(context,
                     userId: userModel.userId,
                     productId: shopProductProvider.shopProductListModel?.products?[i].id
                   );
@@ -76,7 +76,7 @@ class CommonNewCollection extends StatelessWidget {
                 ),
               ): InkWell(
                 onTap: (){
-                  shopProductProvider.addToWishList(context,
+                  shopProductProvider.removeWishList(context,
                     userId: userModel.userId,
                     productId: shopProductProvider.shopProductListModel?.products?[i].id
                   );
