@@ -35,34 +35,34 @@ class _MyProfileState extends State<MyProfile> {
       },
       child: Scaffold(
           backgroundColor: AppColors.primaryGreen,
-          appBar: AppBar(
-            backgroundColor: AppColors.primaryGreen,
-            elevation: 0,
-            leading: InkWell(
-                onTap: () async{
-                       await SystemNavigator.pop();
-                    },
-                child: Icon(
-                  Icons.close,
-                  color: AppColors.white,
-                )),
-            title: Text(
-              'My Account',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    height: 1.5,
-                    color: AppColors.white,
-                  ),
-            ),
-          ),
+          // appBar: AppBar(
+          //   backgroundColor: AppColors.primaryGreen,
+          //   elevation: 0,
+          //   // leading: InkWell(
+          //   //     onTap: () async{
+          //   //            await SystemNavigator.pop();
+          //   //         },
+          //   //     child: Icon(
+          //   //       Icons.close,
+          //   //       color: AppColors.white,
+          //   //     )),
+          //   // title: Text(
+          //   //   'My Account',
+          //   //   style: Theme.of(context).textTheme.bodyText1?.copyWith(
+          //   //         fontSize: 20,
+          //   //         fontWeight: FontWeight.w700,
+          //   //         height: 1.5,
+          //   //         color: AppColors.white,
+          //   //       ),
+          //   // ),
+          // ),
         body:myProfilePROV.isLoading?Center(child: CircularProgressIndicator(color: AppColors.primaryGreen,),): SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 30,
+                height: 60,
               ),
               Stack(
                 children: [

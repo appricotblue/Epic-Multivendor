@@ -109,7 +109,7 @@ class _HomeUIState extends State<HomeUI> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Prime(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Prime(),));
                       },
                       child:
                           SvgImageGreen(AppSvgImages.prime, context, size: 30.0),

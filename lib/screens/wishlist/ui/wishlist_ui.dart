@@ -16,9 +16,13 @@ class WishListUI extends StatefulWidget {
   State<WishListUI> createState() => _WishListUIState();
 }
 
-class _WishListUIState extends State<WishListUI> {
+class _WishListUIState extends State<WishListUI> with SingleTickerProviderStateMixin{
+
   int selectedIndex = 0;
   var userModel = Get.find<UserModel>();
+  late TabController _tabController;
+  
+
   @override
   Widget build(BuildContext context) {
     print(userModel.userId);
@@ -27,52 +31,49 @@ class _WishListUIState extends State<WishListUI> {
          await SystemNavigator.pop();
          return true;
       },
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          backgroundColor: selectedIndex == 0
-              ? AppColors.scaffoldGreen
-              : AppColors.scaffoldBlue,
-          appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(100),
-              child: AppBar(
-                elevation: 0,
-                backgroundColor: AppColors.white,
-                leading: IconButton(
-                    onPressed: () async{
-                       await SystemNavigator.pop();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: AppColors.black,
-                    )),
-                title: Text(
-                  "Wishlist",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      ?.copyWith(color: AppColors.black),
-                ),
-                bottom: TabBar(
+      child: Scaffold(
+         backgroundColor: selectedIndex == 0?AppColors.scaffoldGreen: AppColors.scaffoldBlue,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: AppColors.white,
+            title: Text(
+              "My Wishlist",
+              style: Theme.of(context).textTheme.headline6?.copyWith(color: AppColors.black),
+            ),
+          ),
+          body: Column(
+            children: [
+              const SizedBox(height: 5,),
+              Container(
+                color: Colors.white,
+                child: TabBar(
                   onTap: (i) {
                     setState(() {
                       selectedIndex = i;
                     });
                   },
+                  controller: _tabController,
                   indicatorColor: selectedIndex == 0
                       ? AppColors.primaryGreen
                       : AppColors.primaryBlue,
                   labelColor: AppColors.black,
+                  
                   tabs: const [
                     Tab(text: "Products"),
                     Tab(text: "Services"),
                   ],
                 ),
-              )),
-          body: const TabBarView(
-            children: [WishListProduct(), WishListService()],
-          ),
-        ),
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    WishListProduct(), 
+                    WishListService()
+                  ],
+                ),
+              ),
+            ]),
       ),
     );
   }
@@ -82,6 +83,7 @@ class _WishListUIState extends State<WishListUI> {
     Future.microtask(() {
       context.read<WishListProvider>().wishListProduct(userId: userModel.userId);
     });
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 }

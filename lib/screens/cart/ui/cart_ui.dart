@@ -35,7 +35,10 @@ class _CartUIState extends State<CartUI> {
     var data = cartProvider.cartListModel?.cartData?.map((e) => e.totalAmount);
     productAmount = data?.fold(0, (previousValue, element) => previousValue.toInt() + element!.toInt());
     total = data?.fold(0, (previousValue, element) => previousValue.toInt() + element!.toInt());
-    total = total + cartProvider.cartListModel?.gst;
+    if(cartProvider.cartListModel?.gst != null){
+      total = total + cartProvider.cartListModel?.gst;
+    }
+    
    
     return WillPopScope(
        onWillPop: () async {
@@ -47,14 +50,14 @@ class _CartUIState extends State<CartUI> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: AppColors.white,
-          leading: IconButton(
-             onPressed: () async{
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomBarScreen(),));
-                    },
-              icon: Icon(
-                Icons.arrow_back,
-                color: AppColors.black,
-              )),
+          // leading: IconButton(
+          //    onPressed: () async{
+          //        Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomBarScreen(),));
+          //           },
+          //     icon: Icon(
+          //       Icons.arrow_back,
+          //       color: AppColors.black,
+          //     )),
           title: Text(
             "My Cart",
             style: Theme.of(context)
