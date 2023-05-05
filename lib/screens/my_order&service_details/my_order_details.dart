@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyOrderDetails extends StatelessWidget {
-  const MyOrderDetails({super.key,this.orderId});
+  const MyOrderDetails({super.key,this.orderId,this.orderKey});
   final String? orderId;
+  final String? orderKey;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => MyOrderDetailsProvider(),
       child: MyOrderDetailsUI(
-        orderId:orderId
+        orderId:orderId,
+        orderKey: orderKey,
       ),
     );
   }

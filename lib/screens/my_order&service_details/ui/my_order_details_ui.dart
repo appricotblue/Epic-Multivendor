@@ -15,8 +15,9 @@ import '../../../helper/helper_shimmer.dart';
 import '../../../helper/helper_style.dart';
 
 class MyOrderDetailsUI extends StatefulWidget {
-  const MyOrderDetailsUI({super.key, this.orderId});
+  const MyOrderDetailsUI({super.key, this.orderId,this.orderKey});
   final String? orderId;
+  final String? orderKey;
 
   @override
   State<MyOrderDetailsUI> createState() => _MyOrderDetailsUIState();
@@ -441,6 +442,41 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
               const SizedBox(
                 height: 10,
               ),
+
+              value.trackOrderModel?.data?.status != null? Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                   Text(
+                      "Delivery Boy Status",
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
+                    ),
+
+                    Text(
+                      "${value.trackOrderModel?.data?.status}",
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 15
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
+              value.trackOrderModel?.data?.status != null?const SizedBox(
+                height: 10,
+              ): const SizedBox(),
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -479,7 +515,7 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
                         ),)
                       ],
                     ),
-                        Row(
+                    Row(
                       children: [
                         Column(
                           children: [
@@ -579,6 +615,11 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
       context
           .read<MyOrderDetailsProvider>()
           .myOrderListDetails(orderId: widget.orderId);
+
+      if(widget.orderKey != null){
+        context.read<MyOrderDetailsProvider>().trackOrder(widget.orderKey);
+      }
+      
     });
     super.initState();
   }

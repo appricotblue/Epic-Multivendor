@@ -62,6 +62,7 @@ class ApiEndPoints {
 
   /// Qwqer calculation
   static String deliveryCalcualtion = 'https://stage-api.qwqer.in/client/price-calculate/';
+  static String trackDeliveryBoy    = 'https://stage-api.qwqer.in/client/order/track/';
 
   /// profile
   static String myProfile = '${baseUrl}profile-data';

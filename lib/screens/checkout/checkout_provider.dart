@@ -182,9 +182,7 @@ class CheckoutProvider extends ChangeNotifier{
       }, route: ApiEndPoints.deliveryCalcualtion);
       if (apiResponse.data != null) {
         deliveryCalculationModel = DeliveryCalculationModel.fromJson(apiResponse.data);
-        deliveryAmount = "${deliveryCalculationModel?.data?.deliveryAmount}";
-
-        
+        deliveryAmount = "${deliveryCalculationModel?.data?.deliveryAmount}"; 
       }
       setLoading(false);
     } catch (ex) {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:epic_multivendor/helper/model/SuccessModel.dart';
 import 'package:epic_multivendor/screens/my_order&service_details/model/my_service_details.dart';
+import 'package:epic_multivendor/screens/my_order&service_details/model/track_order.dart';
 import 'package:epic_multivendor/screens/my_order&services/model/ServiceBookingDetailsModel.dart';
 import 'package:epic_multivendor/screens/my_service_details/my_service_details.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +25,7 @@ class MyOrderDetailsProvider extends ChangeNotifier {
   MyServiceDetailsModel? myServiceDetailsModel;
   ServiceBookingDetailsModel? serviceBookingDetailsModel;
   SuccessModel? successModel;
+  TrackOrderModel? trackOrderModel;
 
   /// PRODUCT WISHLIST
   ///
@@ -129,5 +131,20 @@ class MyOrderDetailsProvider extends ChangeNotifier {
        
     }
     return successModel;
+  }
+
+  Future<TrackOrderModel> trackOrder(orderKey) async {
+    try {
+      ApiResponse apiResponse = await ApiHelper()
+          .trackOrder('https://stage-api.qwqer.in/client/order/track/$orderKey');
+      if (apiResponse.data != null) {
+        trackOrderModel = TrackOrderModel.fromJson(apiResponse.data);
+      }
+      setLoading(false);
+    } catch (ex) {
+      setLoading(false);
+      showErrorMessage("Something went wrong");
+    }
+    return trackOrderModel!;
   }
 }

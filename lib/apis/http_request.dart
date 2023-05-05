@@ -115,6 +115,25 @@ class ApiHelper {
     return ApiResponse(false);
   }
 
+  Future<ApiResponse> trackOrder(String route) async {
+    showInfoMessage(route);
+    try {
+      Map<String, String> headers = deliveryHeaders();
+      Response response = await get(Uri.parse(route), headers: headers);
+      showInfoMessage(response.body);
+       showInfoMessage(route);
+      if (response.statusCode == 200) {
+        dynamic bodyData = jsonDecode(response.body);
+        return ApiResponse(true, data: bodyData);
+      } else {
+        return ApiResponse(false);
+      }
+    } catch (ex) {
+      showErrorMessage("Exception $ex");
+      return ApiResponse(false);
+    }
+  }
+
 
   Future<ApiResponse> deleteData(String route, dynamic data) async {
     String url = baseUrlFunction() + route;

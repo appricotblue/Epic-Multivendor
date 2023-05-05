@@ -37,6 +37,8 @@ class _ProductOrderUIState extends State<ProductOrderUI> {
             const SizedBox(
               height: 10,
             ),
+            
+
             myOrderProvider.myOrderModel?.orders?.length == 0 ||
                 myOrderProvider.myOrderModel?.orders?.length == null ?
             Center(child: Image.asset(AppAssetsImages.noService1),):
@@ -49,7 +51,9 @@ class _ProductOrderUIState extends State<ProductOrderUI> {
                       child: InkWell(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => MyOrderDetails(
-                            orderId:myOrderProvider.myOrderModel?.orders?[index].id.toString()
+                            orderId:myOrderProvider.myOrderModel?.orders?[index].id.toString(),
+                            orderKey: myOrderProvider.myOrderModel?.orders?[index].orderKey.toString(),
+
                           ),));
                         },
                         child: Container(
@@ -83,6 +87,7 @@ class _ProductOrderUIState extends State<ProductOrderUI> {
                               const SizedBox(
                                 width: 5,
                               ),
+                              // Text("${myOrderProvider.myOrderModel?.orders?[index].orderKey}"),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

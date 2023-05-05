@@ -82,10 +82,34 @@ class Orders {
     String? paymentMethod;
     int? deliveryBoyId;
     String? deliveryPin;
+    String? orderKey;
     String? createdAt;
     String? updatedAt;
 
-    Orders({this.id, this.orderId, this.userId, this.vendorId, this.userName, this.userPhone, this.userEmail, this.orderAmount, this.paymentStatus, this.orderStatusId, this.orderStatus, this.orderType, this.timeSlot, this.deliveryDate, this.deliveryAddressId, this.deliveryAddress, this.paymentMethod, this.deliveryBoyId, this.deliveryPin, this.createdAt, this.updatedAt});
+    Orders({
+      this.id, 
+      this.orderId, 
+      this.userId, 
+      this.vendorId, 
+      this.userName, 
+      this.userPhone, 
+      this.userEmail, 
+      this.orderAmount, 
+      this.paymentStatus, 
+      this.orderStatusId, 
+      this.orderStatus, 
+      this.orderType, 
+      this.timeSlot, 
+      this.deliveryDate, 
+      this.deliveryAddressId, 
+      this.deliveryAddress, 
+      this.paymentMethod, 
+      this.deliveryBoyId, 
+      this.deliveryPin, 
+      this.orderKey,
+      this.createdAt, 
+      this.updatedAt
+    });
 
     Orders.fromJson(Map<String, dynamic> json) {
         id = json["id"];
@@ -107,6 +131,7 @@ class Orders {
         paymentMethod = json["payment_method"];
         deliveryBoyId = json["delivery_boy_id"];
         deliveryPin = json["delivery_pin"];
+        orderKey    = json["order_key"];
         createdAt = json["created_at"];
         updatedAt = json["updated_at"];
     }
@@ -132,6 +157,7 @@ class Orders {
         _data["payment_method"] = paymentMethod;
         _data["delivery_boy_id"] = deliveryBoyId;
         _data["delivery_pin"] = deliveryPin;
+        _data["order_key"] = orderKey;
         _data["created_at"] = createdAt;
         _data["updated_at"] = updatedAt;
         return _data;
