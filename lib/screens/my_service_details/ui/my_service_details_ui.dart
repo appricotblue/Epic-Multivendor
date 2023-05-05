@@ -414,6 +414,41 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
               const SizedBox(
                 height: 10,
               ),
+
+              value.serviceBookingDetailsModel?.bookingData?.providerStatus !=null?Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                   Text(
+                      "Service Provider Status",
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                      ),
+                    ),
+
+                    Text(
+                      "${value.serviceBookingDetailsModel?.bookingData?.providerStatus}",
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                          height: 1.445,
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 15
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
+              value.serviceBookingDetailsModel?.bookingData?.providerStatus !=null?const SizedBox(
+                height: 10,
+              ):const SizedBox(),
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),

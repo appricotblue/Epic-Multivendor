@@ -40,6 +40,7 @@ class BookingData {
   String? userPhone;
   String? userEmail;
   String? bookingStatus;
+  String? providerStatus;
   List<AdditionalCharges>? additionalCharges;
 
   BookingData({
@@ -58,6 +59,7 @@ class BookingData {
       this.userPhone,
       this.userEmail,
       this.bookingStatus,
+      this.providerStatus,
       this.additionalCharges
     });
 
@@ -77,6 +79,7 @@ class BookingData {
     userPhone = json['user_phone'];
     userEmail = json['user_email'];
     bookingStatus = json['booking_status'];
+    providerStatus = json['provider_status'];
     if (json['additional_charges'] != null) {
       additionalCharges = <AdditionalCharges>[];
       json['additional_charges'].forEach((v) {
@@ -102,6 +105,7 @@ class BookingData {
     data['user_phone'] = this.userPhone;
     data['user_email'] = this.userEmail;
     data['booking_status'] = this.bookingStatus;
+    data['provider_status'] = this.providerStatus;
     if (this.additionalCharges != null) {
       data['additional_charges'] =
           this.additionalCharges!.map((v) => v.toJson()).toList();
