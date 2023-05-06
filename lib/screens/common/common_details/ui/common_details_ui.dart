@@ -383,17 +383,17 @@ class _CommonProductDetailsUIState extends State<CommonProductDetailsUI> {
                   Divider(
                     color: AppColors.lightGrey,
                   ),
-                  Text(
-                    "Details",
-                    style: Theme.of(context).textTheme.headline6?.copyWith(
-                        height: 1.445,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  _details(context, "Category", "Kurtha"),
+                  // Text(
+                  //   "Details",
+                  //   style: Theme.of(context).textTheme.headline6?.copyWith(
+                  //       height: 1.445,
+                  //       overflow: TextOverflow.ellipsis,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  // _details(context, "Category", "Kurtha"),
                   // Row(
                   //   children: [
                   //     SizedBox(
