@@ -352,9 +352,9 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 2,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
-                    List paymentMethod = ["Online Payment","Pay on delivery"];
+                    List paymentMethod = ["Online Payment"];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: InkWell(
@@ -390,8 +390,9 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
                                       height: 10,
                                       width: 10,
                                       decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color:selectedPayment == index?AppColors.primaryGreen: AppColors.white),
+                                        shape: BoxShape.circle,
+                                        color:selectedPayment == index?AppColors.primaryGreen: AppColors.white
+                                      ),
                                     ),
                                   ),
                                 ),

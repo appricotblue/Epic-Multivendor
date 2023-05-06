@@ -435,7 +435,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                   padding: const EdgeInsets.all(5.0),
                   child: InkWell(
                     onTap: () {
-                      userModel.updateWith(orderAmount: shopDetailsProvider.shopDetailsModel?.productData?.price);
+                      userModel.updateWith(orderAmount: shopDetailsProvider.shopDetailsModel?.productData?.salePrice);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -443,7 +443,7 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                               ShopCheckOut(
                                 isOrder: "true",
                                 productId: "${shopDetailsProvider.shopDetailsModel?.productData?.id.toString()}",
-                                productAmount: productAmount == null? shopDetailsProvider.shopDetailsModel?.productData?.price.toString():productAmount.toString(),
+                                productAmount: productAmount == null? shopDetailsProvider.shopDetailsModel?.productData?.salePrice.toString():productAmount.toString(),
                                 quantity: shopDetailsProvider.shopDetailsModel?.productData?.quantityCount,
                               )));
                     },

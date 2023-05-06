@@ -143,6 +143,8 @@ class _ShopProductUIState extends State<ShopProductUI> {
                         // ),
                         Row(
                           children: [
+                            userModel.shopCategoryType == null || userModel.shopCategoryType == 'null'?
+                            Container():
                             Text('${userModel.shopCategoryType}',
                               // '$rupees 300',
                               style: Theme.of(context)
