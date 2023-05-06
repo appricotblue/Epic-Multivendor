@@ -382,20 +382,20 @@ class _ShopDetailsUIState extends State<ShopDetailsUI> {
                   Divider(
                     color: AppColors.lightGrey,
                   ),
-                  Text(
-                    "Details",
-                    style: Theme.of(context).textTheme.headline6?.copyWith(
-                        height: 1.445,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  _details(context, "Category", "Kurtha"),
-                   _details(context, "Color", "Black"),
-                  _details(context, "Occassion", "Casual Wear"),
-                  _details(context, "Material", "Coton"),
+                  // Text(
+                  //   "Details",
+                  //   style: Theme.of(context).textTheme.headline6?.copyWith(
+                  //       height: 1.445,
+                  //       overflow: TextOverflow.ellipsis,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  // _details(context, "Category", "Kurtha"),
+                  //  _details(context, "Color", "Black"),
+                  // _details(context, "Occassion", "Casual Wear"),
+                  // _details(context, "Material", "Coton"),
                   const SizedBox(
                     height: 5,
                   ),
