@@ -63,7 +63,7 @@ class _SplashUIState extends State<SplashUI> {
   void initState() {
     _sharedValueForLocation();
      Future.microtask(() {
-      context.read<SplashProvider>().mySettingsFUNC(userModel.userId);
+      context.read<SplashProvider>().mySettingsFUNC(context);
     });
     super.initState();
   }

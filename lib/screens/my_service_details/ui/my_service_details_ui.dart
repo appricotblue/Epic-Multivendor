@@ -5,6 +5,7 @@ import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/screens/my_order&service_details/my_order_details_provider.dart';
 import 'package:epic_multivendor/screens/my_service_details/my_service_details.dart';
+import 'package:epic_multivendor/screens/splash/splash_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -521,6 +522,7 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
       context.read<MyOrderDetailsProvider>().serviceBookingDetails(
           serviceBookingId: widget.serviceId
       );
+      Provider.of<SplashProvider>(context,listen: false).mySettingsFUNC(context);
     });
     super.initState();
   }
@@ -558,7 +560,7 @@ class _MyServiceDetailsUIState extends State<MyServiceDetailsUI> {
 
   getPayment(String? amount) {
     var options = {
-      'key': "rzp_test_YPPy2atb2bUKDB",
+      'key': Provider.of<SplashProvider>(context, listen: false).settingsModel?.razorpayKey,
       'amount': int.parse(amount.toString()) *100,
       'name': "${userModel.name}",
       'prefill': {

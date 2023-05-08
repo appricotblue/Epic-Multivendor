@@ -13,12 +13,13 @@ class SplashProvider extends ChangeNotifier {
   }
 
   SettingsModel? settingsModel;
-  Future<SettingsModel> mySettingsFUNC(userId) async {
+  Future<SettingsModel> mySettingsFUNC(BuildContext context) async {
     try {
       ApiResponse apiResponse = await ApiHelper()
           .getData(ApiEndPoints.settings);
       if (apiResponse.data != null) {
         settingsModel = SettingsModel.fromJson(apiResponse.data);
+        notifyListeners();
       }
       setLoading(false);
     } catch (ex) {

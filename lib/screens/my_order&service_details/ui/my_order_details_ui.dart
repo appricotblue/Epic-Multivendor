@@ -3,6 +3,7 @@ import 'package:epic_multivendor/apis/api_endpoints.dart';
 import 'package:epic_multivendor/helper/helper_color.dart';
 import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/screens/my_order&service_details/my_order_details_provider.dart';
+import 'package:epic_multivendor/screens/splash/splash_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -630,7 +631,8 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
     Provider.of<MyOrderDetailsProvider>(context,listen: false).updateOrderPaymentStatus(
       context,orderId: widget.orderId
     );
-     context.read<MyOrderDetailsProvider>().myOrderListDetails(orderId: widget.orderId);
+    context.read<MyOrderDetailsProvider>().myOrderListDetails(orderId: widget.orderId);
+    Provider.of<SplashProvider>(context,listen: false).mySettingsFUNC(context);
   }
 
   void payError(PaymentFailureResponse response) {
@@ -645,7 +647,7 @@ class _MyOrderDetailsUIState extends State<MyOrderDetailsUI> {
 
   getPayment(String? amount) {
     var options = {
-      'key': "rzp_test_YPPy2atb2bUKDB",
+      'key': Provider.of<SplashProvider>(context, listen: false).settingsModel?.razorpayKey,
       'amount': int.parse(amount.toString()) *100,
       'name': "${userModel.name}",
       'prefill': {

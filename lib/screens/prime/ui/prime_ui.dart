@@ -236,6 +236,7 @@ class _PrimeUIState extends State<PrimeUI> {
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, externalWallet);
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, paySuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, payError);
+    Provider.of<SplashProvider>(context,listen: false).mySettingsFUNC(context);
     super.initState();
   }
    void paySuccess(PaymentSuccessResponse response) async {
@@ -261,7 +262,7 @@ class _PrimeUIState extends State<PrimeUI> {
 
   getPayment() {
     var options = {
-      'key': "rzp_test_YPPy2atb2bUKDB",
+      'key': Provider.of<SplashProvider>(context, listen: false).settingsModel?.razorpayKey,
       'amount': int.parse(Provider.of<SplashProvider>(context,listen: false).settingsModel?.subscriptionAmount ?? "") * 100,
       'name': "",
       'prefill': {'contact':"",

@@ -1,5 +1,6 @@
 import 'package:epic_multivendor/helper/helper_style.dart';
 import 'package:epic_multivendor/screens/checkout/order_placed/service_order_placed.dart';
+import 'package:epic_multivendor/screens/splash/splash_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -497,6 +498,7 @@ class _ServiceCheckoutUIState extends State<ServiceCheckoutUI> {
       context.read<CheckoutProvider>().getAddressFUNC(
             userId: userModel.userId,
           );
+      Provider.of<SplashProvider>(context,listen: false).mySettingsFUNC(context);
     });
     userModel.updateWith(addressId: "");
     super.initState();
@@ -528,7 +530,7 @@ class _ServiceCheckoutUIState extends State<ServiceCheckoutUI> {
 
   getPayment() {
     var options = {
-      'key': "rzp_test_YPPy2atb2bUKDB",
+      'key': Provider.of<SplashProvider>(context, listen: false).settingsModel?.razorpayKey,
       'amount': int.parse(userModel.servicePrice.toString())*100,
       'name': "${userModel.name}",
       'prefill': {

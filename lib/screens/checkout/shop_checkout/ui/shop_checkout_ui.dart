@@ -7,6 +7,7 @@ import 'package:epic_multivendor/screens/checkout/address/address.dart';
 import 'package:epic_multivendor/screens/checkout/address/ui/address.dart';
 import 'package:epic_multivendor/screens/checkout/checkout_provider.dart';
 import 'package:epic_multivendor/screens/checkout/order_placed/shop_order_placed.dart';
+import 'package:epic_multivendor/screens/splash/splash_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +44,8 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
     CheckoutProvider checkoutProvider = context.watch<CheckoutProvider>();
     deliveryAmount  =  double.parse(checkoutProvider.deliveryAmount);
     totalAmount     = (deliveryAmount ?? 0) + (userModel.orderAmount ?? 0);
+
+  
     return Scaffold(
         backgroundColor: AppColors.scaffoldBlue,
         appBar: AppBar(
@@ -562,6 +565,7 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
     Future.microtask(() {
       context.read<CheckoutProvider>().getAddressFUNC(
           userId: userModel.userId,);
+      Provider.of<SplashProvider>(context,listen: false).mySettingsFUNC(context);
     });
     super.initState();
   }
@@ -599,7 +603,7 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
 
   getPayment() {
     var options = {
-      'key': "rzp_test_YPPy2atb2bUKDB",
+      'key': Provider.of<SplashProvider>(context, listen: false).settingsModel?.razorpayKey,
       'amount': totalAmount! * 100,
       'name': "",
 
