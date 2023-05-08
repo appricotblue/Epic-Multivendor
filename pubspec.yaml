@@ -59,6 +59,7 @@ dependencies:
   firebase_messaging: ^14.2.3
   firebase_core:
   flutter_local_notifications:
+  upgrader: ^6.3.0
 
 
 dev_dependencies:

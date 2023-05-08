@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upgrader/upgrader.dart';
 import '../../../helper/helper_color.dart';
 import '../../../helper/helper_images.dart';
 import '../../../helper/widgets/common_alerts.dart';
@@ -44,134 +45,143 @@ class _HomeUIState extends State<HomeUI> {
          await SystemNavigator.pop();
          return true;
       },
-        child: Scaffold(
-          backgroundColor:
-              isSelected ? AppColors.scaffoldBlue : AppColors.scaffoldGreen,
-          appBar: AppBar(
-            backgroundColor: AppColors.white,
-            elevation: 0,
-            actions: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    SvgImageGreen(AppSvgImages.greenEpic, context, size: 30.0),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MapPage(),
-                              ));
-                        },
-                        child: Container(
-                          width: 200,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color(0xfff6f6f6),
-                          ),
-                          child: TextField(
-                            enabled: false,
-                            decoration: InputDecoration(
-                                hintText: homeProvider.placeName ?? "",
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1
-                                    ?.copyWith(
-                                        overflow: TextOverflow.ellipsis,
-                                        color: AppColors.black),
-                                prefixIcon: Icon(
-                                  Icons.place,
-                                  color: AppColors.primaryGreen,
-                                  size: 17,
-                                ),
-                                suffixIcon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: AppColors.primaryGreen,
-                                ),
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none),
+        child: UpgradeAlert(
+          upgrader: Upgrader(dialogStyle: UpgradeDialogStyle.material),
+          child: Scaffold(
+            backgroundColor:
+                isSelected ? AppColors.scaffoldBlue : AppColors.scaffoldGreen,
+            appBar: AppBar(
+              backgroundColor: AppColors.white,
+              elevation: 0,
+              actions: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SvgImageGreen(AppSvgImages.greenEpic, context,
+                          size: 30.0),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MapPage(),
+                                ));
+                          },
+                          child: Container(
+                            width: 200,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: const Color(0xfff6f6f6),
+                            ),
+                            child: TextField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                  hintText: homeProvider.placeName ?? "",
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      ?.copyWith(
+                                          overflow: TextOverflow.ellipsis,
+                                          color: AppColors.black),
+                                  prefixIcon: Icon(
+                                    Icons.place,
+                                    color: AppColors.primaryGreen,
+                                    size: 17,
+                                  ),
+                                  suffixIcon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: AppColors.primaryGreen,
+                                  ),
+                                  disabledBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Prime(),));
-                      },
-                      child:
-                          SvgImageGreen(AppSvgImages.prime, context, size: 30.0),
-                    ),
-                    // const SizedBox(
-                    //   width: 5,
-                    // ),
-                    // InkWell(
-                    //   onTap: () {},
-                    //   child: SvgImageGreen(AppSvgImages.notification, context,
-                    //       size: 30.0),
-                    // ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          body: homeProvider.isLoading
-              ? ShimmerLoader().shimmerProduct(context)
-              : SingleChildScrollView(
-                  child: SafeArea(
-                    child: Stack(
-                      children: [
-                        AnimatedTab(
-                          isSelected: isSelected,
-                          isFirstTab: isFirstTab,
-                          isSecondTab: isSecondTab,
-                          firstTabTap: () {
-                            setState(() {
-                              isSelected = !isSelected;
-                              isSecondTab = true;
-                              isFirstTab = false;
-                            });
-                          },
-                          secondTabTaP: () {
-                            setState(() {
-                              isSelected = !isSelected;
-                              isFirstTab = true;
-                              isSecondTab = false;
-                            });
-                            Future.microtask(() {
-                              context.read<HomeProvider>().homeService(
-                                  userId: userModel.userId,
-                                  lat: userModel.lat,
-                                  lng:userModel.lng,
-                                  location:userModel.placeName);
-                            });
-                          },
-                        ),
-                        animatedRoundContainer(),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 68.0),
-                          child:
-                              isSelected ? const ServiceList() : const ShopList(),
-                        )
-                      ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Prime(),
+                              ));
+                        },
+                        child: SvgImageGreen(AppSvgImages.prime, context,
+                            size: 30.0),
+                      ),
+                      // const SizedBox(
+                      //   width: 5,
+                      // ),
+                      // InkWell(
+                      //   onTap: () {},
+                      //   child: SvgImageGreen(AppSvgImages.notification, context,
+                      //       size: 30.0),
+                      // ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            body: homeProvider.isLoading
+                ? ShimmerLoader().shimmerProduct(context)
+                : SingleChildScrollView(
+                    child: SafeArea(
+                      child: Stack(
+                        children: [
+                          AnimatedTab(
+                            isSelected: isSelected,
+                            isFirstTab: isFirstTab,
+                            isSecondTab: isSecondTab,
+                            firstTabTap: () {
+                              setState(() {
+                                isSelected = !isSelected;
+                                isSecondTab = true;
+                                isFirstTab = false;
+                              });
+                            },
+                            secondTabTaP: () {
+                              setState(() {
+                                isSelected = !isSelected;
+                                isFirstTab = true;
+                                isSecondTab = false;
+                              });
+                              Future.microtask(() {
+                                context.read<HomeProvider>().homeService(
+                                    userId: userModel.userId,
+                                    lat: userModel.lat,
+                                    lng: userModel.lng,
+                                    location: userModel.placeName);
+                              });
+                            },
+                          ),
+                          animatedRoundContainer(),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 68.0),
+                            child: isSelected
+                                ? const ServiceList()
+                                : const ShopList(),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
+          ),
         ),
       );
     }
