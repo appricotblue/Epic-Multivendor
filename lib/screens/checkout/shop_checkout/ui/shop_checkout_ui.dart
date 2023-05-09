@@ -37,6 +37,8 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
   double? totalAmount;
  
   TextEditingController postCTLR = TextEditingController();
+  TextEditingController houseNumberCTLR = TextEditingController();
+  TextEditingController landMrakCTLR = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -237,10 +239,26 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
                           const SizedBox(
                             height: 5,
                           ),
+                          CommonTextField(
+                            hintText: "house number",
+                            controller: houseNumberCTLR,
+                            textInputType: TextInputType.number,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CommonTextField(
+                            hintText: "land mark",
+                            controller: landMrakCTLR,
+                            textInputType: TextInputType.text,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           InkWell(
                             onTap: () {
                             if(postCTLR.text.isEmpty || userModel.placeName == null || userModel.placeName == "null"||
-                            userModel.placeName == ""){
+                            userModel.placeName == "" || houseNumberCTLR.text.isEmpty || landMrakCTLR.text.isEmpty){
                               SnackBarMessage(context, "All fields are required");
                             }else{
                               Provider.of<CheckoutProvider>(context,
@@ -250,10 +268,14 @@ class _ShopCheckoutUIState extends State<ShopCheckoutUI> {
                                   address: userModel.placeName,
                                   lat: userModel.lat,
                                   lng: userModel.lng,
-                                  pincode: postCTLR.text
+                                  pincode: postCTLR.text,
+                                  houseNumber: houseNumberCTLR.text,
+                                  landMark: landMrakCTLR.text
                               ).then((value) {
                                 userModel.updateWith(placeName: "");
                                 postCTLR.clear();
+                                houseNumberCTLR.clear();
+                                landMrakCTLR.clear();
                                 checkoutProvider.getAddressFUNC(userId: userModel.userId);
                               });
                               setState(() {

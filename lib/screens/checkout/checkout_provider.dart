@@ -48,7 +48,7 @@ class CheckoutProvider extends ChangeNotifier{
 
 
   Future<SuccessModel> addAddressFUNC({
-    userID,address,pincode,lat,lng
+    userID,address,pincode,lat,lng,houseNumber,landMark
 }) async {
     try {
       ApiResponse apiResponse =
@@ -58,7 +58,9 @@ class CheckoutProvider extends ChangeNotifier{
         "location": "$address",
         "latitude": "$lat",
         "longitude": "$lng",
-        "pincode": "$pincode"
+        "pincode": "$pincode",
+        "house_number":"$houseNumber",
+        "land_mark":"$landMark"
       }, route: ApiEndPoints.addAddress);
       if (apiResponse.data != null) {
         successModel = SuccessModel.fromJson(apiResponse.data);
