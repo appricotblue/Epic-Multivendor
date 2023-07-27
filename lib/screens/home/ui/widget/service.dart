@@ -140,7 +140,7 @@ class _ServiceListState extends State<ServiceList> {
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  mainAxisExtent: 125.0,
+                              mainAxisExtent: 140.0,
                   mainAxisSpacing: 1,
                   crossAxisSpacing: 10,
                 ),
@@ -160,7 +160,7 @@ class _ServiceListState extends State<ServiceList> {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const CateroryService(),));
                       },
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
@@ -204,12 +204,13 @@ class _ServiceListState extends State<ServiceList> {
                               homeProvider.homeServiceListModel?.serviceCategories?[i].types ?? "",
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      fontSize: 13,
+                                                fontSize: 12,
                                       fontWeight: FontWeight.w400,
                                       height: 1.445,
                                       color: const Color(0xff444444),
                                       
                                     ),
+                                          textAlign: TextAlign.center
                           )
                         ],
                       ),

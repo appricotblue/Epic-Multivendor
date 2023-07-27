@@ -149,7 +149,8 @@ class _ShopListState extends State<ShopList> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 4,
-                        mainAxisExtent: 100.0,
+                        // mainAxisExtent: 100.0,
+                        mainAxisExtent: 140.0,
                         mainAxisSpacing: 1,
                         crossAxisSpacing: 1,
                       ),
@@ -203,7 +204,7 @@ class _ShopListState extends State<ShopList> {
                             child: SizedBox(
                               width: 100,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
@@ -229,11 +230,12 @@ class _ShopListState extends State<ShopList> {
                                         .textTheme
                                         .bodyText1
                                         ?.copyWith(
-                                          fontSize: 13,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           height: 1.445,
                                           color: const Color(0xff444444),
                                         ),
+                                    textAlign: TextAlign.center,
                                   )
                                 ],
                               ),
