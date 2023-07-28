@@ -159,7 +159,13 @@ class _ShopListState extends State<ShopList> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, i) {
-                        return Padding(
+                        return 
+                        
+                        
+                        
+                        
+                        
+                        Padding(
                           padding: const EdgeInsets.only(right: 3),
                           child: InkWell(
                             onTap: () {
@@ -242,6 +248,11 @@ class _ShopListState extends State<ShopList> {
                             ),
                           ),
                         );
+
+
+
+
+                        
                       },
                     ),
                   ),

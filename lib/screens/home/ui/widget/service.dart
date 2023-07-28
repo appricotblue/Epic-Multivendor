@@ -148,74 +148,141 @@ class _ServiceListState extends State<ServiceList> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 3),
-                    child: InkWell(
-                      onTap: () {
-                        userModel.updateWith(
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 3),
+                                child: InkWell(
+                                  onTap: () {
+                                    userModel.updateWith(
                           serviceCategoryId: homeProvider.homeServiceListModel?.serviceCategories?[i].id.toString(),
                           serviceCategoryName: homeProvider.homeServiceListModel?.serviceCategories?[i].types,
                           serviceCategoryImage:  "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.serviceCategories?[i].imageName}"
                         );
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const CateroryService(),));
-                      },
-                      child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 20),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(7),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0x26000000),
-                                  offset: Offset(0, 0),
-                                  blurRadius: 4,
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: CachedNetworkImage(
-                                  imageUrl: "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.serviceCategories?[i].imageName}",
-                                  width: double.infinity,
-                                  height: 40,
-                                  fit: BoxFit.fill,
-                                  placeholder: (context, url) => ShimmerLoader()
-                                      .shimmerImageService(context, width: 58.25),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset(
-                                    AppAssetsImages.noService1,
-                                    height: 70,
+                             
+                                  },
+                                  child: SizedBox(
+                                    width: 100,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 60,
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: AppColors.secondaryBlue,
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.serviceCategories?[i].imageName}"))),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          homeProvider
+                                                  .homeServiceListModel
+                                                  ?.serviceCategories?[i]
+                                                  .types ??
+                                              "",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.445,
+                                                color: const Color(0xff444444),
+                                              ),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                              homeProvider.homeServiceListModel?.serviceCategories?[i].types ?? "",
-                            style:
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                                fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.445,
-                                      color: const Color(0xff444444),
-                                      
-                                    ),
-                                          textAlign: TextAlign.center
-                          )
-                        ],
-                      ),
-                    ),
-                  );
+                              );
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                              // Padding(
+                              //   padding: const EdgeInsets.only(right: 3),
+                              //   child: InkWell(
+                              //     onTap: () {
+                              // userModel.updateWith(
+                              //   serviceCategoryId: homeProvider.homeServiceListModel?.serviceCategories?[i].id.toString(),
+                              //   serviceCategoryName: homeProvider.homeServiceListModel?.serviceCategories?[i].types,
+                              //   serviceCategoryImage:  "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.serviceCategories?[i].imageName}"
+                              // );
+                              // Navigator.push(context, MaterialPageRoute(builder: (context) => const CateroryService(),));
+                              //     },
+                              //     child: Column(
+                              //                   mainAxisAlignment: MainAxisAlignment.start,
+                              //       crossAxisAlignment: CrossAxisAlignment.center,
+                              //       children: [
+                              //         Container(
+                              //           padding: const EdgeInsets.symmetric(
+                              //               horizontal: 10, vertical: 20),
+                              //           width: double.infinity,
+                              //           decoration: BoxDecoration(
+                              //             color: AppColors.white,
+                              //             borderRadius: BorderRadius.circular(7),
+                              //             boxShadow: const [
+                              //               BoxShadow(
+                              //                 color: Color(0x26000000),
+                              //                 offset: Offset(0, 0),
+                              //                 blurRadius: 4,
+                              //               ),
+                              //             ],
+                              //           ),
+                              //           child: Center(
+                              //             child: ClipRRect(
+                              //               borderRadius: BorderRadius.circular(20),
+                              //               child: CachedNetworkImage(
+                              //                 imageUrl: "${ApiEndPoints.imageBaseURL}${homeProvider.homeServiceListModel?.serviceCategories?[i].imageName}",
+                              //                 width: double.infinity,
+                              //                 height: 40,
+                              //                 fit: BoxFit.fill,
+                              //                 placeholder: (context, url) => ShimmerLoader()
+                              //                     .shimmerImageService(context, width: 58.25),
+                              //                 errorWidget: (context, url, error) =>
+                              //                     Image.asset(
+                              //                   AppAssetsImages.noService1,
+                              //                   height: 70,
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //         const SizedBox(
+                              //           height: 5,
+                              //         ),
+                              //         Text(
+                              //             homeProvider.homeServiceListModel?.serviceCategories?[i].types ?? "",
+                              //           style:
+                              //               Theme.of(context).textTheme.bodyText1?.copyWith(
+                              //                               fontSize: 12,
+                              //                     fontWeight: FontWeight.w400,
+                              //                     height: 1.445,
+                              //                     color: const Color(0xff444444),
+
+                              //                   ),
+                              //                         textAlign: TextAlign.center
+                              //         )
+                              //       ],
+                              //     ),
+                              //   ),
+                              // );
                 },
               ),
             ),
