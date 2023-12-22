@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../../../helper/helper_color.dart';
 import '../../../helper/helper_images.dart';
 import '../../../helper/helper_shimmer.dart';
+import '../../bottom/bottom_nav.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _MyProfileState extends State<MyProfile> {
     ProfileProvider myProfilePROV = context.watch<ProfileProvider>();
     return WillPopScope(
        onWillPop: () async {
-         await SystemNavigator.pop();
+         Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomBarScreen(),));
          return true;
       },
       child: Scaffold(
@@ -153,7 +154,7 @@ class _MyProfileState extends State<MyProfile> {
         ),
         bottomNavigationBar: Container(
           width: MediaQuery.of(context).size.width,
-          height: 420,
+          height: MediaQuery.of(context).size.height * 0.45,
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(50),

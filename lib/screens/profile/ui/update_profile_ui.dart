@@ -29,7 +29,9 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
         backgroundColor: AppColors.primaryGreen,
         elevation: 0,
         leading: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+            },
             child: Icon(
               Icons.close,
               color: AppColors.white,

@@ -97,7 +97,7 @@ class _CommonListWidgetState extends State<CommonListWidget> {
                         ),
                         const SizedBox(width: 5.0),
                         SizedBox(
-                          width: 130,
+                          width: 100,
                           child: Text(
                             widget.location.toString(),
                             style:

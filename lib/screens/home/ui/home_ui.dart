@@ -42,8 +42,11 @@ class _HomeUIState extends State<HomeUI> {
     } else {
       return WillPopScope(
          onWillPop: () async {
-         await SystemNavigator.pop();
-         return true;
+           bool exitConfirmed = await _showExitConfirmationDialog();
+        if (exitConfirmed) {
+          await SystemNavigator.pop();
+        }
+        return false;
       },
         child: UpgradeAlert(
           upgrader: Upgrader(dialogStyle: UpgradeDialogStyle.material),
@@ -218,6 +221,32 @@ class _HomeUIState extends State<HomeUI> {
     pushFCMtoken();
     super.initState();
   }
+   Future<dynamic> _showExitConfirmationDialog() async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Exit"),
+          content: const Text("Do you want to exit the app?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Don't exit
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Exit
+              },
+              child: const Text("Exit"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
    void pushFCMtoken() async {
     HomeProvider provider = HomeProvider();

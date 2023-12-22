@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helper/model/user_model.dart';
+import '../../bottom/bottom_nav.dart';
 
 class WishListUI extends StatefulWidget {
   const WishListUI({super.key});
@@ -25,11 +26,15 @@ class _WishListUIState extends State<WishListUI> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    print(userModel.userId);
+   ;
     return WillPopScope(
       onWillPop: () async {
-         await SystemNavigator.pop();
-         return true;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BottomBarScreen(),
+            ));
+        return true;
       },
       child: Scaffold(
          backgroundColor: selectedIndex == 0?AppColors.scaffoldGreen: AppColors.scaffoldBlue,

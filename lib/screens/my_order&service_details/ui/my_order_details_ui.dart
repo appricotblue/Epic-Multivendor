@@ -7,7 +7,6 @@ import 'package:epic_multivendor/screens/splash/splash_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:order_tracker/order_tracker.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_web/razorpay_web.dart';
 
