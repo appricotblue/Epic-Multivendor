@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'screens/map/location_provider.dart';
 import 'screens/splash/splash.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -44,6 +45,9 @@ Future<void> main() async{
   );
 
   return runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => LocationProvider(),
+    ),
     ChangeNotifierProvider(
       create: (context) => WishListProvider(),
     ),
