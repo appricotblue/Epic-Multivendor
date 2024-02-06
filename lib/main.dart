@@ -1,5 +1,6 @@
 import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/screens/cart/cart_provider.dart';
+import 'package:epic_multivendor/screens/home/home_provider.dart';
 import 'package:epic_multivendor/screens/splash/splash_provider.dart';
 import 'package:epic_multivendor/screens/wishlist/wishlist_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,6 +46,10 @@ Future<void> main() async{
   );
 
   return runApp(MultiProvider(providers: [
+    // ChangeNotifierProvider(
+    //   create: (context) => HomeProvider(),
+    // ),
+    
     ChangeNotifierProvider(
       create: (context) => LocationProvider(),
     ),

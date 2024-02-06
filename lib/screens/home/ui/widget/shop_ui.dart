@@ -34,47 +34,45 @@ class _ShopListState extends State<ShopList> {
     HomeProvider homeProvider = context.watch<HomeProvider>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+     shrinkWrap: true,
         children: [
           const SizedBox(
             height: 5,
           ),
-
+      
           InkWell(
-            onTap: (){
-               Navigator.push(context,MaterialPageRoute(builder: (context) => SearchShop()));
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchShop()));
             },
             child: Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              decoration: BoxDecoration(
-                color: AppColors.white, 
-                borderRadius: BorderRadius.circular(10)
-              ),
-              child: Center(
-                child: TextField(
-                  enabled: false,
-                  controller: controller,
-                  decoration: InputDecoration(
-                  hintText: "Search Shops",
-                  border: InputBorder.none,
-                  hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                    height: 1.445,
-                    color: const Color(0xffa4a4a4),
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Center(
+                  child: TextField(
+                    enabled: false,
+                    controller: controller,
+                    decoration: InputDecoration(
+                        hintText: "Search Shops",
+                        border: InputBorder.none,
+                        hintStyle:
+                            Theme.of(context).textTheme.bodyText1?.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
+                                  height: 1.445,
+                                  color: const Color(0xffa4a4a4),
+                                ),
+                        suffixIcon: IconButton(
+                            onPressed: () {}, icon: const Icon(Icons.search)),
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none),
                   ),
-                suffixIcon: IconButton(
-                onPressed: (){
-          
-                }, 
-                icon: const Icon(Icons.search)),
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none),
-              ),
-            )),
+                )),
           ),
           // CommonSearchBar(
           //   hintText: "Search Shops",
@@ -159,13 +157,7 @@ class _ShopListState extends State<ShopList> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, i) {
-                        return 
-                        
-                        
-                        
-                        
-                        
-                        Padding(
+                        return Padding(
                           padding: const EdgeInsets.only(right: 3),
                           child: InkWell(
                             onTap: () {
@@ -187,18 +179,16 @@ class _ShopListState extends State<ShopList> {
                                       builder: (context) =>
                                           const ShopCategory(),
                                     ));
-                              }
-                              else if (homeProvider
+                              } else if (homeProvider
                                       .homeShopListModel?.shopTypes?[i].type ==
                                   "Fashion") {
-                                     Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const FashionCategory(),
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FashionCategory(),
                                     ));
-                                  }
-                               else {
+                              } else {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -217,13 +207,11 @@ class _ShopListState extends State<ShopList> {
                                     width: 60,
                                     height: 60,
                                     decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: AppColors.secondaryGreen,
-                                      image: DecorationImage(
-                                        image: NetworkImage("${ApiEndPoints.imageBaseURL}${homeProvider.homeShopListModel?.shopTypes?[i].imageName}")
-                                      )
-                                    ),
-                                    
+                                        shape: BoxShape.circle,
+                                        color: AppColors.secondaryGreen,
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                "${ApiEndPoints.imageBaseURL}${homeProvider.homeShopListModel?.shopTypes?[i].imageName}"))),
                                   ),
                                   const SizedBox(
                                     height: 5,
@@ -248,11 +236,6 @@ class _ShopListState extends State<ShopList> {
                             ),
                           ),
                         );
-
-
-
-
-                        
                       },
                     ),
                   ),
@@ -271,7 +254,7 @@ class _ShopListState extends State<ShopList> {
                       ),
                 ),
                 const SizedBox(width: 15.0),
-
+      
                 /// DROP-DOWN
                 // Container(
                 //   height: 40,
@@ -344,14 +327,14 @@ class _ShopListState extends State<ShopList> {
                         userModel.updateWith(
                             shopId:
                                 "${homeProvider.homeShopListModel?.shopData?[i].id}");
-                                
+      
                         userModel.updateWith(
                             shopName:
                                 "${homeProvider.homeShopListModel?.shopData?[i].name}");
                         userModel.updateWith(
                             categoryType:
                                 "${homeProvider.homeShopListModel?.shopData?[i].shopType}");
-                                
+      
                         userModel.updateWith(
                             shopImage:
                                 "${ApiEndPoints.imageBaseURL}${homeProvider.homeShopListModel?.shopData?[i].image}");

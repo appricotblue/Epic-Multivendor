@@ -20,8 +20,6 @@ import '../../../../helper/helper_shimmer.dart';
 import '../../../../helper/model/user_model.dart';
 import '../../../../helper/widgets/common_screen_product_list.dart';
 
-
-
 class FashionShopProductUI extends StatefulWidget {
   const FashionShopProductUI({super.key});
 
@@ -32,10 +30,11 @@ class FashionShopProductUI extends StatefulWidget {
 class _CommonShopProductUIState extends State<FashionShopProductUI> {
   var userModel = Get.find<UserModel>();
   TextEditingController controller = TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
-    ShopProductProvider shopProductProvider = context.watch<ShopProductProvider>();
+    ShopProductProvider shopProductProvider =
+        context.watch<ShopProductProvider>();
     return Scaffold(
       backgroundColor: AppColors.scaffoldGreen,
       appBar: AppBar(
@@ -108,133 +107,170 @@ class _CommonShopProductUIState extends State<FashionShopProductUI> {
           )
         ],
       ),
-      body:shopProductProvider.isLoading?ShimmerLoader().shimmerProduct(context):
-      SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              // CommonSearchBar(
-              //   hintText: "Search Products",
-              // ),
+      body: shopProductProvider.isLoading
+          ? ShimmerLoader().shimmerProduct(context)
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    // CommonSearchBar(
+                    //   hintText: "Search Products",
+                    // ),
 
-              InkWell(
-                onTap: (){
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => SearchProducts()));
-                },
-                child: Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: AppColors.white, borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: TextField(
-                      enabled: false,
-                      controller: controller,
-                      decoration: InputDecoration(
-                      hintText: "Search Products",
-                      border: InputBorder.none,
-                      hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            height: 1.445,
-                            color: const Color(0xffa4a4a4),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchProducts()));
+                      },
+                      child: Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
+                          decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                            child: TextField(
+                              enabled: false,
+                              controller: controller,
+                              decoration: InputDecoration(
+                                  hintText: "Search Products",
+                                  border: InputBorder.none,
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w300,
+                                        height: 1.445,
+                                        color: const Color(0xffa4a4a4),
+                                      ),
+                                  suffixIcon: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.search)),
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none),
+                            ),
+                          )),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    shopProductProvider
+                                    .shopProductListModel?.categories?.length ==
+                                0 ||
+                            shopProductProvider
+                                    .shopProductListModel?.categories?.length ==
+                                null
+                        ? Center(
+                            child: Image.asset(AppAssetsImages.noProduct1),
+                          )
+                        : SizedBox(
+                            height: 140,
+                            child: ListView.builder(
+                                itemCount: shopProductProvider
+                                    .shopProductListModel?.categories?.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) => Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              userModel.updateWith(
+                                                  catgeoryId:
+                                                      shopProductProvider
+                                                          .shopProductListModel
+                                                          ?.categories?[index]
+                                                          .id
+                                                          .toString());
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const CategoryProduct(),
+                                                  ));
+                                            },
+                                            child: Container(
+                                              width: 80,
+                                              height: 80,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: AppColors.white,
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.categories?[index].imageName}"),
+                                                    fit: BoxFit.fill,
+                                                  )),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            shopProductProvider
+                                                    .shopProductListModel
+                                                    ?.categories?[index]
+                                                    .category ??
+                                                "",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall
+                                                ?.copyWith(
+                                                    color:
+                                                        AppColors.primaryGreen),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
                           ),
-                        suffixIcon: IconButton(
-                            onPressed: (){}, icon: const Icon(Icons.search)),
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none),
-                  ),
-                )),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
 
-              shopProductProvider.shopProductListModel?.categories?.length == 0 ||
-                  shopProductProvider.shopProductListModel?.categories?.length == null ?
-              Center(
-                child: Image.asset(AppAssetsImages.noProduct1),
-              ):
-              SizedBox(
-                height: 140,
-                child: ListView.builder(
-                  itemCount:  shopProductProvider.shopProductListModel?.categories?.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: (){
-                                  userModel.updateWith(catgeoryId:shopProductProvider.shopProductListModel?.categories?[index].id.toString());
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryProduct(),));
-                                },
-                              child: Container(
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.white,
-                                 image: DecorationImage(
-                                  image: NetworkImage("${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.categories?[index].imageName}"),
-                                  fit: BoxFit.fill,
-                            
-                                 )
-                                ),
-                               
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              shopProductProvider.shopProductListModel?.categories?[index].category ?? "",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(color: AppColors.primaryGreen),
-                            ),
-                          ],
-                        ),
-                      )),
-              ),
-            
-              const SizedBox(
-                height: 5,
-              ),
+                    const SizedBox(
+                      height: 5,
+                    ),
 
-              carousel(
-                  shopProductProvider.shopProductListModel?.banners?.map((e) =>
-                  e.image == null? carouselSliderImage(
-                    "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png"):
-                    carouselSliderImage("${ApiEndPoints.imageBaseURL}${e.image}")).toList()
+                    carousel(shopProductProvider.shopProductListModel?.banners
+                        ?.map((e) => e.image == null
+                            ? carouselSliderImage(
+                                "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png")
+                            : carouselSliderImage(
+                                "${ApiEndPoints.imageBaseURL}${e.image}"))
+                        .toList()),
+
+                    const SizedBox(
+                      height: 5,
+                    ),
+
+                    const CommonNewCollection(),
+                    //  const CommonPopularCollection(),
+                    // const CommonProductForYouCollection()
+                  ],
+                ),
               ),
-              
-              const SizedBox(
-                height: 5,
-              ),
-             
-              
-             const CommonNewCollection(),
-            //  const CommonPopularCollection(),
-             // const CommonProductForYouCollection()
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
+
   @override
   void initState() {
+    // Future.microtask(() {
+    //   context.read<ShopProductProvider>().shopProductList(
+    //       userId: userModel.userId,
+    //       shopId:userModel.shopId
+    //   );
+    // });
     Future.microtask(() {
-      context.read<ShopProductProvider>().shopProductList(
-          userId: userModel.userId,
-          shopId:userModel.shopId
-      );
+      context.read<ShopProductProvider>().shopProducts(
+          context.read<ShopProductProvider>().currentpage.toString());
     });
+
     super.initState();
   }
 
@@ -243,7 +279,6 @@ class _CommonShopProductUIState extends State<FashionShopProductUI> {
       items: items,
       options: CarouselOptions(
           height: 175,
-          
           enlargeCenterPage: true,
           autoPlay: true,
           aspectRatio: 3 / 20,
@@ -254,18 +289,15 @@ class _CommonShopProductUIState extends State<FashionShopProductUI> {
   }
 
   Widget carouselSliderImage(networkImage) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(20),
-    child: Container(
-  
-      margin: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          
-          image: DecorationImage(
-              image: NetworkImage(networkImage), fit: BoxFit.fill)),
-    ),
-  );
-}
-
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        margin: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(
+                image: NetworkImage(networkImage), fit: BoxFit.fill)),
+      ),
+    );
+  }
 }

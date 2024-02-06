@@ -13,7 +13,8 @@ class ApiEndPoints {
   ///
   ///
   static String homeShopData = '${baseUrl}home-shop-data';
-  static String homeServiceData = '${baseUrl}home-service-data';
+  // static String homeServiceData = '${baseUrl}home-service-data';
+   static String homeServiceData = '${baseUrl}get-all-services';
   static String homeSearchShopData = '${baseUrl}search/home-shop-data';
   static String homeSearchServiceData = '${baseUrl}search/home-service-data';
   static String searchShopData = '${baseUrl}search/shop-data';
@@ -42,7 +43,8 @@ class ApiEndPoints {
 
   /// shop
   static String shopCategory = '${baseUrl}category-shops';
-  static String shopProduct = '${baseUrl}shop/product';
+  // static String shopProduct = '${baseUrl}shop/product';
+   static String shopProduct = '${baseUrl}get-all-product';
   static String shopDetails = '${baseUrl}product-details';
   ///
   static String categoryProduct = '${baseUrl}category/product';

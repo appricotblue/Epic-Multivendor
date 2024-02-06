@@ -15,7 +15,8 @@ class CommonNewCollection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShopProductProvider shopProductProvider = context.watch<ShopProductProvider>();
+    ShopProductProvider shopProductProvider =
+        context.watch<ShopProductProvider>();
     var userModel = Get.find<UserModel>();
     return Column(
       children: [
@@ -27,73 +28,114 @@ class CommonNewCollection extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-
         shopProductProvider.shopProductListModel?.products?.length == 0 ||
-            shopProductProvider.shopProductListModel?.products?.length == null ?
-            Center(
-              child: Image.asset(AppAssetsImages.noProduct1),
-            ):
-        GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 260.0,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
-          ),
-          itemCount: shopProductProvider.shopProductListModel?.products?.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, i) {
-            return CommonScreenProductList(
-              image: "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.products?[i].featuredImageName}",
-              title:shopProductProvider.shopProductListModel?.products?[i].name ?? "",
-              type: shopProductProvider.shopProductListModel?.products?[i].categoryType ?? "",
-              price: shopProductProvider.shopProductListModel?.products?[i].salePrice.toString() ?? "",
-              strikedPrice: shopProductProvider.shopProductListModel?.products?[i].price.toString() ?? "",
-              onTap: (){
-                userModel.updateWith(shopProductId: shopProductProvider.shopProductListModel?.products?[i].id.toString());
-                userModel.updateWith(shopProductTitle: shopProductProvider.shopProductListModel?.products?[i].name.toString());
-                userModel.updateWith(shopProductPrice: shopProductProvider.shopProductListModel?.products?[i].price.toString());
-                userModel.updateWith(shopProductImage: "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.products?[i].featuredImageName}");
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CommonProductDetails(),));
-              },
-
-            iconData: shopProductProvider.shopProductListModel?.products?[i].isWishlist == false?
-              InkWell(
-                onTap: (){
-                  shopProductProvider.addToWishList(context,
-                    userId: userModel.userId,
-                    productId: shopProductProvider.shopProductListModel?.products?[i].id
-                  );
-                  context.read<ShopProductProvider>().shopProductList(
-                      userId: userModel.userId,
-                      shopId:userModel.shopId
+                shopProductProvider.shopProductListModel?.products?.length ==
+                    null
+            ? Center(
+                child: Image.asset(AppAssetsImages.noProduct1),
+              )
+            : GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: 260.0,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                ),
+                itemCount:
+                    shopProductProvider.shopProductListModel?.products?.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, i) {
+                  return CommonScreenProductList(
+                    image:
+                        "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.products?[i].featuredImageName}",
+                    title: shopProductProvider
+                            .shopProductListModel?.products?[i].name ??
+                        "",
+                    type: shopProductProvider
+                            .shopProductListModel?.products?[i].categoryType ??
+                        "",
+                    price: shopProductProvider
+                            .shopProductListModel?.products?[i].salePrice
+                            .toString() ??
+                        "",
+                    strikedPrice: shopProductProvider
+                            .shopProductListModel?.products?[i].price
+                            .toString() ??
+                        "",
+                    onTap: () {
+                      userModel.updateWith(
+                          shopProductId: shopProductProvider
+                              .shopProductListModel?.products?[i].id
+                              .toString());
+                      userModel.updateWith(
+                          shopProductTitle: shopProductProvider
+                              .shopProductListModel?.products?[i].name
+                              .toString());
+                      userModel.updateWith(
+                          shopProductPrice: shopProductProvider
+                              .shopProductListModel?.products?[i].price
+                              .toString());
+                      userModel.updateWith(
+                          shopProductImage:
+                              "${ApiEndPoints.imageBaseURL}${shopProductProvider.shopProductListModel?.products?[i].featuredImageName}");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CommonProductDetails(),
+                          ));
+                    },
+                    iconData: shopProductProvider.shopProductListModel
+                                ?.products?[i].isWishlist ==
+                            false
+                        ? InkWell(
+                            onTap: () {
+                              shopProductProvider.addToWishList(context,
+                                  userId: userModel.userId,
+                                  productId: shopProductProvider
+                                      .shopProductListModel?.products?[i].id);
+                              // context.read<ShopProductProvider>().shopProductList(
+                              //     userId: userModel.userId,
+                              //     shopId:userModel.shopId
+                              // );
+                               context
+                                    .read<ShopProductProvider>()
+                                    .shopProducts(context
+                                        .read<ShopProductProvider>()
+                                        .currentpage
+                                        .toString());
+                            },
+                            child: Icon(
+                              Icons.favorite_outline,
+                              color: AppColors.primaryGreen,
+                            ),
+                          )
+                        : InkWell(
+                            onTap: () {
+                              shopProductProvider.removeWishList(context,
+                                  userId: userModel.userId,
+                                  productId: shopProductProvider
+                                      .shopProductListModel?.products?[i].id);
+                              // context
+                              //     .read<ShopProductProvider>()
+                              //     .shopProductList(
+                              //         userId: userModel.userId,
+                              //         shopId: userModel.shopId);
+                               context
+                                    .read<ShopProductProvider>()
+                                    .shopProducts(context
+                                        .read<ShopProductProvider>()
+                                        .currentpage
+                                        .toString());
+                            },
+                            child: Icon(
+                              Icons.favorite,
+                              color: AppColors.primaryGreen,
+                            ),
+                          ),
                   );
                 },
-                child: Icon(
-                  Icons.favorite_outline,
-                  color: AppColors.primaryGreen,
-                ),
-              ): InkWell(
-                onTap: (){
-                  shopProductProvider.removeWishList(context,
-                    userId: userModel.userId,
-                    productId: shopProductProvider.shopProductListModel?.products?[i].id
-                  );
-                  context.read<ShopProductProvider>().shopProductList(
-                      userId: userModel.userId,
-                      shopId:userModel.shopId
-                  );
-                },
-                child: Icon(
-                  Icons.favorite,
-                  color: AppColors.primaryGreen,
-                ),
               ),
-            
-            );
-          },
-        ),
         const SizedBox(
           height: 5,
         ),

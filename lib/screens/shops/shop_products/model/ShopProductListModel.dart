@@ -20,15 +20,19 @@ class ShopProductListModel {
     banners = json["banners"] == null
         ? null
         : (json["banners"] as List).map((e) => Banners.fromJson(e)).toList();
-        
+
     categories = json["categories"] == null
         ? null
-        : (json["categories"] as List).map((e) => Category.fromJson(e)).toList();
+        : (json["categories"] as List)
+            .map((e) => Category.fromJson(e))
+            .toList();
 
     newProducts = json["new_products"] == null
         ? null
-        : (json["new_products"] as List).map((e) => NewProducts.fromJson(e)).toList();
-        
+        : (json["new_products"] as List)
+            .map((e) => NewProducts.fromJson(e))
+            .toList();
+
     products = json["products"] == null
         ? null
         : (json["products"] as List).map((e) => Products.fromJson(e)).toList();
@@ -127,7 +131,6 @@ class Products {
   set isSelected(bool value) {
     _isSelected = value;
   }
-  
 
   String get productPrice => _productPrice ?? "";
 
@@ -199,7 +202,7 @@ class Attributes {
   dynamic name;
   int? value;
 
-  Attributes({this.id,this.name, this.value});
+  Attributes({this.id, this.name, this.value});
 
   Attributes.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -239,31 +242,31 @@ class Banners {
 }
 
 class Category {
-    Category({
-        required this.id,
-        required this.category,
-        required this.imageName,
-    });
+  Category({
+    required this.id,
+    required this.category,
+    required this.imageName,
+  });
 
-    int id;
-    String category;
-    String imageName;
+  int id;
+  String category;
+  String imageName;
 
-    factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
         category: json["category"],
         imageName: json["image_name"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "category": category,
         "image_name": imageName,
-    };
+      };
 }
 
 class NewProducts {
- int? id;
+  int? id;
   String? name;
   String? description;
   int? price;

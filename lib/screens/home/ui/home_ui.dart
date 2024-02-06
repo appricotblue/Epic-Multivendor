@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:epic_multivendor/helper/helper_shimmer.dart';
 import 'package:epic_multivendor/helper/model/user_model.dart';
 import 'package:epic_multivendor/screens/home/home_provider.dart';
@@ -143,27 +145,29 @@ class _HomeUIState extends State<HomeUI> {
             ),
             body: homeProvider.isLoading
                 ? ShimmerLoader().shimmerProduct(context)
-                : SingleChildScrollView(
-                    child: SafeArea(
-                      child: Stack(
-                        children: [
-                          AnimatedTab(
+                : SafeArea(
+                  child: Stack(
+                    children: [
+                      AnimatedTab(
                             isSelected: isSelected,
                             isFirstTab: isFirstTab,
                             isSecondTab: isSecondTab,
                             firstTabTap: () {
+                              
                               setState(() {
                                 isSelected = !isSelected;
-                                isSecondTab = true;
-                                isFirstTab = false;
+                                isSecondTab = false;
+                                isFirstTab = true;
                               });
+                              log("-----$isFirstTab");
                             },
                             secondTabTaP: () {
                               setState(() {
                                 isSelected = !isSelected;
-                                isFirstTab = true;
-                                isSecondTab = false;
+                                isFirstTab = false;
+                                isSecondTab = true;
                               });
+                              log("-----$isSecondTab");
                               Future.microtask(() {
                                 context.read<HomeProvider>().homeService(
                                     userId: userModel.userId,
@@ -173,17 +177,16 @@ class _HomeUIState extends State<HomeUI> {
                               });
                             },
                           ),
-                          animatedRoundContainer(),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 68.0),
-                            child: isSelected
-                                ? const ServiceList()
-                                : const ShopList(),
-                          )
-                        ],
-                      ),
-                    ),
+                      animatedRoundContainer(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 68.0),
+                        child: isSelected
+                            ?  ServiceList()
+                            : const ShopList(),
+                      )
+                    ],
                   ),
+                ),
           ),
         ),
       );

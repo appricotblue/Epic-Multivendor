@@ -503,11 +503,15 @@ class _CategoryProductUiState extends State<CategoryProductUi> {
                                                                                       attributeId: attributeId
                                                                                   )
                                                                                   .then((value) {
-                                                                                Future.microtask(
+                                                                                // Future.microtask(
+                                                                                //     () {
+                                                                                //   context.read<ShopProductProvider>().shopProductList(
+                                                                                //       userId: "26",
+                                                                                //       shopId: userModel.shopId);
+                                                                                // });
+                                                                                 Future.microtask(
                                                                                     () {
-                                                                                  context.read<ShopProductProvider>().shopProductList(
-                                                                                      userId: "26",
-                                                                                      shopId: userModel.shopId);
+                                                                                  context.read<ShopProductProvider>().shopProducts(context.read<ShopProductProvider>().currentpage.toString());
                                                                                 });
                                                                               });
                                                                             }

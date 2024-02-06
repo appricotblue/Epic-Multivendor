@@ -246,11 +246,12 @@ class ApiHelper {
 }
 
 class ApiResponse{
+  int statusCode;
   bool _status;
   dynamic data;
   String? message;
 
-  ApiResponse(this._status,{this.data = const {}, this.message});
+  ApiResponse(this._status,{this.statusCode = 0,this.data = const {}, this.message});
 
   bool getStatus(){
     return _status;
