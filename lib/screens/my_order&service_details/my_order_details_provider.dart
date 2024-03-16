@@ -87,7 +87,10 @@ class MyOrderDetailsProvider extends ChangeNotifier {
     var headers = {
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('http://phpstack-732301-3293226.cloudwaysapps.com/api/update/service-bookings/payemnt-status'));
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'http://phpstack-1215628-4317594.cloudwaysapps.com/api/update/service-bookings/payemnt-status'));
     request.body = json.encode({
       "service_booking_id": "$bookingId"
     });
@@ -113,7 +116,10 @@ class MyOrderDetailsProvider extends ChangeNotifier {
     var headers = {
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('http://phpstack-732301-3293226.cloudwaysapps.com/api/update/payment/status'));
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'http://phpstack-1215628-4317594.cloudwaysapps.com/api/update/payment/status'));
     request.body = json.encode({
       "order_id": "$orderId"
     });

@@ -1,8 +1,8 @@
 class ApiEndPoints {
   static String baseUrl =
-      "http://phpstack-732301-3293226.cloudwaysapps.com/api/";
+      "https://phpstack-1215628-4317594.cloudwaysapps.com/api/";
   static String imageBaseURL =
-      "https://phpstack-732301-3293226.cloudwaysapps.com/image_uploads/";
+      "https://phpstack-1215628-4317594.cloudwaysapps.com/image_uploads/";
 
   /// login
   static String login = '${baseUrl}login';
