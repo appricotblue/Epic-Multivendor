@@ -144,7 +144,10 @@ class CheckoutProvider extends ChangeNotifier{
     var headers = {
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('http://phpstack-732301-3293226.cloudwaysapps.com/api/service-bookings'));
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'https://phpstack-1215628-4317594.cloudwaysapps.com/api/service-bookings'));
     request.body = json.encode({
       "user_id": "$userId",
       "service_id": "$serviceId",

@@ -8,7 +8,7 @@ class ApiHelper {
   factory ApiHelper() => _instance;
   ApiHelper.internal();
   String baseUrlFunction() {
-    String baseUrl = 'http://phpstack-732301-3293226.cloudwaysapps.com/api/';
+    String baseUrl = 'https://phpstack-1215628-4317594.cloudwaysapps.com/api/';
     return baseUrl;
   }
 

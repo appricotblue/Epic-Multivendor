@@ -22,7 +22,9 @@ class ProfileProvider extends ChangeNotifier {
   Future<MyProfileModel> myProfileFUNC(userId) async {
     try {
       ApiResponse apiResponse = await ApiHelper().postData(
-          data: {"user_id": "$userId"}, route: "http://phpstack-732301-3293226.cloudwaysapps.com/api/get/profile-data");
+          data: {"user_id": "$userId"},
+          route:
+              "https://phpstack-1215628-4317594.cloudwaysapps.com/api/get/profile-data");
       if (apiResponse.data != null) {
         myProfileModel = MyProfileModel.fromJson(apiResponse.data);
       }
@@ -43,7 +45,9 @@ class ProfileProvider extends ChangeNotifier {
           "email": "$email",
           "phone": "$phone"
         
-      }, route: "http://phpstack-732301-3293226.cloudwaysapps.com/api/update/profile-data");
+          },
+          route:
+              "https://phpstack-1215628-4317594.cloudwaysapps.com/api/update/profile-data");
       if (apiResponse.data != null) {
         successModel = SuccessModel.fromJson(apiResponse.data);
       }
